@@ -5,7 +5,7 @@ import languages.murasaki.MurasakiLanguages.core.Enums.LanguageType;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class ClassesEntity {
+public class CourseEntity {
 
     private String title;
     private String text;
@@ -15,10 +15,10 @@ public class ClassesEntity {
     private LocalDateTime createAt;
     private LocalDateTime updatedAt;
 
-    public ClassesEntity() {
+    public CourseEntity() {
     }
 
-    public ClassesEntity(String title, String text, List<String> links, String username, LanguageType languageType, LocalDateTime createAt, LocalDateTime updatedAt) {
+    public CourseEntity(String title, String text, List<String> links, String username, LanguageType languageType, LocalDateTime createAt, LocalDateTime updatedAt) {
         this.title = title;
         this.text = text;
         this.links = links;

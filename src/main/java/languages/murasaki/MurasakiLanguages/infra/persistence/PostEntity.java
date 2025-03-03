@@ -1,6 +1,5 @@
 package languages.murasaki.MurasakiLanguages.infra.persistence;
 
-import languages.murasaki.MurasakiLanguages.core.entities.Comments;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -14,14 +13,14 @@ public class PostEntity {
     private String banner;
     private String userId;
     private List<Integer> likes;
-    private List<CommentsEntity> commentsList;
+    private List<CommentEntity> commentsList;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
     public PostEntity() {
     }
 
-    public PostEntity(String title, String text, String banner, String userId, List<Integer> likes, List<CommentsEntity> commentsList, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public PostEntity(String title, String text, String banner, String userId, List<Integer> likes, List<CommentEntity> commentsList, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.title = title;
         this.text = text;
         this.banner = banner;
@@ -72,11 +71,11 @@ public class PostEntity {
         this.likes = likes;
     }
 
-    public List<CommentsEntity> getCommentsList() {
+    public List<CommentEntity> getCommentsList() {
         return commentsList;
     }
 
-    public void setCommentsList(List<CommentsEntity> commentsList) {
+    public void setCommentsList(List<CommentEntity> commentsList) {
         this.commentsList = commentsList;
     }
 

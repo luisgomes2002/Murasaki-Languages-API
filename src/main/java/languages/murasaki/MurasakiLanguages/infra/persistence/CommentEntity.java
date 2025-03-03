@@ -6,19 +6,19 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Document(collation = "Comments")
-public class CommentsEntity {
+public class CommentEntity {
 
     private String message;
     private String username;
     private String icon;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private List<CommentsEntity> replies;
+    private List<CommentEntity> replies;
 
-    public CommentsEntity() {
+    public CommentEntity() {
     }
 
-    public CommentsEntity(String message, String username, String icon, LocalDateTime createdAt, LocalDateTime updatedAt, List<CommentsEntity> replies) {
+    public CommentEntity(String message, String username, String icon, LocalDateTime createdAt, LocalDateTime updatedAt, List<CommentEntity> replies) {
         this.message = message;
         this.username = username;
         this.icon = icon;
@@ -67,11 +67,11 @@ public class CommentsEntity {
         this.updatedAt = updatedAt;
     }
 
-    public List<CommentsEntity> getReplies() {
+    public List<CommentEntity> getReplies() {
         return replies;
     }
 
-    public void setReplies(List<CommentsEntity> replies) {
+    public void setReplies(List<CommentEntity> replies) {
         this.replies = replies;
     }
 }
