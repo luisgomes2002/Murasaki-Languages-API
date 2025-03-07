@@ -16,13 +16,14 @@ public class UserDtoMapper {
             user.password(),
             user.icon(),
             user.background(),
-            user.followers(),
-            user.following(),
+            user.followersId(),
+            user.followingId(),
             user.createdAt(),
             user.updatedAt(),
             user.about(),
             user.userType(),
-            user.notification(),
+            user.notificationsId(),
+            user.postsId(),
             user.ban()
         );
     }
@@ -36,13 +37,14 @@ public class UserDtoMapper {
             userDto.password(),
             userDto.icon(),
             userDto.background(),
-            userDto.followers(),
-            userDto.following(),
+            userDto.followersId(),
+            userDto.followingId(),
             userDto.createdAt(),
             userDto.updatedAt(),
             userDto.about(),
             userDto.userType(),
-            userDto.notification(),
+            userDto.notificationsId(),
+            userDto.postsId(),
             userDto.ban()
         );
     }

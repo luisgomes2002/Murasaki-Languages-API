@@ -1,7 +1,7 @@
 package languages.murasaki.MurasakiLanguages.infra.mapper;
 
 import languages.murasaki.MurasakiLanguages.core.entities.User;
-import languages.murasaki.MurasakiLanguages.infra.persistence.UserEntity;
+import languages.murasaki.MurasakiLanguages.infra.persistence.User.UserEntity;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,13 +16,14 @@ public class UserEntityMapper {
             user.password(),
             user.icon(),
             user.background(),
-            user.followers(),
-            user.following(),
+            user.followersId(),
+            user.followingId(),
             user.createdAt(),
             user.updatedAt(),
             user.about(),
             user.userType(),
-            user.notification(),
+            user.notificationsId(),
+            user.postsId(),
             user.ban()
         );
     }
@@ -36,13 +37,14 @@ public class UserEntityMapper {
             userEntity.getPassword(),
             userEntity.getIcon(),
             userEntity.getBackground(),
-            userEntity.getFollowers(),
-            userEntity.getFollowing(),
+            userEntity.getFollowersId(),
+            userEntity.getFollowingId(),
             userEntity.getCreatedAt(),
             userEntity.getUpdatedAt(),
             userEntity.getAbout(),
             userEntity.getUserType(),
-            userEntity.getNotification(),
+            userEntity.getNotificationsId(),
+            userEntity.getPostsId(),
             userEntity.isBan()
         );
     }

@@ -3,8 +3,8 @@ package languages.murasaki.MurasakiLanguages.infra.gateway;
 import languages.murasaki.MurasakiLanguages.core.entities.User;
 import languages.murasaki.MurasakiLanguages.core.gateway.UserGateway;
 import languages.murasaki.MurasakiLanguages.infra.mapper.UserEntityMapper;
-import languages.murasaki.MurasakiLanguages.infra.persistence.UserEntity;
-import languages.murasaki.MurasakiLanguages.infra.persistence.UserRepository;
+import languages.murasaki.MurasakiLanguages.infra.persistence.User.UserEntity;
+import languages.murasaki.MurasakiLanguages.infra.persistence.User.UserRepository;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;

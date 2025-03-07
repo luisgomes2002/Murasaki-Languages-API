@@ -1,4 +1,4 @@
-package languages.murasaki.MurasakiLanguages.infra.persistence;
+package languages.murasaki.MurasakiLanguages.infra.persistence.User;
 
 import languages.murasaki.MurasakiLanguages.core.enums.UserType;
 import org.springframework.data.annotation.Id;
@@ -19,19 +19,20 @@ public class UserEntity {
     private String password;
     private String icon;
     private String background;
-    private String followers;
-    private String following;
+    private List<String> followersId;
+    private List<String> followingId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String about;
     private UserType userType;
-    private List<String> notification;
+    private List<String> notificationsId;
+    private List<String> postsId;
     private boolean ban;
 
     public UserEntity() {
     }
 
-    public UserEntity(String id, String name, String username, String email, String password, String icon, String background, String followers, String following, LocalDateTime createdAt, LocalDateTime updatedAt, String about, UserType userType, List<String> notification, boolean ban) {
+    public UserEntity(String id, String name, String username, String email, String password, String icon, String background, List<String> followersId, List<String> followingId, LocalDateTime createdAt, LocalDateTime updatedAt, String about, UserType userType, List<String> notificationsId, List<String> postsId, boolean ban) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -39,13 +40,14 @@ public class UserEntity {
         this.password = password;
         this.icon = icon;
         this.background = background;
-        this.followers = followers;
-        this.following = following;
+        this.followersId = followersId;
+        this.followingId = followingId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.about = about;
         this.userType = userType;
-        this.notification = notification;
+        this.notificationsId = notificationsId;
+        this.postsId = postsId;
         this.ban = ban;
     }
 
@@ -105,20 +107,20 @@ public class UserEntity {
         this.background = background;
     }
 
-    public String getFollowers() {
-        return followers;
+    public List<String> getFollowersId() {
+        return followersId;
     }
 
-    public void setFollowers(String followers) {
-        this.followers = followers;
+    public void setFollowersId(List<String> followersId) {
+        this.followersId = followersId;
     }
 
-    public String getFollowing() {
-        return following;
+    public List<String> getFollowingId() {
+        return followingId;
     }
 
-    public void setFollowing(String following) {
-        this.following = following;
+    public void setFollowingId(List<String> followingId) {
+        this.followingId = followingId;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -153,12 +155,20 @@ public class UserEntity {
         this.userType = userType;
     }
 
-    public List<String> getNotification() {
-        return notification;
+    public List<String> getNotificationsId() {
+        return notificationsId;
     }
 
-    public void setNotification(List<String> notification) {
-        this.notification = notification;
+    public void setNotificationsId(List<String> notificationsId) {
+        this.notificationsId = notificationsId;
+    }
+
+    public List<String> getPostsId() {
+        return postsId;
+    }
+
+    public void setPostsId(List<String> postsId) {
+        this.postsId = postsId;
     }
 
     public boolean isBan() {
