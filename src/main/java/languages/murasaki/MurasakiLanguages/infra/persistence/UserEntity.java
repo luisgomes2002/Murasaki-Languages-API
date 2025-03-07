@@ -1,20 +1,23 @@
 package languages.murasaki.MurasakiLanguages.infra.persistence;
 
-import languages.murasaki.MurasakiLanguages.core.Enums.UserType;
-import languages.murasaki.MurasakiLanguages.core.entities.Post;
+import languages.murasaki.MurasakiLanguages.core.enums.UserType;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Document(collation = "User")
+@Document(collection = "User")
 public class UserEntity {
+
+    @Id
+    private String id;
 
     private String name;
     private String username;
     private String email;
     private String password;
-    private String avatar;
+    private String icon;
     private String background;
     private String followers;
     private String following;
@@ -23,16 +26,18 @@ public class UserEntity {
     private String about;
     private UserType userType;
     private List<String> notification;
+    private boolean ban;
 
     public UserEntity() {
     }
 
-    public UserEntity(String name, String username, String email, String password, String avatar, String background, String followers, String following, LocalDateTime createdAt, LocalDateTime updatedAt, String about, UserType userType, List<String> notification) {
+    public UserEntity(String id, String name, String username, String email, String password, String icon, String background, String followers, String following, LocalDateTime createdAt, LocalDateTime updatedAt, String about, UserType userType, List<String> notification, boolean ban) {
+        this.id = id;
         this.name = name;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.avatar = avatar;
+        this.icon = icon;
         this.background = background;
         this.followers = followers;
         this.following = following;
@@ -41,6 +46,15 @@ public class UserEntity {
         this.about = about;
         this.userType = userType;
         this.notification = notification;
+        this.ban = ban;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -75,12 +89,12 @@ public class UserEntity {
         this.password = password;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public String getIcon() {
+        return icon;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public String getBackground() {
@@ -147,4 +161,12 @@ public class UserEntity {
         this.notification = notification;
     }
 
+    public boolean isBan() {
+        return ban;
+    }
+
+    public void setBan(boolean ban) {
+        this.ban = ban;
+    }
 }
+

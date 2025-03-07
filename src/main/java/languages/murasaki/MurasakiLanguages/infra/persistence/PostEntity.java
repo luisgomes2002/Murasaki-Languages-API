@@ -1,15 +1,21 @@
 package languages.murasaki.MurasakiLanguages.infra.persistence;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Document(collation = "Post")
+@Document(collection = "Post")
 public class PostEntity {
 
-    private String title;
-    private String text;
+    @Id
+    private String id;
+
+    private String titlePt;
+    private String titleEn;
+    private String textPt;
+    private String textEn;
     private String banner;
     private String userId;
     private List<Integer> likes;
@@ -20,9 +26,12 @@ public class PostEntity {
     public PostEntity() {
     }
 
-    public PostEntity(String title, String text, String banner, String userId, List<Integer> likes, List<CommentEntity> commentsList, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.title = title;
-        this.text = text;
+    public PostEntity(String id, String titlePt, String titleEn, String textPt, String textEn, String banner, String userId, List<Integer> likes, List<CommentEntity> commentsList, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.titlePt = titlePt;
+        this.titleEn = titleEn;
+        this.textPt = textPt;
+        this.textEn = textEn;
         this.banner = banner;
         this.userId = userId;
         this.likes = likes;
@@ -31,20 +40,44 @@ public class PostEntity {
         this.updatedAt = updatedAt;
     }
 
-    public String getTitle() {
-        return title;
+    public String getId() {
+        return id;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getText() {
-        return text;
+    public String getTitlePt() {
+        return titlePt;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setTitlePt(String titlePt) {
+        this.titlePt = titlePt;
+    }
+
+    public String getTitleEn() {
+        return titleEn;
+    }
+
+    public void setTitleEn(String titleEn) {
+        this.titleEn = titleEn;
+    }
+
+    public String getTextPt() {
+        return textPt;
+    }
+
+    public void setTextPt(String textPt) {
+        this.textPt = textPt;
+    }
+
+    public String getTextEn() {
+        return textEn;
+    }
+
+    public void setTextEn(String textEn) {
+        this.textEn = textEn;
     }
 
     public String getBanner() {

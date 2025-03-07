@@ -2,16 +2,19 @@ package languages.murasaki.MurasakiLanguages.infra.mapper;
 
 import languages.murasaki.MurasakiLanguages.core.entities.User;
 import languages.murasaki.MurasakiLanguages.infra.dtos.UserDto;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserDtoMapper {
 
     public UserDto toDto(User user){
         return new UserDto (
+            user.id(),
             user.name(),
             user.username(),
             user.email(),
             user.password(),
-            user.avatar(),
+            user.icon(),
             user.background(),
             user.followers(),
             user.following(),
@@ -19,17 +22,19 @@ public class UserDtoMapper {
             user.updatedAt(),
             user.about(),
             user.userType(),
-            user.notification()
+            user.notification(),
+            user.ban()
         );
     }
 
     public User toDomain(UserDto userDto){
         return new User (
+            userDto.id(),
             userDto.name(),
             userDto.username(),
             userDto.email(),
             userDto.password(),
-            userDto.avatar(),
+            userDto.icon(),
             userDto.background(),
             userDto.followers(),
             userDto.following(),
@@ -37,7 +42,8 @@ public class UserDtoMapper {
             userDto.updatedAt(),
             userDto.about(),
             userDto.userType(),
-            userDto.notification()
+            userDto.notification(),
+            userDto.ban()
         );
     }
 }

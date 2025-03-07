@@ -1,11 +1,17 @@
 package languages.murasaki.MurasakiLanguages.infra.persistence;
 
-import languages.murasaki.MurasakiLanguages.core.Enums.LanguageType;
+import languages.murasaki.MurasakiLanguages.core.enums.LanguageType;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Document(collection = "Course")
 public class CourseEntity {
+
+    @Id
+    private String id;
 
     private String title;
     private String text;
@@ -18,7 +24,8 @@ public class CourseEntity {
     public CourseEntity() {
     }
 
-    public CourseEntity(String title, String text, List<String> links, String username, LanguageType languageType, LocalDateTime createAt, LocalDateTime updatedAt) {
+    public CourseEntity(String id, String title, String text, List<String> links, String username, LanguageType languageType, LocalDateTime createAt, LocalDateTime updatedAt) {
+        this.id = id;
         this.title = title;
         this.text = text;
         this.links = links;
@@ -26,6 +33,14 @@ public class CourseEntity {
         this.languageType = languageType;
         this.createAt = createAt;
         this.updatedAt = updatedAt;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {

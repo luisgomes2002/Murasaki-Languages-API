@@ -1,12 +1,16 @@
 package languages.murasaki.MurasakiLanguages.infra.persistence;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Document(collation = "Comments")
+@Document(collection = "Comments")
 public class CommentEntity {
+
+    @Id
+    private String id;
 
     private String message;
     private String username;
@@ -18,13 +22,22 @@ public class CommentEntity {
     public CommentEntity() {
     }
 
-    public CommentEntity(String message, String username, String icon, LocalDateTime createdAt, LocalDateTime updatedAt, List<CommentEntity> replies) {
+    public CommentEntity(String id, String message, String username, String icon, LocalDateTime createdAt, LocalDateTime updatedAt, List<CommentEntity> replies) {
+        this.id = id;
         this.message = message;
         this.username = username;
         this.icon = icon;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.replies = replies;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getMessage() {
