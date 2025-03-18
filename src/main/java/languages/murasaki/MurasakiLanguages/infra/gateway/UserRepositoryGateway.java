@@ -1,10 +1,16 @@
 package languages.murasaki.MurasakiLanguages.infra.gateway;
 
-import languages.murasaki.MurasakiLanguages.core.entities.User;
+import languages.murasaki.MurasakiLanguages.core.entities.user.Login;
+import languages.murasaki.MurasakiLanguages.core.entities.user.User;
 import languages.murasaki.MurasakiLanguages.core.gateway.UserGateway;
-import languages.murasaki.MurasakiLanguages.infra.mapper.UserEntityMapper;
+import languages.murasaki.MurasakiLanguages.infra.config.TokenConfiguration;
+import languages.murasaki.MurasakiLanguages.infra.mapper.user.UserEntityMapper;
 import languages.murasaki.MurasakiLanguages.infra.persistence.User.UserEntity;
 import languages.murasaki.MurasakiLanguages.infra.persistence.User.UserRepository;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -16,10 +22,16 @@ public class UserRepositoryGateway implements UserGateway {
 
     private final UserRepository userRepository;
     private final UserEntityMapper userEntityMapper;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final TokenConfiguration tokenConfiguration;
 
-    public UserRepositoryGateway(UserRepository userRepository, UserEntityMapper userEntityMapper) {
+    public UserRepositoryGateway(UserRepository userRepository, UserEntityMapper userEntityMapper, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, TokenConfiguration tokenConfiguration) {
         this.userRepository = userRepository;
         this.userEntityMapper = userEntityMapper;
+        this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
+        this.tokenConfiguration = tokenConfiguration;
     }
 
     @Override
@@ -27,6 +39,10 @@ public class UserRepositoryGateway implements UserGateway {
         UserEntity entity = userEntityMapper.toEntity(user);
         entity.setCreatedAt(LocalDateTime.now());
         entity.setUpdatedAt(LocalDateTime.now());
+
+        String password = entity.getPassword();
+        entity.setPassword(passwordEncoder.encode(password));
+
         UserEntity newUSer = userRepository.save(entity);
         return userEntityMapper.toDomain(newUSer);
     }
@@ -75,5 +91,15 @@ public class UserRepositoryGateway implements UserGateway {
     @Override
     public void deleteUser(String id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public String login(Login login) {
+        UsernamePasswordAuthenticationToken userAndPass = new UsernamePasswordAuthenticationToken(login.email(), login.password());
+        Authentication authentication = authenticationManager.authenticate(userAndPass);
+
+        UserEntity user = (UserEntity) authentication.getPrincipal();
+
+        return tokenConfiguration.generateToken(user);
     }
 }

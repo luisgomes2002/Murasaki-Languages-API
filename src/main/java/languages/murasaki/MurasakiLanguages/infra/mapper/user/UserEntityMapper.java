@@ -1,6 +1,6 @@
-package languages.murasaki.MurasakiLanguages.infra.mapper;
+package languages.murasaki.MurasakiLanguages.infra.mapper.user;
 
-import languages.murasaki.MurasakiLanguages.core.entities.User;
+import languages.murasaki.MurasakiLanguages.core.entities.user.User;
 import languages.murasaki.MurasakiLanguages.infra.persistence.User.UserEntity;
 import org.springframework.stereotype.Component;
 

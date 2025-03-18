@@ -1,6 +1,6 @@
 package languages.murasaki.MurasakiLanguages.infra.dtos;
 
-import languages.murasaki.MurasakiLanguages.core.entities.Comment;
+import languages.murasaki.MurasakiLanguages.core.entities.post.Comment;
 
 import java.time.LocalDateTime;
 import java.util.List;

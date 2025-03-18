@@ -3,12 +3,15 @@ package languages.murasaki.MurasakiLanguages.infra.persistence.User;
 import languages.murasaki.MurasakiLanguages.core.enums.UserType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 
 @Document(collection = "User")
-public class UserEntity {
+public class UserEntity implements UserDetails{
 
     @Id
     private String id;
@@ -177,6 +180,31 @@ public class UserEntity {
 
     public void setBan(boolean ban) {
         this.ban = ban;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override // Olhar no video da Fernanda Kipper
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
     }
 }
 

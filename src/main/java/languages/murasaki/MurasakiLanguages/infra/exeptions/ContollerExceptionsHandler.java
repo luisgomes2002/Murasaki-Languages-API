@@ -12,7 +12,7 @@ public class ContollerExceptionsHandler {
     @ExceptionHandler(DuplicateUserException.class)
     public ResponseEntity<Map<String, String>> handleDuplicateUserException(DuplicateUserException exception){
         Map<String, String> response = new HashMap<>();
-        response.put("Error:", exception.getMessage());
+        response.put("Error: ", exception.getMessage());
         response.put("Message:", "Por favor, insira um e-mail válido.");
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
@@ -20,12 +20,19 @@ public class ContollerExceptionsHandler {
     @ExceptionHandler(IdNotFoundException.class)
     public ResponseEntity<Map<String, String>> handleIdNotFoundException(IdNotFoundException exception){
         Map<String, String> response = new HashMap<>();
-        response.put("Error:", exception.getMessage());
-        response.put("Message:", "Por favor, insira um ID válido.");
-        return new ResponseEntity<>(response,HttpStatus.CONFLICT);
+        response.put("Error: ", exception.getMessage());
+        response.put("Message: ", "Por favor, insira um ID válido.");
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
-    // Email errado
-    // Senh errada
+    @ExceptionHandler(EmailIncorrectException.class)
+    public ResponseEntity<Map<String, String>> handleEmailIncorrectException(EmailIncorrectException exception){
+        Map<String, String> response = new HashMap<>();
+        response.put("Error: ", exception.getMessage());
+        response.put("Message: ", "Email ou senha incorretos");
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+    }
+
+    // Password incorrect
     // Update password
 }

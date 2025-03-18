@@ -8,3 +8,7 @@ spring:
       port: 27017
       database: MurasakiLanguages
 
+murasakilanguages:
+  security:
+    secret: ${SECRET}
+

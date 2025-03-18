@@ -1,4 +1,4 @@
-package languages.murasaki.MurasakiLanguages.core.entities;
+package languages.murasaki.MurasakiLanguages.core.entities.post;
 
 import java.time.LocalDateTime;
 import java.util.List;

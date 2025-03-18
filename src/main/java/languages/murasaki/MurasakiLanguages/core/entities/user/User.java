@@ -1,4 +1,4 @@
-package languages.murasaki.MurasakiLanguages.core.entities;
+package languages.murasaki.MurasakiLanguages.core.entities.user;
 
 import languages.murasaki.MurasakiLanguages.core.enums.UserType;
 
