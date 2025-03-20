@@ -24,7 +24,7 @@ public class UserDtoMapper {
             user.userType(),
             user.notificationsId(),
             user.postsId(),
-            user.ban()
+            user.isEnabled()
         );
     }
 
@@ -45,7 +45,7 @@ public class UserDtoMapper {
             userDto.userType(),
             userDto.notificationsId(),
             userDto.postsId(),
-            userDto.ban()
+            userDto.isEnabled()
         );
     }
 }

@@ -30,12 +30,12 @@ public class UserEntity implements UserDetails{
     private UserType userType;
     private List<String> notificationsId;
     private List<String> postsId;
-    private boolean ban;
+    private boolean isEnabled;
 
     public UserEntity() {
     }
 
-    public UserEntity(String id, String name, String username, String email, String password, String icon, String background, List<String> followersId, List<String> followingId, LocalDateTime createdAt, LocalDateTime updatedAt, String about, UserType userType, List<String> notificationsId, List<String> postsId, boolean ban) {
+    public UserEntity(String id, String name, String username, String email, String password, String icon, String background, List<String> followersId, List<String> followingId, LocalDateTime createdAt, LocalDateTime updatedAt, String about, UserType userType, List<String> notificationsId, List<String> postsId, boolean isEnabled) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -51,7 +51,7 @@ public class UserEntity implements UserDetails{
         this.userType = userType;
         this.notificationsId = notificationsId;
         this.postsId = postsId;
-        this.ban = ban;
+        this.isEnabled = isEnabled;
     }
 
     public String getId() {
@@ -174,12 +174,12 @@ public class UserEntity implements UserDetails{
         this.postsId = postsId;
     }
 
-    public boolean isBan() {
-        return ban;
+    public boolean isEnabled() {
+        return isEnabled;
     }
 
-    public void setBan(boolean ban) {
-        this.ban = ban;
+    public void setIsEnabled(boolean isEnabled) {
+        this.isEnabled = isEnabled;
     }
 
     @Override
@@ -194,11 +194,6 @@ public class UserEntity implements UserDetails{
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
         return true;
     }
 

@@ -1,10 +1,7 @@
 package languages.murasaki.MurasakiLanguages.infrastructure.beans;
 
 import languages.murasaki.MurasakiLanguages.core.gateway.UserGateway;
-import languages.murasaki.MurasakiLanguages.core.usecases.user.CreateUserUsecase;
-import languages.murasaki.MurasakiLanguages.core.usecases.user.CreateUserUsecaseImpl;
-import languages.murasaki.MurasakiLanguages.core.usecases.user.LoginUsecase;
-import languages.murasaki.MurasakiLanguages.core.usecases.user.LoginUsecaseImpl;
+import languages.murasaki.MurasakiLanguages.core.usecases.user.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,4 +17,7 @@ public class BeanConfiguration {
     public LoginUsecase loginUsecase(UserGateway userGateway){
         return new LoginUsecaseImpl(userGateway);
     }
+
+    @Bean
+    public GetAllUsersUseCase getAllUsersUseCase(UserGateway userGateway) {return new GetAllUsersUseCaseImpl(userGateway);}
 }
