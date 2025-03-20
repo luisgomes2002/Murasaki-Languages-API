@@ -1,5 +1,6 @@
 package languages.murasaki.MurasakiLanguages.infrastructure.beans;
 
+import jakarta.servlet.DispatcherType;
 import languages.murasaki.MurasakiLanguages.infrastructure.config.AuthConfiguration;
 import languages.murasaki.MurasakiLanguages.infrastructure.config.SecurityFilter;
 import languages.murasaki.MurasakiLanguages.infrastructure.persistence.user.UserRepository;
@@ -35,6 +36,7 @@ public class SecurityConfiguration {
                 .csrf(csrf ->csrf.disable())
                 .sessionManagement(session ->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
+                        .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .requestMatchers(HttpMethod.POST,"api/user/create").permitAll()
                         .requestMatchers(HttpMethod.POST,"api/user/login").permitAll()
                         .anyRequest().authenticated()
