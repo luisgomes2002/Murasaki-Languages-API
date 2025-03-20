@@ -2,7 +2,6 @@ package languages.murasaki.MurasakiLanguages.core.gateway;
 
 import languages.murasaki.MurasakiLanguages.core.entities.user.Login;
 import languages.murasaki.MurasakiLanguages.core.entities.user.User;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 
