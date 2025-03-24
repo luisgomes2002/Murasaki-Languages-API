@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CourseGateway {
 
-    Course createCourse(Course course);
+    Course createCourse(String collectionId, Course course);
     List<Course> getAllCourse();
     Course getCourseById(String id);
     Course updateCourse(String id, Course course);

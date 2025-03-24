@@ -8,4 +8,5 @@ public interface CourseCollectionGateway {
 
     CourseCollection createCourseCollection(CourseCollection courseCollection);
     List<CourseCollection> getAllCollections();
+    CourseCollection getCourseCollectionById(String collectionId);
 }

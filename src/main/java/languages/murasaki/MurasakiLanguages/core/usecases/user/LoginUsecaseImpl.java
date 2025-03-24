@@ -2,7 +2,7 @@ package languages.murasaki.MurasakiLanguages.core.usecases.user;
 
 import languages.murasaki.MurasakiLanguages.core.entities.user.Login;
 import languages.murasaki.MurasakiLanguages.core.gateway.UserGateway;
-import languages.murasaki.MurasakiLanguages.infrastructure.exceptions.EmailOrPasswordIncorrectException;
+import languages.murasaki.MurasakiLanguages.infra.exceptions.EmailOrPasswordIncorrectException;
 
 public class LoginUsecaseImpl implements LoginUsecase{
 

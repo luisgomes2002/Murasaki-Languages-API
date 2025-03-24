@@ -4,8 +4,8 @@ import languages.murasaki.MurasakiLanguages.core.entities.course.Course;
 import languages.murasaki.MurasakiLanguages.core.entities.user.UserInfo;
 import languages.murasaki.MurasakiLanguages.core.gateway.CourseGateway;
 import languages.murasaki.MurasakiLanguages.core.usecases.security.AuthenticatedUsecase;
-import languages.murasaki.MurasakiLanguages.infrastructure.exceptions.MissingArgumentsException;
-import languages.murasaki.MurasakiLanguages.infrastructure.exceptions.UserDoesNotHavePermissionException;
+import languages.murasaki.MurasakiLanguages.infra.exceptions.MissingArgumentsException;
+import languages.murasaki.MurasakiLanguages.infra.exceptions.UserDoesNotHavePermissionException;
 
 public class CreateCourseUsecaseImpl implements CreateCourseUsecase{
 
@@ -18,7 +18,7 @@ public class CreateCourseUsecaseImpl implements CreateCourseUsecase{
     }
 
     @Override
-    public Course execute(Course course) {
+    public Course execute(String collectionId, Course course) {
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
         if(!"ADMIN".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
@@ -27,6 +27,6 @@ public class CreateCourseUsecaseImpl implements CreateCourseUsecase{
             throw new MissingArgumentsException("Campos faltando");
         }
 
-        return courseGateway.createCourse(course);
+        return courseGateway.createCourse(collectionId, course);
     }
 }

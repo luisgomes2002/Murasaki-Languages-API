@@ -2,7 +2,7 @@ package languages.murasaki.MurasakiLanguages.core.usecases.user;
 
 import languages.murasaki.MurasakiLanguages.core.entities.user.User;
 import languages.murasaki.MurasakiLanguages.core.gateway.UserGateway;
-import languages.murasaki.MurasakiLanguages.infrastructure.exceptions.DuplicateUserException;
+import languages.murasaki.MurasakiLanguages.infra.exceptions.DuplicateUserException;
 
 public class CreateUserUsecaseImpl implements CreateUserUsecase{
 

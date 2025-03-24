@@ -4,5 +4,5 @@ import languages.murasaki.MurasakiLanguages.core.entities.course.Course;
 
 public interface CreateCourseUsecase {
 
-    public Course execute(Course course);
+    public Course execute(String collectionId, Course course);
 }
