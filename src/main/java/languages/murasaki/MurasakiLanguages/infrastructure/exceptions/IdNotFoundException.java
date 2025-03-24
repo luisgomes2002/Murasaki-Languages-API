@@ -1,4 +1,4 @@
-package languages.murasaki.MurasakiLanguages.infrastructure.exeptions;
+package languages.murasaki.MurasakiLanguages.infrastructure.exceptions;
 
 public class IdNotFoundException extends RuntimeException{
 

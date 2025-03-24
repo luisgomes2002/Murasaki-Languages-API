@@ -15,6 +15,6 @@ public class AuthConfiguration implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return  userRepository.findUserByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Usuario ou senha incorreto"));
+        return userRepository.findUserByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Usuario ou senha incorreto"));
     }
 }

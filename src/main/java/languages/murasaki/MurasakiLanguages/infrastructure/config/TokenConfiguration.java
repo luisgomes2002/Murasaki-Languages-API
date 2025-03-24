@@ -6,6 +6,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import languages.murasaki.MurasakiLanguages.infrastructure.dtos.user.UserInfoDto;
 import languages.murasaki.MurasakiLanguages.infrastructure.persistence.user.UserEntity;
+import languages.murasaki.MurasakiLanguages.infrastructure.persistence.user.UserInfoEntity;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -25,13 +26,14 @@ public class TokenConfiguration {
                 .withSubject(userEntity.getEmail())
                 .withClaim("userId", userEntity.getId())
                 .withClaim("username", userEntity.getUsername())
+                .withClaim("userType", userEntity.getUserType().name())
                 .withExpiresAt(Instant.now().plusSeconds(86400))
                 .withIssuedAt(Instant.now())
                 .withIssuer("API Murasaki Languages")
                 .sign(algorithm);
     }
 
-    public Optional<UserInfoDto> verifyToken(String token){
+    public Optional<UserInfoEntity> verifyToken(String token){
         try{
             Algorithm algorithm = Algorithm.HMAC256(secret);
 
@@ -39,9 +41,10 @@ public class TokenConfiguration {
 
             String userId = verify.getClaim("userId").asString();
             String username = verify.getClaim("username").asString();
+            String userType = verify.getClaim("userType").asString();
             String email = verify.getSubject();
 
-            UserInfoDto userData = new UserInfoDto(userId, username, email);
+            UserInfoEntity userData = new UserInfoEntity(userId, username, userType, email);
 
             return Optional.of(userData);
 

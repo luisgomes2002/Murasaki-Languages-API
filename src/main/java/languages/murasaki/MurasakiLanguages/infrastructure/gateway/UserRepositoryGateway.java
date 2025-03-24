@@ -5,7 +5,7 @@ import languages.murasaki.MurasakiLanguages.core.entities.user.User;
 import languages.murasaki.MurasakiLanguages.core.enums.UserType;
 import languages.murasaki.MurasakiLanguages.core.gateway.UserGateway;
 import languages.murasaki.MurasakiLanguages.infrastructure.config.TokenConfiguration;
-import languages.murasaki.MurasakiLanguages.infrastructure.exeptions.EmailOrPasswordIncorrectException;
+import languages.murasaki.MurasakiLanguages.infrastructure.exceptions.EmailOrPasswordIncorrectException;
 import languages.murasaki.MurasakiLanguages.infrastructure.mapper.user.UserEntityMapper;
 import languages.murasaki.MurasakiLanguages.infrastructure.persistence.user.UserEntity;
 import languages.murasaki.MurasakiLanguages.infrastructure.persistence.user.UserRepository;
@@ -39,6 +39,7 @@ public class UserRepositoryGateway implements UserGateway {
     @Override
     public User createUser(User user) {
         UserEntity entity = userEntityMapper.toEntity(user);
+
         entity.setCreatedAt(LocalDateTime.now());
         entity.setUpdatedAt(LocalDateTime.now());
         entity.setIcon("");

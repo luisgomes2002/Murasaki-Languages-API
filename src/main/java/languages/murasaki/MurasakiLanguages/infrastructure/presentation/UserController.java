@@ -47,16 +47,15 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @PostMapping("login")
-    public ResponseEntity<Object> login(@RequestBody LoginDto loginDto){
-            String token = loginUsecase.execute(loginDtoMapper.toDomain(loginDto));
-            return ResponseEntity.ok( new LoginResponseDto(token));
-    }
-
     @GetMapping("/")
     public List<User> getAllUsers(){
         return getAllUsersUseCase.execute();
     }
 
+    @PostMapping("login")
+    public ResponseEntity<Object> login(@RequestBody LoginDto loginDto){
+            String token = loginUsecase.execute(loginDtoMapper.toDomain(loginDto));
+            return ResponseEntity.ok( new LoginResponseDto(token));
+    }
 
 }

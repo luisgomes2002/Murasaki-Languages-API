@@ -12,10 +12,8 @@ public class PostEntity {
     @Id
     private String id;
 
-    private String titlePt;
-    private String titleEn;
-    private String textPt;
-    private String textEn;
+    private String title;
+    private String text;
     private String banner;
     private String userId;
     private List<Integer> likes;
@@ -26,12 +24,10 @@ public class PostEntity {
     public PostEntity() {
     }
 
-    public PostEntity(String id, String titlePt, String titleEn, String textPt, String textEn, String banner, String userId, List<Integer> likes, List<CommentEntity> commentsList, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public PostEntity(String id, String title, String text, String banner, String userId, List<Integer> likes, List<CommentEntity> commentsList, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
-        this.titlePt = titlePt;
-        this.titleEn = titleEn;
-        this.textPt = textPt;
-        this.textEn = textEn;
+        this.title = title;
+        this.text = text;
         this.banner = banner;
         this.userId = userId;
         this.likes = likes;
@@ -48,36 +44,20 @@ public class PostEntity {
         this.id = id;
     }
 
-    public String getTitlePt() {
-        return titlePt;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitlePt(String titlePt) {
-        this.titlePt = titlePt;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getTitleEn() {
-        return titleEn;
+    public String getText() {
+        return text;
     }
 
-    public void setTitleEn(String titleEn) {
-        this.titleEn = titleEn;
-    }
-
-    public String getTextPt() {
-        return textPt;
-    }
-
-    public void setTextPt(String textPt) {
-        this.textPt = textPt;
-    }
-
-    public String getTextEn() {
-        return textEn;
-    }
-
-    public void setTextEn(String textEn) {
-        this.textEn = textEn;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public String getBanner() {

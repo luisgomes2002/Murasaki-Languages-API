@@ -4,7 +4,9 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import languages.murasaki.MurasakiLanguages.core.entities.user.UserInfo;
 import languages.murasaki.MurasakiLanguages.infrastructure.dtos.user.UserInfoDto;
+import languages.murasaki.MurasakiLanguages.infrastructure.persistence.user.UserInfoEntity;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,9 +32,9 @@ public class SecurityFilter extends OncePerRequestFilter {
         if(Strings.isNotEmpty(authorizationHeader) && authorizationHeader.startsWith("Bearer ")){
             String token = authorizationHeader.substring("Bearer ".length());
 
-            Optional<UserInfoDto> optionalUserInfoDto = tokenConfiguration.verifyToken(token);
+            Optional<UserInfoEntity> optionalUserInfoDto = tokenConfiguration.verifyToken(token);
             if(optionalUserInfoDto.isPresent()){
-                UserInfoDto userData = optionalUserInfoDto.get();
+                UserInfoEntity userData = optionalUserInfoDto.get();
 
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userData, null, null);
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
@@ -44,5 +46,3 @@ public class SecurityFilter extends OncePerRequestFilter {
         }
     }
 }
-
-//UserInfoDto principal = (UserInfoDto) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

@@ -13,6 +13,9 @@ public class NotificationEntity {
     private String username;
     private String text;
 
+    public NotificationEntity() {
+    }
+
     public NotificationEntity(String id, String userId, String username, String text) {
         this.id = id;
         this.userId = userId;

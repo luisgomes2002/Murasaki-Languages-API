@@ -4,11 +4,16 @@ public class UserInfoEntity {
 
     private String userId;
     private String username;
+    private String userType;
     private String email;
 
-    public UserInfoEntity(String userId, String username, String email) {
+    public UserInfoEntity() {
+    }
+
+    public UserInfoEntity(String userId, String username, String userType, String email) {
         this.userId = userId;
         this.username = username;
+        this.userType = userType;
         this.email = email;
     }
 
@@ -28,6 +33,14 @@ public class UserInfoEntity {
         this.username = username;
     }
 
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -35,5 +48,4 @@ public class UserInfoEntity {
     public void setEmail(String email) {
         this.email = email;
     }
-
 }
