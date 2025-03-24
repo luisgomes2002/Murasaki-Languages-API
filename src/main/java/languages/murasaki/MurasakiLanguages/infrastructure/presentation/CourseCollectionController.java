@@ -2,16 +2,15 @@ package languages.murasaki.MurasakiLanguages.infrastructure.presentation;
 
 import languages.murasaki.MurasakiLanguages.core.entities.courseCollection.CourseCollection;
 import languages.murasaki.MurasakiLanguages.core.usecases.courseCollection.CreateCourseCollectionUsecase;
+import languages.murasaki.MurasakiLanguages.core.usecases.courseCollection.GetAllCollectionsUsecase;
 import languages.murasaki.MurasakiLanguages.infrastructure.dtos.CourseCollection.CourseCollectionDto;
 import languages.murasaki.MurasakiLanguages.infrastructure.mapper.courseCollection.CourseCollectionDtoMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -20,10 +19,12 @@ public class CourseCollectionController {
 
     private final CreateCourseCollectionUsecase createCourseCollectionUsecase;
     private final CourseCollectionDtoMapper courseCollectionDtoMapper;
+    private final GetAllCollectionsUsecase getAllCollectionsUsecase;
 
-    public CourseCollectionController(CreateCourseCollectionUsecase createCourseCollectionUsecase, CourseCollectionDtoMapper courseCollectionDtoMapper) {
+    public CourseCollectionController(CreateCourseCollectionUsecase createCourseCollectionUsecase, CourseCollectionDtoMapper courseCollectionDtoMapper, GetAllCollectionsUsecase getAllCollectionsUsecase) {
         this.createCourseCollectionUsecase = createCourseCollectionUsecase;
         this.courseCollectionDtoMapper = courseCollectionDtoMapper;
+        this.getAllCollectionsUsecase = getAllCollectionsUsecase;
     }
 
     @PostMapping("create")
@@ -33,5 +34,10 @@ public class CourseCollectionController {
         response.put("Message: ", "Curso collection criado com sucesso.");
         response.put("Course collection data: ", courseCollectionDtoMapper.toDto(newCourseCollection));
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @GetMapping("/")
+    public List<CourseCollection> getAllUsers(){
+        return getAllCollectionsUsecase.execute();
     }
 }

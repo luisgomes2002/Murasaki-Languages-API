@@ -7,6 +7,8 @@ import languages.murasaki.MurasakiLanguages.infrastructure.persistence.courseCol
 import languages.murasaki.MurasakiLanguages.infrastructure.persistence.courseCollection.CourseCollectionRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class CourseCollectionRepositoryGateway implements CourseCollectionGateway {
 
@@ -23,5 +25,10 @@ public class CourseCollectionRepositoryGateway implements CourseCollectionGatewa
         CourseCollectionEntity entity = courseCollectionEntityMapper.toEntity(courseCollection);
         courseCollectionRepository.save(entity);
         return courseCollectionEntityMapper.toDomain(entity);
+    }
+
+    @Override
+    public List<CourseCollection> getAllCollections() {
+        return courseCollectionRepository.findAll().stream().map(courseCollectionEntityMapper::toDomain).toList();
     }
 }
