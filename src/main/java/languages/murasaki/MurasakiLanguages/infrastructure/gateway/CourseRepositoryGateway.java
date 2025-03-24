@@ -2,7 +2,6 @@ package languages.murasaki.MurasakiLanguages.infrastructure.gateway;
 
 import languages.murasaki.MurasakiLanguages.core.entities.course.Course;
 import languages.murasaki.MurasakiLanguages.core.gateway.CourseGateway;
-import languages.murasaki.MurasakiLanguages.infrastructure.dtos.user.UserInfoDto;
 import languages.murasaki.MurasakiLanguages.infrastructure.mapper.course.CourseEntityMapper;
 import languages.murasaki.MurasakiLanguages.infrastructure.persistence.course.CourseEntity;
 import languages.murasaki.MurasakiLanguages.infrastructure.persistence.course.CourseRepository;
@@ -56,4 +55,5 @@ public class CourseRepositoryGateway implements CourseGateway {
     public void deleteCourse(String id) {
 
     }
+
 }

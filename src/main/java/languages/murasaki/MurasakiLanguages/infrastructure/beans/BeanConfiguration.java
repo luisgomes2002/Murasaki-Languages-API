@@ -1,10 +1,13 @@
 package languages.murasaki.MurasakiLanguages.infrastructure.beans;
 
+import languages.murasaki.MurasakiLanguages.core.gateway.CourseCollectionGateway;
 import languages.murasaki.MurasakiLanguages.core.gateway.CourseGateway;
 import languages.murasaki.MurasakiLanguages.core.gateway.SecurityGateway;
 import languages.murasaki.MurasakiLanguages.core.gateway.UserGateway;
 import languages.murasaki.MurasakiLanguages.core.usecases.course.CreateCourseUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.course.CreateCourseUsecaseImpl;
+import languages.murasaki.MurasakiLanguages.core.usecases.courseCollection.CreateCourseCollectionUsecase;
+import languages.murasaki.MurasakiLanguages.core.usecases.courseCollection.CreateCourseCollectionUsecaseImpl;
 import languages.murasaki.MurasakiLanguages.core.usecases.security.AuthenticatedUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.security.AuthenticatedUsecaseImpl;
 import languages.murasaki.MurasakiLanguages.core.usecases.user.*;
@@ -38,5 +41,11 @@ public class BeanConfiguration {
     @Bean
     public AuthenticatedUsecase authenticatedUsecase(SecurityGateway securityGateway){
         return new AuthenticatedUsecaseImpl(securityGateway);
+    }
+
+    // CourseCollection
+    @Bean
+    public CreateCourseCollectionUsecase createCourseCollectionUsecase(CourseCollectionGateway courseCollectionGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new CreateCourseCollectionUsecaseImpl(courseCollectionGateway, authenticatedUsecase);
     }
 }

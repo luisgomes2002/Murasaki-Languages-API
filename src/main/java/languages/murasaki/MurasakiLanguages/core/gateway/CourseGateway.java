@@ -12,4 +12,6 @@ public interface CourseGateway {
     Course updateCourse(String id, Course course);
 
     void deleteCourse(String id);
+
+
 }
