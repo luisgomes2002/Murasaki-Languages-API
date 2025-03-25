@@ -2,7 +2,7 @@ package languages.murasaki.MurasakiLanguages.core.usecases.course;
 
 import languages.murasaki.MurasakiLanguages.core.entities.course.Course;
 
-public interface CreateCourseUsecase {
+public interface GetCourseByIdUsecase {
 
-    public Course execute(Course course);
+    Course execute(String id);
 }

@@ -18,7 +18,7 @@ public class CreateCourseUsecaseImpl implements CreateCourseUsecase{
     }
 
     @Override
-    public Course execute(String collectionId, Course course) {
+    public Course execute(Course course) {
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
         if(!"ADMIN".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
@@ -27,6 +27,6 @@ public class CreateCourseUsecaseImpl implements CreateCourseUsecase{
             throw new MissingArgumentsException("Campos faltando");
         }
 
-        return courseGateway.createCourse(collectionId, course);
+        return courseGateway.createCourse(course);
     }
 }

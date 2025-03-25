@@ -52,10 +52,24 @@ public class UserController {
         return getAllUsersUseCase.execute();
     }
 
+//    @GetMapping("list/{id}")
+//    public ResponseEntity<Map<String, Object>> getUserById(@PathVariable String id){
+//
+//    }
+//
+//    @PutMapping("update/{id}")
+//    public ResponseEntity<Map<String, Object>> updateUser(@PathVariable String id, @RequestBody UserDto userDto){
+//
+//    }
+//
+//    @DeleteMapping("delete/{id}")
+//    public ResponseEntity<Map<String, Object>> deleteUser(@PathVariable String id){
+//
+//    }
+
     @PostMapping("login")
     public ResponseEntity<Object> login(@RequestBody LoginDto loginDto){
-            String token = loginUsecase.execute(loginDtoMapper.toDomain(loginDto));
-            return ResponseEntity.ok( new LoginResponseDto(token));
+        String token = loginUsecase.execute(loginDtoMapper.toDomain(loginDto));
+        return ResponseEntity.ok( new LoginResponseDto(token));
     }
-
 }

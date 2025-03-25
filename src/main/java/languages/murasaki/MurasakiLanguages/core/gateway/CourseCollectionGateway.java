@@ -9,4 +9,6 @@ public interface CourseCollectionGateway {
     CourseCollection createCourseCollection(CourseCollection courseCollection);
     List<CourseCollection> getAllCollections();
     CourseCollection getCourseCollectionById(String collectionId);
+
+    void publishCourseInCollection(String collectionId, String courseId);
 }

@@ -51,6 +51,5 @@ public class ControllerExceptionsHandler {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-    // Password incorrect
     // Update password
 }

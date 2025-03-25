@@ -77,11 +77,14 @@ public class UserRepositoryGateway implements UserGateway {
         if(entity.isPresent()){
             UserEntity updatedUser = entity.get();
             updatedUser.setName(user.name());
+            updatedUser.setUsername(user.username());
             updatedUser.setEmail(user.email());
-            updatedUser.setPassword(user.password());
-            updatedUser.setCreatedAt(entity.get().getCreatedAt());
+            updatedUser.setIcon(user.icon());
+            updatedUser.setBackground(user.background());
+            updatedUser.setAbout(user.about());
             updatedUser.setUpdatedAt(LocalDateTime.now());
-            updatedUser.setUserType(user.userType());
+
+            updatedUser.setCreatedAt(entity.get().getCreatedAt());
 
             userRepository.save(updatedUser);
 
@@ -92,8 +95,35 @@ public class UserRepositoryGateway implements UserGateway {
     }
 
     @Override
+    public User updateUserPassword(String id, String newPassword) {
+        Optional<UserEntity> entity = userRepository.findById(id);
+
+        if(entity.isPresent()){
+            UserEntity updatedUser = entity.get();
+            updatedUser.setPassword(newPassword);
+            updatedUser.setUpdatedAt(LocalDateTime.now());
+
+            userRepository.save(updatedUser);
+
+            return userEntityMapper.toDomain(updatedUser);
+        }
+
+        return null;
+    }
+
+    @Override
+    public UserType updateUserType(String type) {
+        return null;
+    }
+
+    @Override
     public boolean userIdExists(String id) {
         return userRepository.existsById(id);
+    }
+
+    @Override
+    public boolean isEnable() {
+        return false;
     }
 
     @Override

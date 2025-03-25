@@ -4,8 +4,7 @@ import languages.murasaki.MurasakiLanguages.core.gateway.CourseCollectionGateway
 import languages.murasaki.MurasakiLanguages.core.gateway.CourseGateway;
 import languages.murasaki.MurasakiLanguages.core.gateway.SecurityGateway;
 import languages.murasaki.MurasakiLanguages.core.gateway.UserGateway;
-import languages.murasaki.MurasakiLanguages.core.usecases.course.CreateCourseUsecase;
-import languages.murasaki.MurasakiLanguages.core.usecases.course.CreateCourseUsecaseImpl;
+import languages.murasaki.MurasakiLanguages.core.usecases.course.*;
 import languages.murasaki.MurasakiLanguages.core.usecases.coursecollection.*;
 import languages.murasaki.MurasakiLanguages.core.usecases.security.AuthenticatedUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.security.AuthenticatedUsecaseImpl;
@@ -23,17 +22,30 @@ public class BeanConfiguration {
     }
 
     @Bean
+    public GetAllUsersUseCase getAllUsersUseCase(UserGateway userGateway) { return new GetAllUsersUseCaseImpl(userGateway);}
+
+    @Bean
     public LoginUsecase loginUsecase(UserGateway userGateway){
         return new LoginUsecaseImpl(userGateway);
     }
 
     @Bean
-    public GetAllUsersUseCase getAllUsersUseCase(UserGateway userGateway) { return new GetAllUsersUseCaseImpl(userGateway);}
+    public UpdateUserUsecase updateUserUsecase(UserGateway userGateway) {return new UpdateUserUsecaseImpl(userGateway);}
 
     // Course
     @Bean
     public CreateCourseUsecase createCourseUsecase(CourseGateway courseGateway, AuthenticatedUsecase authenticatedUsecase){
         return new CreateCourseUsecaseImpl(courseGateway, authenticatedUsecase);
+    }
+
+    @Bean
+    public GetCourseByIdUsecase getCourseByIdUsecase(CourseGateway courseGateway){
+        return new GetCourseByIdUsecaseImpl(courseGateway);
+    }
+
+    @Bean
+    public PublishCourseUsecase publishCourseUsecase(CourseGateway courseGateway){
+        return new PublishCourseUsecaseImpl(courseGateway);
     }
 
     // Security
@@ -56,6 +68,11 @@ public class BeanConfiguration {
     @Bean
     public GetCourseCollectionByIdUsecase getCourseCollectionByIdUsecase(CourseCollectionGateway courseCollectionGateway){
         return new GetCourseCollectionByIdUsecaseImpl(courseCollectionGateway);
+    }
+
+    @Bean
+    public PublishCourseInCollectionUsecase publishCourseInCollectionUsecase(CourseCollectionGateway courseCollectionGateway){
+        return new PublishCourseInCollectionUsecaseImpl(courseCollectionGateway);
     }
 
 }

@@ -12,12 +12,14 @@ public class CourseDtoMapper {
             course.id(),
             course.title(),
             course.text(),
+            course.explanations(),
             course.links(),
             course.username(),
             course.languageType(),
             course.japaneseLevels(),
             course.createAt(),
-            course.updatedAt()
+            course.updatedAt(),
+            course.published()
         );
     }
 
@@ -26,12 +28,14 @@ public class CourseDtoMapper {
             courseDto.id(),
             courseDto.title(),
             courseDto.text(),
+            courseDto.explanations(),
             courseDto.links(),
             courseDto.username(),
             courseDto.languageType(),
             courseDto.japaneseLevels(),
             courseDto.createAt(),
-            courseDto.updatedAt()
+            courseDto.updatedAt(),
+            courseDto.published()
         );
     }
 }

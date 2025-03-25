@@ -1,7 +1,9 @@
 package languages.murasaki.MurasakiLanguages.infra.persistence.course;
 
+import languages.murasaki.MurasakiLanguages.core.entities.course.Explanation;
 import languages.murasaki.MurasakiLanguages.core.enums.JapaneseLevels;
 import languages.murasaki.MurasakiLanguages.core.enums.LanguageType;
+import languages.murasaki.MurasakiLanguages.infra.dtos.course.ExplanationDto;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,26 +18,30 @@ public class CourseEntity {
 
     private String title;
     private String text;
+    private List<Explanation> explanations;
     private List<String> links;
     private String username;
     private LanguageType languageType;
     private JapaneseLevels japaneseLevels;
     private LocalDateTime createAt;
     private LocalDateTime updatedAt;
+    private boolean published;
 
     public CourseEntity() {
     }
 
-    public CourseEntity(String id, String title, String text, List<String> links, String username, LanguageType languageType, JapaneseLevels japaneseLevels, LocalDateTime createAt, LocalDateTime updatedAt) {
+    public CourseEntity(String id, String title, String text, List<Explanation> explanations, List<String> links, String username, LanguageType languageType, JapaneseLevels japaneseLevels, LocalDateTime createAt, LocalDateTime updatedAt, boolean published) {
         this.id = id;
         this.title = title;
         this.text = text;
+        this.explanations = explanations;
         this.links = links;
         this.username = username;
         this.languageType = languageType;
         this.japaneseLevels = japaneseLevels;
         this.createAt = createAt;
         this.updatedAt = updatedAt;
+        this.published = published;
     }
 
     public String getId() {
@@ -60,6 +66,14 @@ public class CourseEntity {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public List<Explanation> getExplanations() {
+        return explanations;
+    }
+
+    public void setExplanations(List<Explanation> explanations) {
+        this.explanations = explanations;
     }
 
     public List<String> getLinks() {
@@ -108,5 +122,13 @@ public class CourseEntity {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public boolean isPublished() {
+        return published;
+    }
+
+    public void setPublished(boolean published) {
+        this.published = published;
     }
 }

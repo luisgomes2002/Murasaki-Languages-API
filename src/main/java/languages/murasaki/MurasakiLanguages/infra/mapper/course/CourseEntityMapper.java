@@ -12,12 +12,14 @@ public class CourseEntityMapper {
             course.id(),
             course.title(),
             course.text(),
+            course.explanations(),
             course.links(),
             course.username(),
             course.languageType(),
             course.japaneseLevels(),
             course.createAt(),
-            course.updatedAt()
+            course.updatedAt(),
+            course.published()
         );
     }
 
@@ -26,12 +28,14 @@ public class CourseEntityMapper {
             courseEntity.getId(),
             courseEntity.getTitle(),
             courseEntity.getText(),
+            courseEntity.getExplanations(),
             courseEntity.getLinks(),
             courseEntity.getUsername(),
             courseEntity.getLanguageType(),
             courseEntity.getJapaneseLevels(),
             courseEntity.getCreateAt(),
-            courseEntity.getUpdatedAt()
+            courseEntity.getUpdatedAt(),
+            courseEntity.isPublished()
         );
     }
 }

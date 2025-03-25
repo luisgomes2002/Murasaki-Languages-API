@@ -37,5 +37,12 @@ public class CourseCollectionRepositoryGateway implements CourseCollectionGatewa
         return courseCollectionRepository.findById(collectionId).map(courseCollectionEntityMapper::toDomain).orElse(null);
     }
 
+    @Override
+    public void publishCourseInCollection(String collectionId, String courseId) {
+        CourseCollection courseCollection = getCourseCollectionById(collectionId);
+        courseCollection.coursesId().add(courseId);
 
+        CourseCollectionEntity courseCollectionEntity = courseCollectionEntityMapper.toEntity(courseCollection);
+        courseCollectionRepository.save(courseCollectionEntity);
+    }
 }
