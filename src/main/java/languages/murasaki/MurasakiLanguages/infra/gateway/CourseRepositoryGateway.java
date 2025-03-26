@@ -18,12 +18,10 @@ public class CourseRepositoryGateway implements CourseGateway {
 
     private final CourseRepository courseRepository;
     private final CourseEntityMapper courseEntityMapper;
-    private final PublishCourseInCollectionUsecase publishCourseInCollectionUsecase;
 
-    public CourseRepositoryGateway(CourseRepository courseRepository, CourseEntityMapper courseEntityMapper, PublishCourseInCollectionUsecase publishCourseInCollectionUsecase) {
+    public CourseRepositoryGateway(CourseRepository courseRepository, CourseEntityMapper courseEntityMapper) {
         this.courseRepository = courseRepository;
         this.courseEntityMapper = courseEntityMapper;
-        this.publishCourseInCollectionUsecase = publishCourseInCollectionUsecase;
     }
 
     @Override
