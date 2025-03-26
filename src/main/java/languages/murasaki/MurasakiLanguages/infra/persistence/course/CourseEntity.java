@@ -1,6 +1,7 @@
 package languages.murasaki.MurasakiLanguages.infra.persistence.course;
 
 import languages.murasaki.MurasakiLanguages.core.entities.course.Explanation;
+import languages.murasaki.MurasakiLanguages.core.entities.course.Worksheets;
 import languages.murasaki.MurasakiLanguages.core.enums.JapaneseLevels;
 import languages.murasaki.MurasakiLanguages.core.enums.LanguageType;
 import languages.murasaki.MurasakiLanguages.infra.dtos.course.ExplanationDto;
@@ -19,6 +20,7 @@ public class CourseEntity {
     private String title;
     private String text;
     private List<Explanation> explanations;
+    private List<Worksheets> worksheets;
     private List<String> links;
     private String username;
     private LanguageType languageType;
@@ -30,11 +32,12 @@ public class CourseEntity {
     public CourseEntity() {
     }
 
-    public CourseEntity(String id, String title, String text, List<Explanation> explanations, List<String> links, String username, LanguageType languageType, JapaneseLevels japaneseLevels, LocalDateTime createAt, LocalDateTime updatedAt, boolean published) {
+    public CourseEntity(String id, String title, String text, List<Explanation> explanations, List<Worksheets> worksheets, List<String> links, String username, LanguageType languageType, JapaneseLevels japaneseLevels, LocalDateTime createAt, LocalDateTime updatedAt, boolean published) {
         this.id = id;
         this.title = title;
         this.text = text;
         this.explanations = explanations;
+        this.worksheets = worksheets;
         this.links = links;
         this.username = username;
         this.languageType = languageType;
@@ -74,6 +77,14 @@ public class CourseEntity {
 
     public void setExplanations(List<Explanation> explanations) {
         this.explanations = explanations;
+    }
+
+    public List<Worksheets> getWorksheets() {
+        return worksheets;
+    }
+
+    public void setWorksheets(List<Worksheets> worksheets) {
+        this.worksheets = worksheets;
     }
 
     public List<String> getLinks() {

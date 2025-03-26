@@ -1,4 +1,6 @@
 package languages.murasaki.MurasakiLanguages.core.entities.course;
 
-public record Worksheets(String id, String courseId) {
+import java.util.List;
+
+public record Worksheets(String courseId, String question, List<String> options, String answer) {
 }

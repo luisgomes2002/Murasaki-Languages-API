@@ -39,13 +39,18 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public GetCourseByIdUsecase getCourseByIdUsecase(CourseGateway courseGateway){
-        return new GetCourseByIdUsecaseImpl(courseGateway);
+    public GetAllCoursesUsecase getAllCoursesUsecase(CourseGateway courseGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new GetAllCoursesUsecaseImpl(courseGateway, authenticatedUsecase);
     }
 
     @Bean
-    public PublishCourseUsecase publishCourseUsecase(CourseGateway courseGateway){
-        return new PublishCourseUsecaseImpl(courseGateway);
+    public GetCourseByIdUsecase getCourseByIdUsecase(CourseGateway courseGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new GetCourseByIdUsecaseImpl(courseGateway, authenticatedUsecase);
+    }
+
+    @Bean
+    public PublishCourseUsecase publishCourseUsecase(CourseGateway courseGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new PublishCourseUsecaseImpl(courseGateway, authenticatedUsecase);
     }
 
     // Security
@@ -66,13 +71,13 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public GetCourseCollectionByIdUsecase getCourseCollectionByIdUsecase(CourseCollectionGateway courseCollectionGateway){
-        return new GetCourseCollectionByIdUsecaseImpl(courseCollectionGateway);
+    public GetCourseCollectionByIdUsecase getCourseCollectionByIdUsecase(CourseCollectionGateway courseCollectionGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new GetCourseCollectionByIdUsecaseImpl(courseCollectionGateway, authenticatedUsecase);
     }
 
     @Bean
-    public PublishCourseInCollectionUsecase publishCourseInCollectionUsecase(CourseCollectionGateway courseCollectionGateway){
-        return new PublishCourseInCollectionUsecaseImpl(courseCollectionGateway);
+    public PublishCourseInCollectionUsecase publishCourseInCollectionUsecase(CourseCollectionGateway courseCollectionGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new PublishCourseInCollectionUsecaseImpl(courseCollectionGateway, authenticatedUsecase);
     }
 
 }

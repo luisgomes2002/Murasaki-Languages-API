@@ -2,7 +2,6 @@ package languages.murasaki.MurasakiLanguages.infra.gateway;
 
 import languages.murasaki.MurasakiLanguages.core.entities.course.Course;
 import languages.murasaki.MurasakiLanguages.core.gateway.CourseGateway;
-import languages.murasaki.MurasakiLanguages.core.usecases.coursecollection.PublishCourseInCollectionUsecase;
 import languages.murasaki.MurasakiLanguages.infra.mapper.course.CourseEntityMapper;
 import languages.murasaki.MurasakiLanguages.infra.persistence.course.CourseEntity;
 import languages.murasaki.MurasakiLanguages.infra.persistence.course.CourseRepository;
@@ -40,7 +39,7 @@ public class CourseRepositoryGateway implements CourseGateway {
 
     @Override
     public List<Course> getAllCourse() {
-        return List.of();
+        return courseRepository.findAll().stream().map(courseEntityMapper::toDomain).toList();
     }
 
     @Override
