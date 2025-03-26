@@ -53,7 +53,7 @@ public class CourseRepositoryGateway implements CourseGateway {
 
     @Override
     public void deleteCourse(String id) {
-
+        courseRepository.deleteById(id);
     }
 
     @Override

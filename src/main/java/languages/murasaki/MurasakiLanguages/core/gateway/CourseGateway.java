@@ -16,5 +16,4 @@ public interface CourseGateway {
     boolean publishCourse(String courseId);
     boolean courseIdExists(String id);
 
-
 }

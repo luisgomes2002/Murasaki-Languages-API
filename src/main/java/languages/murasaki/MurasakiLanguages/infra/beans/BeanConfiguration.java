@@ -49,6 +49,11 @@ public class BeanConfiguration {
     }
 
     @Bean
+    public DeleteCourseUsecase deleteCourseUsecase(CourseGateway courseGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new DeleteCourseUsecaseImpl(courseGateway, authenticatedUsecase);
+    }
+
+    @Bean
     public PublishCourseUsecase publishCourseUsecase(CourseGateway courseGateway, AuthenticatedUsecase authenticatedUsecase){
         return new PublishCourseUsecaseImpl(courseGateway, authenticatedUsecase);
     }
