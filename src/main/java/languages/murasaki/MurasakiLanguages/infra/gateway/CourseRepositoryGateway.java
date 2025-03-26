@@ -14,7 +14,6 @@ import java.util.List;
 
 @Component
 public class CourseRepositoryGateway implements CourseGateway {
-
     private final CourseRepository courseRepository;
     private final CourseEntityMapper courseEntityMapper;
 
@@ -58,21 +57,25 @@ public class CourseRepositoryGateway implements CourseGateway {
     }
 
     @Override
-    public String publishCourse(String courseId) {
+    public boolean publishCourse(String courseId) {
         Course course = getCourseById(courseId);
 
         CourseEntity entity = courseEntityMapper.toEntity(course);
 
-        // Atualiza status
         if(course.published()){
             entity.setPublished(false);
             courseRepository.save(entity);
-            return "Status do publicar atualizado para: Arquivado";
+            return false;
         }
 
         entity.setPublished(true);
         courseRepository.save(entity);
-        return "Status do publicar atualizado para: Publicado";
+        return true;
+    }
+
+    @Override
+    public boolean courseIdExists(String id) {
+        return courseRepository.existsById(id);
     }
 
 }

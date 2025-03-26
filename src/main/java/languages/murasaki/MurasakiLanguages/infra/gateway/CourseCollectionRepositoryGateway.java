@@ -38,11 +38,14 @@ public class CourseCollectionRepositoryGateway implements CourseCollectionGatewa
     }
 
     @Override
-    public void publishCourseInCollection(String collectionId, String courseId) {
+    public String publishCourseInCollection(String collectionId, String courseId, boolean status) {
         CourseCollection courseCollection = getCourseCollectionById(collectionId);
-        courseCollection.coursesId().add(courseId);
 
-        CourseCollectionEntity courseCollectionEntity = courseCollectionEntityMapper.toEntity(courseCollection);
-        courseCollectionRepository.save(courseCollectionEntity);
+        if (status) courseCollection.coursesId().add(courseId);
+        else courseCollection.coursesId().remove(courseId);
+
+        courseCollectionRepository.save(courseCollectionEntityMapper.toEntity(courseCollection));
+
+        return status ? "Status atualizado: Publicado" : "Status atualizado: Arquivado";
     }
 }

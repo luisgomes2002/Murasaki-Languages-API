@@ -16,11 +16,11 @@ public class PublishCourseInCollectionUsecaseImpl implements PublishCourseInColl
     }
 
     @Override
-    public void execute(String collectionId, String courseId) {
+    public String execute(String collectionId, String courseId, boolean status) {
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
         if(!"ADMIN".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
 
-        courseCollectionGateway.publishCourseInCollection(collectionId, courseId);
+       return courseCollectionGateway.publishCourseInCollection(collectionId, courseId, status);
     }
 }

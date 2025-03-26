@@ -23,7 +23,7 @@ public class CreateCourseUsecaseImpl implements CreateCourseUsecase{
 
         if(!"ADMIN".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
 
-        if(course.title() == null || course.text() == null || course.languageType() == null || course.japaneseLevels() == null ){
+        if(course.title() == null || course.text() == null || course.languageType() == null || course.japaneseLevels() == null || course.explanations() == null || course.links() == null){
             throw new MissingArgumentsException("Campos faltando");
         }
 

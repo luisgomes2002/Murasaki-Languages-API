@@ -3,6 +3,7 @@ package languages.murasaki.MurasakiLanguages.infra.presentation;
 import languages.murasaki.MurasakiLanguages.core.entities.course.Course;
 import languages.murasaki.MurasakiLanguages.core.usecases.course.CreateCourseUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.course.GetAllCoursesUsecase;
+import languages.murasaki.MurasakiLanguages.core.usecases.course.GetCourseByIdUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.course.PublishCourseUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.coursecollection.PublishCourseInCollectionUsecase;
 import languages.murasaki.MurasakiLanguages.infra.dtos.course.CourseDto;
@@ -24,13 +25,15 @@ public class CourseController {
     private final CourseDtoMapper courseDtoMapper;
     private final PublishCourseInCollectionUsecase publishCourseInCollectionUsecase;
     private final GetAllCoursesUsecase getAllCoursesUsecase;
+    private final GetCourseByIdUsecase getCourseByIdUsecase;
 
-    public CourseController(CreateCourseUsecase createCourseUsecase, PublishCourseUsecase publishCourseUsecase, CourseDtoMapper courseDtoMapper, PublishCourseInCollectionUsecase publishCourseInCollectionUsecase, GetAllCoursesUsecase getAllCoursesUsecase) {
+    public CourseController(CreateCourseUsecase createCourseUsecase, PublishCourseUsecase publishCourseUsecase, CourseDtoMapper courseDtoMapper, PublishCourseInCollectionUsecase publishCourseInCollectionUsecase, GetAllCoursesUsecase getAllCoursesUsecase, GetCourseByIdUsecase getCourseByIdUsecase) {
         this.createCourseUsecase = createCourseUsecase;
         this.publishCourseUsecase = publishCourseUsecase;
         this.courseDtoMapper = courseDtoMapper;
         this.publishCourseInCollectionUsecase = publishCourseInCollectionUsecase;
         this.getAllCoursesUsecase = getAllCoursesUsecase;
+        this.getCourseByIdUsecase = getCourseByIdUsecase;
     }
 
     @PostMapping("create")
@@ -45,10 +48,13 @@ public class CourseController {
     @GetMapping("/")
     public List<Course> getAllCourses(){ return getAllCoursesUsecase.execute(); }
 
+    @GetMapping("/{id}")
+    public Course getCourseById(@PathVariable String id){ return getCourseByIdUsecase.execute(id); }
+
     @PostMapping("publish/{collectionId}/{courseId}")
     public ResponseEntity<String> updatePublishCourse(@PathVariable String collectionId, @PathVariable String courseId){
-        publishCourseInCollectionUsecase.execute(collectionId, courseId);
-        String status = publishCourseUsecase.execute(courseId);
-        return ResponseEntity.status(HttpStatus.OK).body(status);
+        boolean status = publishCourseUsecase.execute(courseId);
+        String message = publishCourseInCollectionUsecase.execute(collectionId, courseId, status);
+        return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 }

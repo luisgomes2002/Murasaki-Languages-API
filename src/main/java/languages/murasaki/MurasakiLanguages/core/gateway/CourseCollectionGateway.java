@@ -10,5 +10,5 @@ public interface CourseCollectionGateway {
     List<CourseCollection> getAllCollections();
     CourseCollection getCourseCollectionById(String collectionId);
 
-    void publishCourseInCollection(String collectionId, String courseId);
+    String publishCourseInCollection(String collectionId, String courseId, boolean status);
 }

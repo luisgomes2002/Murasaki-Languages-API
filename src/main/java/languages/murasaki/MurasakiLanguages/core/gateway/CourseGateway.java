@@ -1,7 +1,6 @@
 package languages.murasaki.MurasakiLanguages.core.gateway;
 
 import languages.murasaki.MurasakiLanguages.core.entities.course.Course;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -14,7 +13,8 @@ public interface CourseGateway {
 
     void deleteCourse(String id);
 
-    String publishCourse(String courseId);
+    boolean publishCourse(String courseId);
+    boolean courseIdExists(String id);
 
 
 }

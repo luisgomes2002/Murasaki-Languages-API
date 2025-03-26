@@ -21,6 +21,7 @@ public class GetCourseCollectionByIdUsecaseImpl implements GetCourseCollectionBy
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
         if(!"ADMIN".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
+
         return courseCollectionGateway.getCourseCollectionById(collectionId);
     }
 }

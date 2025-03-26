@@ -22,7 +22,7 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public GetAllUsersUseCase getAllUsersUseCase(UserGateway userGateway) { return new GetAllUsersUseCaseImpl(userGateway);}
+    public GetAllUsersUseCase getAllUsersUseCase(UserGateway userGateway, AuthenticatedUsecase authenticatedUsecase) { return new GetAllUsersUseCaseImpl(userGateway, authenticatedUsecase);}
 
     @Bean
     public LoginUsecase loginUsecase(UserGateway userGateway){
@@ -30,7 +30,7 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public UpdateUserUsecase updateUserUsecase(UserGateway userGateway) {return new UpdateUserUsecaseImpl(userGateway);}
+    public UpdateUserUsecase updateUserUsecase(UserGateway userGateway, AuthenticatedUsecase authenticatedUsecase) {return new UpdateUserUsecaseImpl(userGateway, authenticatedUsecase);}
 
     // Course
     @Bean

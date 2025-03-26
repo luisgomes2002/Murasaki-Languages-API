@@ -3,6 +3,7 @@ package languages.murasaki.MurasakiLanguages.core.usecases.course;
 import languages.murasaki.MurasakiLanguages.core.entities.user.UserInfo;
 import languages.murasaki.MurasakiLanguages.core.gateway.CourseGateway;
 import languages.murasaki.MurasakiLanguages.core.usecases.security.AuthenticatedUsecase;
+import languages.murasaki.MurasakiLanguages.infra.exceptions.IdNotFoundException;
 import languages.murasaki.MurasakiLanguages.infra.exceptions.UserDoesNotHavePermissionException;
 
 public class PublishCourseUsecaseImpl implements PublishCourseUsecase{
@@ -16,10 +17,12 @@ public class PublishCourseUsecaseImpl implements PublishCourseUsecase{
     }
 
     @Override
-    public String execute(String courseId) {
+    public boolean execute(String courseId) {
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
         if(!"ADMIN".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
+
+        if(!courseGateway.courseIdExists(courseId)) throw new IdNotFoundException("Course não encontrado");
 
         return courseGateway.publishCourse(courseId);
     }

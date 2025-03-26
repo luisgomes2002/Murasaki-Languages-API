@@ -4,6 +4,7 @@ import languages.murasaki.MurasakiLanguages.core.entities.course.Course;
 import languages.murasaki.MurasakiLanguages.core.entities.user.UserInfo;
 import languages.murasaki.MurasakiLanguages.core.gateway.CourseGateway;
 import languages.murasaki.MurasakiLanguages.core.usecases.security.AuthenticatedUsecase;
+import languages.murasaki.MurasakiLanguages.infra.exceptions.IdNotFoundException;
 import languages.murasaki.MurasakiLanguages.infra.exceptions.UserDoesNotHavePermissionException;
 
 public class GetCourseByIdUsecaseImpl implements GetCourseByIdUsecase{
@@ -21,6 +22,8 @@ public class GetCourseByIdUsecaseImpl implements GetCourseByIdUsecase{
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
         if(!"ADMIN".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
+
+        if(!courseGateway.courseIdExists(id)) throw new IdNotFoundException("Course não encontrado");
 
         return courseGateway.getCourseById(id);
     }
