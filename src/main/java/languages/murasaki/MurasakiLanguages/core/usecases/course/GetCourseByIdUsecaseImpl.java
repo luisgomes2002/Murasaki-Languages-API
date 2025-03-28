@@ -21,7 +21,7 @@ public class GetCourseByIdUsecaseImpl implements GetCourseByIdUsecase{
     public Course execute(String id) {
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
-        if(!"ADMIN".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
+        if(!"ADMIN".equals(userInfo.userType()) && !"BOSS".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
 
         if(!courseGateway.courseIdExists(id)) throw new IdNotFoundException("Course não encontrado");
 

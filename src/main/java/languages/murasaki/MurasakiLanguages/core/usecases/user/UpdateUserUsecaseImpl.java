@@ -21,7 +21,7 @@ public class UpdateUserUsecaseImpl implements UpdateUserUsecase{
     public User execute(String id, User user) {
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
-        if(!"ADMIN".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
+        if(!user.id().equals(userInfo.userId())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
 
         if(!userGateway.userIdExists(id)) throw new IdNotFoundException("Usuário não encontrado");
 

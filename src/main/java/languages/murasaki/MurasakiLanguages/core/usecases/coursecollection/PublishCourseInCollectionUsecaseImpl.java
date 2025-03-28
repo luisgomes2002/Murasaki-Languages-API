@@ -20,7 +20,7 @@ public class PublishCourseInCollectionUsecaseImpl implements PublishCourseInColl
     public String execute(String collectionId, String courseId, boolean status) {
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
-        if(!"ADMIN".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
+        if(!"ADMIN".equals(userInfo.userType()) && !"BOSS".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
 
         if(collectionId == null || courseId == null){
             throw new MissingArgumentsException("Campo faltando");

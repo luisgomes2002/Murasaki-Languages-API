@@ -14,9 +14,8 @@ public class LoginUsecaseImpl implements LoginUsecase{
 
     @Override
     public String execute(Login login) {
-        if(!userGateway.userAlreadyCreated(login.email())){
-            throw new EmailOrPasswordIncorrectException("Email ou senha incorretos");
-        }
+        if(!userGateway.userAlreadyCreated(login.email())) throw new EmailOrPasswordIncorrectException("Email ou senha incorretos");
+
         return userGateway.login(login);
     }
 }

@@ -20,7 +20,7 @@ public class DeleteCourseUsecaseImpl implements DeleteCourseUsecase{
     public void deleteCourse(String id) {
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
-        if(!"ADMIN".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
+        if(!"BOSS".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
 
         if(!courseGateway.courseIdExists(id)) throw new IdNotFoundException("Course não encontrado");
 

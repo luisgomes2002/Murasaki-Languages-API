@@ -21,11 +21,11 @@ public class CreateCourseUsecaseImpl implements CreateCourseUsecase{
     public Course execute(Course course) {
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
-        if(!"ADMIN".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
+        if(!"ADMIN".equals(userInfo.userType()) && !"BOSS".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
 
-        if(course.title() == null || course.text() == null || course.languageType() == null || course.japaneseLevels() == null || course.explanations() == null || course.links() == null){
+        if(course.title() == null || course.text() == null || course.languageType() == null || course.japaneseLevels() == null || course.explanations() == null || course.links() == null)
             throw new MissingArgumentsException("Campos faltando");
-        }
+
 
         return courseGateway.createCourse(course);
     }
