@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
-@Document(collection = "User")
+@Document(collection = "users")
 public class UserEntity implements UserDetails{
 
     @Id

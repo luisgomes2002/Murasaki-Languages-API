@@ -1,4 +1,6 @@
 package languages.murasaki.MurasakiLanguages.core.entities.course;
 
-public record Explanation(String phrase, String translation, String explanation) {
+import java.io.Serializable;
+
+public record Explanation(String phrase, String translation, String explanation) implements Serializable {
 }

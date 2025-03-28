@@ -3,7 +3,7 @@ package languages.murasaki.MurasakiLanguages.infra.persistence.notification;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "Notifications")
+@Document(collection = "notifications")
 public class NotificationEntity {
 
     @Id

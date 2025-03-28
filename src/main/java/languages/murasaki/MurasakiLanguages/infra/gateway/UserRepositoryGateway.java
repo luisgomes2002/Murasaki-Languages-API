@@ -9,6 +9,7 @@ import languages.murasaki.MurasakiLanguages.infra.exceptions.EmailOrPasswordInco
 import languages.murasaki.MurasakiLanguages.infra.mapper.user.UserEntityMapper;
 import languages.murasaki.MurasakiLanguages.infra.persistence.user.UserEntity;
 import languages.murasaki.MurasakiLanguages.infra.persistence.user.UserRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -61,6 +62,7 @@ public class UserRepositoryGateway implements UserGateway {
     }
 
     @Override
+    @Cacheable(value = "user", key = "#id")
     public User getUserById(String id) {
         return userRepository.findById(id).map(userEntityMapper::toDomain).orElse(null);
     }

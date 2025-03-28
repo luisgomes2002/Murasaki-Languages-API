@@ -5,6 +5,7 @@ import languages.murasaki.MurasakiLanguages.core.gateway.CourseCollectionGateway
 import languages.murasaki.MurasakiLanguages.infra.mapper.coursecollection.CourseCollectionEntityMapper;
 import languages.murasaki.MurasakiLanguages.infra.persistence.coursecollection.CourseCollectionEntity;
 import languages.murasaki.MurasakiLanguages.infra.persistence.coursecollection.CourseCollectionRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class CourseCollectionRepositoryGateway implements CourseCollectionGatewa
     }
 
     @Override
+    @Cacheable(value = "course-collection")
     public List<CourseCollection> getAllCollections() {
         return courseCollectionRepository.findAll().stream().map(courseCollectionEntityMapper::toDomain).toList();
     }

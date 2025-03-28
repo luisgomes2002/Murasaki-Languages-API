@@ -24,6 +24,6 @@ public class GetAllCoursesUsecaseImpl implements GetAllCoursesUsecase {
 
         if(!"ADMIN".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
 
-        return courseGateway.getAllCourse();
+        return courseGateway.getAllCourses();
     }
 }

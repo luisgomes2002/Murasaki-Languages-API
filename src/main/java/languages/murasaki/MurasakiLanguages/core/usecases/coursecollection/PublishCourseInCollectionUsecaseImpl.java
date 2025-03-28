@@ -3,6 +3,7 @@ package languages.murasaki.MurasakiLanguages.core.usecases.coursecollection;
 import languages.murasaki.MurasakiLanguages.core.entities.user.UserInfo;
 import languages.murasaki.MurasakiLanguages.core.gateway.CourseCollectionGateway;
 import languages.murasaki.MurasakiLanguages.core.usecases.security.AuthenticatedUsecase;
+import languages.murasaki.MurasakiLanguages.infra.exceptions.MissingArgumentsException;
 import languages.murasaki.MurasakiLanguages.infra.exceptions.UserDoesNotHavePermissionException;
 
 public class PublishCourseInCollectionUsecaseImpl implements PublishCourseInCollectionUsecase {
@@ -20,6 +21,10 @@ public class PublishCourseInCollectionUsecaseImpl implements PublishCourseInColl
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
         if(!"ADMIN".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
+
+        if(collectionId == null || courseId == null){
+            throw new MissingArgumentsException("Campo faltando");
+        }
 
        return courseCollectionGateway.publishCourseInCollection(collectionId, courseId, status);
     }
