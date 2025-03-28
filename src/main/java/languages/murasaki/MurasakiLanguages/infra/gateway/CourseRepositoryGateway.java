@@ -1,6 +1,7 @@
 package languages.murasaki.MurasakiLanguages.infra.gateway;
 
 import languages.murasaki.MurasakiLanguages.core.entities.course.Course;
+import languages.murasaki.MurasakiLanguages.core.enums.Visibility;
 import languages.murasaki.MurasakiLanguages.core.gateway.CourseGateway;
 import languages.murasaki.MurasakiLanguages.infra.mapper.course.CourseEntityMapper;
 import languages.murasaki.MurasakiLanguages.infra.persistence.course.CourseEntity;
@@ -34,6 +35,7 @@ public class CourseRepositoryGateway implements CourseGateway {
         entity.setUsername(principal.getUsername());
         entity.setCreateAt(LocalDateTime.now());
         entity.setUpdatedAt(LocalDateTime.now());
+        entity.setVisibility(Visibility.valueOf("PRIVATE"));
 
         CourseEntity savedCourse = courseRepository.save(entity);
 

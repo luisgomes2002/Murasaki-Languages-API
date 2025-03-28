@@ -125,7 +125,7 @@ public class UserRepositoryGateway implements UserGateway {
 
     @Override
     public boolean isEnable() {
-        return false;
+        return true;
     }
 
     @Override

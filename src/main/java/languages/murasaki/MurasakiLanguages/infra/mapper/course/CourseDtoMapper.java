@@ -20,7 +20,8 @@
                 course.japaneseLevels(),
                 course.createAt(),
                 course.updatedAt(),
-                course.published()
+                course.published(),
+                course.visibility()
             );
         }
 
@@ -37,7 +38,8 @@
                 courseDto.japaneseLevels(),
                 courseDto.createAt(),
                 courseDto.updatedAt(),
-                courseDto.published()
+                courseDto.published(),
+                courseDto.visibility()
             );
         }
     }

@@ -4,6 +4,7 @@ import languages.murasaki.MurasakiLanguages.core.entities.course.Explanation;
 import languages.murasaki.MurasakiLanguages.core.entities.course.Worksheets;
 import languages.murasaki.MurasakiLanguages.core.enums.JapaneseLevels;
 import languages.murasaki.MurasakiLanguages.core.enums.LanguageType;
+import languages.murasaki.MurasakiLanguages.core.enums.Visibility;
 import languages.murasaki.MurasakiLanguages.infra.dtos.course.ExplanationDto;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -28,11 +29,12 @@ public class CourseEntity {
     private LocalDateTime createAt;
     private LocalDateTime updatedAt;
     private boolean published;
+    private Visibility visibility;
 
     public CourseEntity() {
     }
 
-    public CourseEntity(String id, String title, String text, List<Explanation> explanations, List<Worksheets> worksheets, List<String> links, String username, LanguageType languageType, JapaneseLevels japaneseLevels, LocalDateTime createAt, LocalDateTime updatedAt, boolean published) {
+    public CourseEntity(String id, String title, String text, List<Explanation> explanations, List<Worksheets> worksheets, List<String> links, String username, LanguageType languageType, JapaneseLevels japaneseLevels, LocalDateTime createAt, LocalDateTime updatedAt, boolean published, Visibility visibility) {
         this.id = id;
         this.title = title;
         this.text = text;
@@ -45,6 +47,7 @@ public class CourseEntity {
         this.createAt = createAt;
         this.updatedAt = updatedAt;
         this.published = published;
+        this.visibility = visibility;
     }
 
     public String getId() {
@@ -141,5 +144,13 @@ public class CourseEntity {
 
     public void setPublished(boolean published) {
         this.published = published;
+    }
+
+    public Visibility getVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(Visibility visibility) {
+        this.visibility = visibility;
     }
 }

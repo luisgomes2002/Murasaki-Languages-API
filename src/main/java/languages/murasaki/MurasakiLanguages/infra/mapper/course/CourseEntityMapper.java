@@ -20,7 +20,8 @@ public class CourseEntityMapper {
             course.japaneseLevels(),
             course.createAt(),
             course.updatedAt(),
-            course.published()
+            course.published(),
+            course.visibility()
         );
     }
 
@@ -37,7 +38,8 @@ public class CourseEntityMapper {
             courseEntity.getJapaneseLevels(),
             courseEntity.getCreateAt(),
             courseEntity.getUpdatedAt(),
-            courseEntity.isPublished()
+            courseEntity.isPublished(),
+            courseEntity.getVisibility()
         );
     }
 }
