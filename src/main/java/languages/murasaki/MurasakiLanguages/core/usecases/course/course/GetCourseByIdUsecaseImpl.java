@@ -1,32 +1,30 @@
-package languages.murasaki.MurasakiLanguages.core.usecases.course;
+package languages.murasaki.MurasakiLanguages.core.usecases.course.course;
 
 import languages.murasaki.MurasakiLanguages.core.entities.course.Course;
 import languages.murasaki.MurasakiLanguages.core.entities.user.UserInfo;
 import languages.murasaki.MurasakiLanguages.core.gateway.CourseGateway;
 import languages.murasaki.MurasakiLanguages.core.usecases.security.AuthenticatedUsecase;
-import languages.murasaki.MurasakiLanguages.infra.exceptions.MissingArgumentsException;
+import languages.murasaki.MurasakiLanguages.infra.exceptions.IdNotFoundException;
 import languages.murasaki.MurasakiLanguages.infra.exceptions.UserDoesNotHavePermissionException;
 
-public class CreateCourseUsecaseImpl implements CreateCourseUsecase{
+public class GetCourseByIdUsecaseImpl implements GetCourseByIdUsecase{
 
-    private final CourseGateway courseGateway;
+    public final CourseGateway courseGateway;
     private final AuthenticatedUsecase authenticatedUsecase;
 
-    public CreateCourseUsecaseImpl(CourseGateway courseGateway, AuthenticatedUsecase authenticatedUsecase) {
+    public GetCourseByIdUsecaseImpl(CourseGateway courseGateway, AuthenticatedUsecase authenticatedUsecase) {
         this.courseGateway = courseGateway;
         this.authenticatedUsecase = authenticatedUsecase;
     }
 
     @Override
-    public Course execute(Course course) {
+    public Course execute(String id) {
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
         if(!"ADMIN".equals(userInfo.userType()) && !"BOSS".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
 
-        if(course.title() == null || course.text() == null || course.languageType() == null || course.japaneseLevels() == null || course.explanations() == null || course.links() == null)
-            throw new MissingArgumentsException("Campos faltando");
+        if(!courseGateway.courseIdExists(id)) throw new IdNotFoundException("Course não encontrado");
 
-
-        return courseGateway.createCourse(course);
+        return courseGateway.getCourseById(id);
     }
 }

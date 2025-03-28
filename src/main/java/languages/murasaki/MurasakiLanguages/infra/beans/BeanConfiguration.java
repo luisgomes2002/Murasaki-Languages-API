@@ -1,14 +1,14 @@
 package languages.murasaki.MurasakiLanguages.infra.beans;
 
-import languages.murasaki.MurasakiLanguages.core.gateway.CourseCollectionGateway;
-import languages.murasaki.MurasakiLanguages.core.gateway.CourseGateway;
-import languages.murasaki.MurasakiLanguages.core.gateway.SecurityGateway;
-import languages.murasaki.MurasakiLanguages.core.gateway.UserGateway;
-import languages.murasaki.MurasakiLanguages.core.usecases.course.*;
+import languages.murasaki.MurasakiLanguages.core.gateway.*;
+import languages.murasaki.MurasakiLanguages.core.usecases.course.course.*;
+import languages.murasaki.MurasakiLanguages.core.usecases.course.report.CreateReportUsecase;
+import languages.murasaki.MurasakiLanguages.core.usecases.course.report.CreateReportUsecaseImpl;
 import languages.murasaki.MurasakiLanguages.core.usecases.coursecollection.*;
 import languages.murasaki.MurasakiLanguages.core.usecases.security.AuthenticatedUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.security.AuthenticatedUsecaseImpl;
 import languages.murasaki.MurasakiLanguages.core.usecases.user.*;
+import languages.murasaki.MurasakiLanguages.infra.gateway.ReportRepositoryGateway;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -58,6 +58,12 @@ public class BeanConfiguration {
         return new PublishCourseUsecaseImpl(courseGateway, authenticatedUsecase);
     }
 
+    // Report
+    @Bean
+    public CreateReportUsecase createReportUsecase(ReportGateway reportGateway){
+        return new CreateReportUsecaseImpl(reportGateway);
+    }
+
     // Security
     @Bean
     public AuthenticatedUsecase authenticatedUsecase(SecurityGateway securityGateway){
@@ -84,5 +90,6 @@ public class BeanConfiguration {
     public PublishCourseInCollectionUsecase publishCourseInCollectionUsecase(CourseCollectionGateway courseCollectionGateway, AuthenticatedUsecase authenticatedUsecase){
         return new PublishCourseInCollectionUsecaseImpl(courseCollectionGateway, authenticatedUsecase);
     }
+
 
 }

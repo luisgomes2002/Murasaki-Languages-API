@@ -1,7 +1,7 @@
 package languages.murasaki.MurasakiLanguages.infra.presentation;
 
 import languages.murasaki.MurasakiLanguages.core.entities.course.Course;
-import languages.murasaki.MurasakiLanguages.core.usecases.course.*;
+import languages.murasaki.MurasakiLanguages.core.usecases.course.course.*;
 import languages.murasaki.MurasakiLanguages.core.usecases.coursecollection.PublishCourseInCollectionUsecase;
 import languages.murasaki.MurasakiLanguages.infra.dtos.course.CourseDto;
 import languages.murasaki.MurasakiLanguages.infra.mapper.course.CourseDtoMapper;

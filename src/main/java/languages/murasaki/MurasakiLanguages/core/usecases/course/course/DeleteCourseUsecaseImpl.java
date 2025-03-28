@@ -1,4 +1,4 @@
-package languages.murasaki.MurasakiLanguages.core.usecases.course;
+package languages.murasaki.MurasakiLanguages.core.usecases.course.course;
 
 import languages.murasaki.MurasakiLanguages.core.entities.user.UserInfo;
 import languages.murasaki.MurasakiLanguages.core.gateway.CourseGateway;

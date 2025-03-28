@@ -7,8 +7,6 @@ import languages.murasaki.MurasakiLanguages.infra.mapper.course.CourseEntityMapp
 import languages.murasaki.MurasakiLanguages.infra.persistence.course.CourseEntity;
 import languages.murasaki.MurasakiLanguages.infra.persistence.course.CourseRepository;
 import languages.murasaki.MurasakiLanguages.infra.persistence.user.UserInfoEntity;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -18,7 +16,7 @@ import java.util.List;
 
 @Component
 public class CourseRepositoryGateway implements CourseGateway {
-    private static final Logger log = LoggerFactory.getLogger(CourseRepositoryGateway.class);
+
     private final CourseRepository courseRepository;
     private final CourseEntityMapper courseEntityMapper;
 
@@ -37,9 +35,9 @@ public class CourseRepositoryGateway implements CourseGateway {
         entity.setUpdatedAt(LocalDateTime.now());
         entity.setVisibility(Visibility.valueOf("PRIVATE"));
 
-        CourseEntity savedCourse = courseRepository.save(entity);
+        courseRepository.save(entity);
 
-        return courseEntityMapper.toDomain(savedCourse);
+        return courseEntityMapper.toDomain(entity);
     }
 
     @Override
@@ -84,5 +82,6 @@ public class CourseRepositoryGateway implements CourseGateway {
     public boolean courseIdExists(String id) {
         return courseRepository.existsById(id);
     }
+
 
 }
