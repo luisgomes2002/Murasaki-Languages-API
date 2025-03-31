@@ -1,7 +1,7 @@
 package languages.murasaki.MurasakiLanguages.infra.mapper.coursecollection;
 
 import languages.murasaki.MurasakiLanguages.core.entities.courseCollection.CourseCollection;
-import languages.murasaki.MurasakiLanguages.infra.dtos.CourseCollection.CourseCollectionDto;
+import languages.murasaki.MurasakiLanguages.infra.dtos.courseCollection.CourseCollectionDto;
 import org.springframework.stereotype.Component;
 
 @Component

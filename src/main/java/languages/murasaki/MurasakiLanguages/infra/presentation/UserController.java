@@ -1,6 +1,8 @@
 package languages.murasaki.MurasakiLanguages.infra.presentation;
 
+import languages.murasaki.MurasakiLanguages.core.entities.backlog.Backlog;
 import languages.murasaki.MurasakiLanguages.core.entities.user.User;
+import languages.murasaki.MurasakiLanguages.core.usecases.backlog.CreateBacklogUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.user.CreateUserUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.user.GetAllUsersUseCase;
 import languages.murasaki.MurasakiLanguages.core.usecases.user.LoginUsecase;
@@ -28,14 +30,17 @@ public class UserController {
     private final UserDtoMapper userDtoMapper;
     private final LoginDtoMapper loginDtoMapper;
     private final UserResponseDtoMapper userResponseDtoMapper;
+    private final CreateBacklogUsecase createBacklogUsecase;
 
-    public UserController(CreateUserUsecase createUserUsecase, LoginUsecase loginUsecase, GetAllUsersUseCase getAllUsersUseCase, UserDtoMapper userDtoMapper, LoginDtoMapper loginDtoMapper, UserResponseDtoMapper userResponseDtoMapper) {
+
+    public UserController(CreateUserUsecase createUserUsecase, LoginUsecase loginUsecase, GetAllUsersUseCase getAllUsersUseCase, UserDtoMapper userDtoMapper, LoginDtoMapper loginDtoMapper, UserResponseDtoMapper userResponseDtoMapper, CreateBacklogUsecase createBacklogUsecase) {
         this.createUserUsecase = createUserUsecase;
         this.loginUsecase = loginUsecase;
         this.getAllUsersUseCase = getAllUsersUseCase;
         this.userDtoMapper = userDtoMapper;
         this.loginDtoMapper = loginDtoMapper;
         this.userResponseDtoMapper = userResponseDtoMapper;
+        this.createBacklogUsecase = createBacklogUsecase;
     }
 
     @PostMapping("create")
@@ -44,6 +49,10 @@ public class UserController {
         Map<String, Object > response = new HashMap<>();
         response.put("Message: ", "Usuário criado com sucesso.");
         response.put("User data: ", userResponseDtoMapper.toDto(newUser));
+
+        Backlog backlog = new Backlog(null, userDto.name(), "Usuário criado.", null);
+        createBacklogUsecase.execute(backlog);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 

@@ -1,6 +1,8 @@
 package languages.murasaki.MurasakiLanguages.infra.beans;
 
 import languages.murasaki.MurasakiLanguages.core.gateway.*;
+import languages.murasaki.MurasakiLanguages.core.usecases.backlog.CreateBacklogUsecase;
+import languages.murasaki.MurasakiLanguages.core.usecases.backlog.CreateBacklogUsecaseImpl;
 import languages.murasaki.MurasakiLanguages.core.usecases.course.course.*;
 import languages.murasaki.MurasakiLanguages.core.usecases.course.report.CreateReportUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.course.report.CreateReportUsecaseImpl;
@@ -91,5 +93,9 @@ public class BeanConfiguration {
         return new PublishCourseInCollectionUsecaseImpl(courseCollectionGateway, authenticatedUsecase);
     }
 
-
+    // Backlog
+    @Bean
+    public CreateBacklogUsecase createBacklogUsecase(BacklogGateway backlogGateway){
+        return new CreateBacklogUsecaseImpl(backlogGateway);
+    }
 }

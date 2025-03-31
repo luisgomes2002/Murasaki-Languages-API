@@ -1,4 +1,4 @@
-package languages.murasaki.MurasakiLanguages.infra.dtos.CourseCollection;
+package languages.murasaki.MurasakiLanguages.infra.dtos.courseCollection;
 
 import java.util.List;
 

@@ -3,7 +3,7 @@ package languages.murasaki.MurasakiLanguages.infra.presentation;
 import languages.murasaki.MurasakiLanguages.core.entities.courseCollection.CourseCollection;
 import languages.murasaki.MurasakiLanguages.core.usecases.coursecollection.CreateCourseCollectionUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.coursecollection.GetAllCollectionsUsecase;
-import languages.murasaki.MurasakiLanguages.infra.dtos.CourseCollection.CourseCollectionDto;
+import languages.murasaki.MurasakiLanguages.infra.dtos.courseCollection.CourseCollectionDto;
 import languages.murasaki.MurasakiLanguages.infra.mapper.coursecollection.CourseCollectionDtoMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
