@@ -13,7 +13,6 @@ public class ReportEntityMapper {
             report.userId(),
             report.objectId(),
             report.reportType(),
-            report.user(),
             report.text(),
             report.finished()
         );
@@ -25,7 +24,6 @@ public class ReportEntityMapper {
             reportEntity.getUserId(),
             reportEntity.getObjectId(),
             reportEntity.getReportType(),
-            reportEntity.getUser(),
             reportEntity.getText(),
             reportEntity.isFinished()
         );

@@ -4,7 +4,7 @@ import languages.murasaki.MurasakiLanguages.core.enums.ReportType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "course-report")
+@Document(collection = "report")
 public class ReportEntity {
 
     @Id
@@ -13,19 +13,17 @@ public class ReportEntity {
     private String userId;
     private String objectId;
     private ReportType reportType;
-    private String user;
     private String text;
     private boolean finished;
 
     public ReportEntity() {
     }
 
-    public ReportEntity(String id, String userId, String objectId, ReportType reportType, String user, String text, boolean finished) {
+    public ReportEntity(String id, String userId, String objectId, ReportType reportType, String text, boolean finished) {
         this.id = id;
         this.userId = userId;
         this.objectId = objectId;
         this.reportType = reportType;
-        this.user = user;
         this.text = text;
         this.finished = finished;
     }
@@ -60,14 +58,6 @@ public class ReportEntity {
 
     public void setReportType(ReportType reportType) {
         this.reportType = reportType;
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
     }
 
     public String getText() {

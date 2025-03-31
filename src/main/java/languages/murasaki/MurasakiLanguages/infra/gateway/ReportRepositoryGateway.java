@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class ReportRepositoryGateway implements ReportGateway {
 
-    private final ReportRepository courseRepository;
+    private final ReportRepository reportRepository;
     private final ReportEntityMapper reportEntityMapper;
 
-    public ReportRepositoryGateway(ReportRepository courseRepository, ReportEntityMapper reportEntityMapper) {
-        this.courseRepository = courseRepository;
+    public ReportRepositoryGateway(ReportRepository reportRepository, ReportEntityMapper reportEntityMapper) {
+        this.reportRepository = reportRepository;
         this.reportEntityMapper = reportEntityMapper;
     }
 
@@ -23,7 +23,7 @@ public class ReportRepositoryGateway implements ReportGateway {
         ReportEntity entity = reportEntityMapper.toEntity(report);
         entity.setObjectId(objectId);
 
-        courseRepository.save(entity);
+        reportRepository.save(entity);
 
         return reportEntityMapper.toDomain(entity);
     }

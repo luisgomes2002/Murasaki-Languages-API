@@ -1,8 +1,8 @@
 package languages.murasaki.MurasakiLanguages.infra.presentation;
 
 import languages.murasaki.MurasakiLanguages.core.entities.report.Report;
-import languages.murasaki.MurasakiLanguages.core.usecases.course.report.CreateReportUsecase;
-import languages.murasaki.MurasakiLanguages.infra.dtos.course.ReportDto;
+import languages.murasaki.MurasakiLanguages.core.usecases.lesson.report.CreateReportUsecase;
+import languages.murasaki.MurasakiLanguages.infra.dtos.report.ReportDto;
 import languages.murasaki.MurasakiLanguages.infra.mapper.report.ReportDtoMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
 package languages.murasaki.MurasakiLanguages.infra.mapper.report;
 
 import languages.murasaki.MurasakiLanguages.core.entities.report.Report;
-import languages.murasaki.MurasakiLanguages.infra.dtos.course.ReportDto;
+import languages.murasaki.MurasakiLanguages.infra.dtos.report.ReportDto;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -13,7 +13,6 @@ public class ReportDtoMapper {
             report.userId(),
             report.objectId(),
             report.reportType(),
-            report.user(),
             report.text(),
             report.finished()
         );
@@ -25,7 +24,6 @@ public class ReportDtoMapper {
             reportDto.userId(),
             reportDto.objectId(),
             reportDto.reportType(),
-            reportDto.user(),
             reportDto.text(),
             reportDto.finished()
         );

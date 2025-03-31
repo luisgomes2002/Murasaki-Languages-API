@@ -3,14 +3,13 @@ package languages.murasaki.MurasakiLanguages.infra.beans;
 import languages.murasaki.MurasakiLanguages.core.gateway.*;
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.CreateBacklogUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.CreateBacklogUsecaseImpl;
-import languages.murasaki.MurasakiLanguages.core.usecases.course.course.*;
-import languages.murasaki.MurasakiLanguages.core.usecases.course.report.CreateReportUsecase;
-import languages.murasaki.MurasakiLanguages.core.usecases.course.report.CreateReportUsecaseImpl;
-import languages.murasaki.MurasakiLanguages.core.usecases.coursecollection.*;
+import languages.murasaki.MurasakiLanguages.core.usecases.lesson.lesson.*;
+import languages.murasaki.MurasakiLanguages.core.usecases.lesson.report.CreateReportUsecase;
+import languages.murasaki.MurasakiLanguages.core.usecases.lesson.report.CreateReportUsecaseImpl;
+import languages.murasaki.MurasakiLanguages.core.usecases.lessoncollection.*;
 import languages.murasaki.MurasakiLanguages.core.usecases.security.AuthenticatedUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.security.AuthenticatedUsecaseImpl;
 import languages.murasaki.MurasakiLanguages.core.usecases.user.*;
-import languages.murasaki.MurasakiLanguages.infra.gateway.ReportRepositoryGateway;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -34,30 +33,30 @@ public class BeanConfiguration {
     @Bean
     public UpdateUserUsecase updateUserUsecase(UserGateway userGateway, AuthenticatedUsecase authenticatedUsecase) {return new UpdateUserUsecaseImpl(userGateway, authenticatedUsecase);}
 
-    // Course
+    // Lesson
     @Bean
-    public CreateCourseUsecase createCourseUsecase(CourseGateway courseGateway, AuthenticatedUsecase authenticatedUsecase){
-        return new CreateCourseUsecaseImpl(courseGateway, authenticatedUsecase);
+    public CreateLessonUsecase createLessonUsecase(LessonGateway lessonGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new CreateLessonUsecaseImpl(lessonGateway, authenticatedUsecase);
     }
 
     @Bean
-    public GetAllCoursesUsecase getAllCoursesUsecase(CourseGateway courseGateway, AuthenticatedUsecase authenticatedUsecase){
-        return new GetAllCoursesUsecaseImpl(courseGateway, authenticatedUsecase);
+    public GetAllLessonUsecase getAllLessonUsecase(LessonGateway lessonGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new GetAllLessonUsecaseImpl(lessonGateway, authenticatedUsecase);
     }
 
     @Bean
-    public GetCourseByIdUsecase getCourseByIdUsecase(CourseGateway courseGateway, AuthenticatedUsecase authenticatedUsecase){
-        return new GetCourseByIdUsecaseImpl(courseGateway, authenticatedUsecase);
+    public GetLessonByIdUsecase getLessonByIdUsecase(LessonGateway lessonGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new GetLessonByIdUsecaseImpl(lessonGateway, authenticatedUsecase);
     }
 
     @Bean
-    public DeleteCourseUsecase deleteCourseUsecase(CourseGateway courseGateway, AuthenticatedUsecase authenticatedUsecase){
-        return new DeleteCourseUsecaseImpl(courseGateway, authenticatedUsecase);
+    public DeleteLessonUsecase deleteLessonUsecase(LessonGateway lessonGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new DeleteLessonUsecaseImpl(lessonGateway, authenticatedUsecase);
     }
 
     @Bean
-    public PublishCourseUsecase publishCourseUsecase(CourseGateway courseGateway, AuthenticatedUsecase authenticatedUsecase){
-        return new PublishCourseUsecaseImpl(courseGateway, authenticatedUsecase);
+    public PublishLessonUsecase publishLessoneUsecase(LessonGateway lessonGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new PublishLessonUsecaseImpl(lessonGateway, authenticatedUsecase);
     }
 
     // Report
@@ -72,25 +71,25 @@ public class BeanConfiguration {
         return new AuthenticatedUsecaseImpl(securityGateway);
     }
 
-    // CourseCollection
+    // LessonCollection
     @Bean
-    public CreateCourseCollectionUsecase createCourseCollectionUsecase(CourseCollectionGateway courseCollectionGateway, AuthenticatedUsecase authenticatedUsecase){
-        return new CreateCourseCollectionUsecaseImpl(courseCollectionGateway, authenticatedUsecase);
+    public CreateLessonCollectionUsecase createLessonCollectionUsecase(LessonCollectionGateway lessonCollectionGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new CreateLessonCollectionUsecaseImpl(lessonCollectionGateway, authenticatedUsecase);
     }
 
     @Bean
-    public GetAllCollectionsUsecase getAllCollectionsUsecase(CourseCollectionGateway courseCollectionGateway, AuthenticatedUsecase authenticatedUsecase){
-        return new GetAllCollectionsUsecaseImpl(courseCollectionGateway, authenticatedUsecase);
+    public GetAllCollectionsUsecase getAllCollectionsUsecase(LessonCollectionGateway lessonCollectionGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new GetAllCollectionsUsecaseImpl(lessonCollectionGateway, authenticatedUsecase);
     }
 
     @Bean
-    public GetCourseCollectionByIdUsecase getCourseCollectionByIdUsecase(CourseCollectionGateway courseCollectionGateway, AuthenticatedUsecase authenticatedUsecase){
-        return new GetCourseCollectionByIdUsecaseImpl(courseCollectionGateway, authenticatedUsecase);
+    public GetLessonCollectionByIdUsecase getLessonCollectionByIdUsecase(LessonCollectionGateway lessonCollectionGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new GetLessonCollectionByIdUsecaseImpl(lessonCollectionGateway, authenticatedUsecase);
     }
 
     @Bean
-    public PublishCourseInCollectionUsecase publishCourseInCollectionUsecase(CourseCollectionGateway courseCollectionGateway, AuthenticatedUsecase authenticatedUsecase){
-        return new PublishCourseInCollectionUsecaseImpl(courseCollectionGateway, authenticatedUsecase);
+    public PublishLessonInCollectionUsecase publishLessonInCollectionUsecase(LessonCollectionGateway lessonCollectionGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new PublishLessonInCollectionUsecaseImpl(lessonCollectionGateway, authenticatedUsecase);
     }
 
     // Backlog
