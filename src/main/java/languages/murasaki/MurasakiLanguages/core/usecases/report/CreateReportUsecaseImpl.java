@@ -1,4 +1,4 @@
-package languages.murasaki.MurasakiLanguages.core.usecases.lesson.report;
+package languages.murasaki.MurasakiLanguages.core.usecases.report;
 
 import languages.murasaki.MurasakiLanguages.core.entities.report.Report;
 import languages.murasaki.MurasakiLanguages.core.gateway.ReportGateway;
@@ -12,7 +12,7 @@ public class CreateReportUsecaseImpl implements CreateReportUsecase {
     }
 
     @Override
-    public Report execute(Report report, String objectId) {
-        return reportGateway.createReport(report, objectId);
+    public Report execute(Report report) {
+        return reportGateway.createReport(report);
     }
 }

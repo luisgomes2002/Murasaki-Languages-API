@@ -4,5 +4,5 @@ import languages.murasaki.MurasakiLanguages.core.entities.report.Report;
 
 public interface ReportGateway{
 
-    Report createReport(Report report, String objectId);
+    Report createReport(Report report);
 }

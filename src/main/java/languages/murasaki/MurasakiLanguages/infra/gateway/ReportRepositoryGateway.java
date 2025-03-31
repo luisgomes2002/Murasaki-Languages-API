@@ -19,9 +19,8 @@ public class ReportRepositoryGateway implements ReportGateway {
     }
 
     @Override
-    public Report createReport(Report report, String objectId) {
+    public Report createReport(Report report) {
         ReportEntity entity = reportEntityMapper.toEntity(report);
-        entity.setObjectId(objectId);
 
         reportRepository.save(entity);
 
