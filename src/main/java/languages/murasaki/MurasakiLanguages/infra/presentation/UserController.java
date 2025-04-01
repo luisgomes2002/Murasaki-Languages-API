@@ -50,7 +50,7 @@ public class UserController {
         response.put("Message: ", "Usuário criado com sucesso.");
         response.put("User data: ", userResponseDtoMapper.toDto(newUser));
 
-        Backlog backlog = new Backlog(null, userDto.id(), "Criou uma conta.", null);
+        Backlog backlog = new Backlog(null, userDto.id(),  newUser.name() + "criou uma conta", null);
         createBacklogUsecase.execute(backlog);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);

@@ -29,6 +29,9 @@ public class ReportController {
         Map<String, Object> response = new HashMap<>();
         response.put("Message: ", "Reporte criado");
         response.put("Report data", reportDtoMapper.toDto(newReport));
+
+
+
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

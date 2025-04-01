@@ -59,9 +59,13 @@ public class LessonController {
     public Lesson getLessonById(@PathVariable String id){ return getLessonByIdUsecase.execute(id); }
 
     @DeleteMapping("delete/{id}/{collectionId}")
-    public ResponseEntity<String> deleteLesson(@PathVariable String id,@PathVariable String collectionId){
+    public ResponseEntity<String> deleteLesson(@PathVariable String id, @PathVariable String collectionId, String userId, String lessonName){
         deleteLessonUsecase.execute(id);
         publishLessonInCollectionUsecase.execute(collectionId, id, false);
+
+        Backlog backlog = new Backlog(null, userId, "Deletou uma aula: " + lessonName, null);
+        createBacklogUsecase.execute(backlog);
+
         return ResponseEntity.status(HttpStatus.OK).body("Aula deletado");
     }
 
@@ -70,7 +74,7 @@ public class LessonController {
         boolean status = publishLessonUsecase.execute(lessonId);
         String message = publishLessonInCollectionUsecase.execute(collectionId, lessonId, status);
 
-        Backlog backlog = new Backlog(null, userId, "Deletou um aula.", null);
+        Backlog backlog = new Backlog(null, userId, "Atualizou um aula: " + lessonId, null);
         createBacklogUsecase.execute(backlog);
 
         return ResponseEntity.status(HttpStatus.OK).body(message);
