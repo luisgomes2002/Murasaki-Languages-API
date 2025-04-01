@@ -46,7 +46,7 @@ public class LessonController {
         response.put("Message: ", "Aula criado com sucesso.");
         response.put("Lesson data: ", lessonDtoMapper.toDto(newLesson));
 
-        Backlog backlog = new Backlog(null, userId, "Criou um aula.", null);
+        Backlog backlog = new Backlog(null, userId, "Criou uma aula: " + newLesson.title(), null);
         createBacklogUsecase.execute(backlog);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);

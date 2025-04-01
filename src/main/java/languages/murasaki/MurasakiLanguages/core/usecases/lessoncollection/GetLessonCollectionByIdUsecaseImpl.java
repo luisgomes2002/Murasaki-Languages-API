@@ -20,7 +20,7 @@ public class GetLessonCollectionByIdUsecaseImpl implements GetLessonCollectionBy
     public lessonCollection execute(String collectionId) {
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
-        if(!"ADMIN".equals(userInfo.userType()) && !"BOSS".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
+        if(!"ADMIN".equals(userInfo.userType()) && !"MOD".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
 
         return lessonCollectionGateway.getLessonCollectionById(collectionId);
     }

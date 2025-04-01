@@ -4,6 +4,8 @@ import languages.murasaki.MurasakiLanguages.core.gateway.*;
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.CreateBacklogUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.CreateBacklogUsecaseImpl;
 import languages.murasaki.MurasakiLanguages.core.usecases.lesson.lesson.*;
+import languages.murasaki.MurasakiLanguages.core.usecases.plans.CreatePlanUsecase;
+import languages.murasaki.MurasakiLanguages.core.usecases.plans.CreatePlanUsecaseImpl;
 import languages.murasaki.MurasakiLanguages.core.usecases.report.CreateReportUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.report.CreateReportUsecaseImpl;
 import languages.murasaki.MurasakiLanguages.core.usecases.lessoncollection.*;
@@ -96,5 +98,11 @@ public class BeanConfiguration {
     @Bean
     public CreateBacklogUsecase createBacklogUsecase(BacklogGateway backlogGateway){
         return new CreateBacklogUsecaseImpl(backlogGateway);
+    }
+
+    // Plans
+    @Bean
+    public CreatePlanUsecase createPlanUsecase(PlansGateway plansGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new CreatePlanUsecaseImpl(plansGateway, authenticatedUsecase);
     }
 }

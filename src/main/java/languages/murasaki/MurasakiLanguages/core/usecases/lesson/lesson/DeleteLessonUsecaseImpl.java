@@ -20,7 +20,7 @@ public class DeleteLessonUsecaseImpl implements DeleteLessonUsecase {
     public void execute(String id) {
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
-        if(!"BOSS".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
+        if(!"ADMIN".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
 
         if(!lessonGateway.lessonIdExists(id)) throw new IdNotFoundException("Aula não encontrado");
 

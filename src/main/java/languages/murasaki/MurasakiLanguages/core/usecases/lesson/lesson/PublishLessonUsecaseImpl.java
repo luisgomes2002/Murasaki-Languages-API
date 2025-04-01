@@ -20,7 +20,7 @@ public class PublishLessonUsecaseImpl implements PublishLessonUsecase {
     public boolean execute(String lessonId) {
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
-        if(!"ADMIN".equals(userInfo.userType()) && !"BOSS".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
+        if(!"ADMIN".equals(userInfo.userType()) && !"MOD".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
 
         if(!lessonGateway.lessonIdExists(lessonId)) throw new IdNotFoundException("Aula não encontrado");
 

@@ -21,7 +21,7 @@ public class CreateLessonCollectionUsecaseImpl implements CreateLessonCollection
     public lessonCollection execute(lessonCollection lessonCollection) {
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
-        if(!"ADMIN".equals(userInfo.userType()) && !"BOSS".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
+        if(!"ADMIN".equals(userInfo.userType()) && !"MOD".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
 
         if(lessonCollection.languageName() == null){
             throw new MissingArgumentsException("Campo faltando");
