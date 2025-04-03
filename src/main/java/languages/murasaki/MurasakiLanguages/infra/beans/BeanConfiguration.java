@@ -4,8 +4,7 @@ import languages.murasaki.MurasakiLanguages.core.gateway.*;
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.CreateBacklogUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.CreateBacklogUsecaseImpl;
 import languages.murasaki.MurasakiLanguages.core.usecases.lesson.lesson.*;
-import languages.murasaki.MurasakiLanguages.core.usecases.plans.CreatePlanUsecase;
-import languages.murasaki.MurasakiLanguages.core.usecases.plans.CreatePlanUsecaseImpl;
+import languages.murasaki.MurasakiLanguages.core.usecases.plans.*;
 import languages.murasaki.MurasakiLanguages.core.usecases.report.CreateReportUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.report.CreateReportUsecaseImpl;
 import languages.murasaki.MurasakiLanguages.core.usecases.lessoncollection.*;
@@ -104,5 +103,25 @@ public class BeanConfiguration {
     @Bean
     public CreatePlanUsecase createPlanUsecase(PlansGateway plansGateway, AuthenticatedUsecase authenticatedUsecase){
         return new CreatePlanUsecaseImpl(plansGateway, authenticatedUsecase);
+    }
+
+    @Bean
+    public DeletePlanUsecase deletePlanUsecase (PlansGateway plansGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new DeletePlanUsecaseImpl(plansGateway, authenticatedUsecase);
+    }
+
+    @Bean
+    public GetAllPlansUsecase getAllPlansUsecase(PlansGateway plansGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new GetAllPlansUsecaseImpl(plansGateway, authenticatedUsecase);
+    }
+
+    @Bean
+    public GetPlanByIdUsecase getPlanByIdUsecase(PlansGateway plansGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new GetPlanByIdUsecaseImpl(plansGateway, authenticatedUsecase);
+    }
+
+    @Bean
+    public UpdatePlanUsecase updatePlanUsecase(PlansGateway plansGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new UpdatePlanUsecaseImpl(plansGateway, authenticatedUsecase);
     }
 }
