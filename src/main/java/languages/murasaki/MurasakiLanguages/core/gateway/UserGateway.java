@@ -16,10 +16,10 @@ public interface UserGateway {
 
     void deleteUser(String id);
     void updateUserType(String id ,UserType type);
+    void isEnable(String id, boolean isEnable);
 
     String login(Login login);
 
     boolean userAlreadyCreated(String email);
     boolean userIdExists(String id);
-    boolean isEnable();
 }

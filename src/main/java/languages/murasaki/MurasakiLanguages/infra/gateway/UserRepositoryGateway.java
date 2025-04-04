@@ -115,7 +115,7 @@ public class UserRepositoryGateway implements UserGateway {
     }
 
     @Override
-    public void updateUserType(String id ,UserType type) {
+    public void updateUserType(String id, UserType type) {
         Optional<UserEntity> entity = userRepository.findById(id);
 
         if(entity.isPresent()){
@@ -124,7 +124,7 @@ public class UserRepositoryGateway implements UserGateway {
             updatedUser.setUserType(type);
             updatedUser.setUpdatedAt(LocalDateTime.now());
 
-            UserEntity newUser = userRepository.save(updatedUser);
+            userRepository.save(updatedUser);
         }
     }
 
@@ -134,8 +134,17 @@ public class UserRepositoryGateway implements UserGateway {
     }
 
     @Override
-    public boolean isEnable() {
-        return true;
+    public void isEnable(String id, boolean isEnable) {
+        Optional<UserEntity> entity = userRepository.findById(id);
+
+        if(entity.isPresent()){
+            UserEntity updatedUser = entity.get();
+
+            updatedUser.setIsEnabled(isEnable);
+            updatedUser.setUpdatedAt(LocalDateTime.now());
+
+            userRepository.save(updatedUser);
+        }
     }
 
     @Override

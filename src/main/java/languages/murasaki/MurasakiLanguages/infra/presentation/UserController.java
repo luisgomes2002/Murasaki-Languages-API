@@ -35,8 +35,9 @@ public class UserController {
     private final UpdateUserUsecase updateUserUsecase;
     private final UpdateUserPasswordUsecase updateUserPasswordUsecase;
     private final UpdateUserTypeUsecase updateUserTypeUsecase;
+    private final UpdateUserEnableUsecase updateUserEnableUsecase;
 
-    public UserController(CreateUserUsecase createUserUsecase, LoginUsecase loginUsecase, GetAllUsersUseCase getAllUsersUseCase, UserDtoMapper userDtoMapper, LoginDtoMapper loginDtoMapper, UserResponseDtoMapper userResponseDtoMapper, CreateBacklogUsecase createBacklogUsecase, GetUserByIdUsecase getUserByIdUsecase, DeleteUserUsecase deleteUserUsecase, UpdateUserUsecase updateUserUsecase, UpdateUserPasswordUsecase updateUserPasswordUsecase, UpdateUserTypeUsecase updateUserTypeUsecase) {
+    public UserController(CreateUserUsecase createUserUsecase, LoginUsecase loginUsecase, GetAllUsersUseCase getAllUsersUseCase, UserDtoMapper userDtoMapper, LoginDtoMapper loginDtoMapper, UserResponseDtoMapper userResponseDtoMapper, CreateBacklogUsecase createBacklogUsecase, GetUserByIdUsecase getUserByIdUsecase, DeleteUserUsecase deleteUserUsecase, UpdateUserUsecase updateUserUsecase, UpdateUserPasswordUsecase updateUserPasswordUsecase, UpdateUserTypeUsecase updateUserTypeUsecase, UpdateUserEnableUsecase updateUserEnableUsecase) {
         this.createUserUsecase = createUserUsecase;
         this.loginUsecase = loginUsecase;
         this.getAllUsersUseCase = getAllUsersUseCase;
@@ -49,6 +50,7 @@ public class UserController {
         this.updateUserUsecase = updateUserUsecase;
         this.updateUserPasswordUsecase = updateUserPasswordUsecase;
         this.updateUserTypeUsecase = updateUserTypeUsecase;
+        this.updateUserEnableUsecase = updateUserEnableUsecase;
     }
 
     @PostMapping("create")
@@ -117,6 +119,16 @@ public class UserController {
         createBacklogUsecase.execute(backlog);
 
         return "Cargo atualizado para: " + userType;
+    }
+
+    @PutMapping("update-status/{id}")
+    public String updateUserState(@PathVariable String id, @RequestBody boolean isEnable, String loggedUser){
+        updateUserEnableUsecase.execute(id, isEnable);
+
+        Backlog backlog = new Backlog(null, loggedUser, "Atualizou o status da conta: " + id + " para: " + isEnable, null);
+        createBacklogUsecase.execute(backlog);
+
+        return "Status atualizado para: " + isEnable;
     }
 
 
