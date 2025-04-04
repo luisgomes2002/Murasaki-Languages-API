@@ -60,7 +60,7 @@ public class UserController {
         response.put("Message: ", "Usuário criado com sucesso.");
         response.put("User data: ", userResponseDtoMapper.toDto(newUser));
 
-        Backlog backlog = new Backlog(null, userDto.id(),  newUser.name() + "criou uma conta", null);
+        Backlog backlog = new Backlog(null, userDto.id(),  newUser.name() + " criou uma conta", null);
         createBacklogUsecase.execute(backlog);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -115,7 +115,7 @@ public class UserController {
     public String updateUserRole(@PathVariable String id, @RequestBody UserType userType, String loggedUser){
         updateUserTypeUsecase.execute(id, userType);
 
-        Backlog backlog = new Backlog(null, loggedUser, "Atualizou o cargo da conta: " + id + " para: " + userType, null);
+        Backlog backlog = new Backlog(null, loggedUser, "Atualizou o cargo da conta: " + id + " para " + userType, null);
         createBacklogUsecase.execute(backlog);
 
         return "Cargo atualizado para: " + userType;
@@ -125,7 +125,7 @@ public class UserController {
     public String updateUserState(@PathVariable String id, @RequestBody boolean isEnable, String loggedUser){
         updateUserEnableUsecase.execute(id, isEnable);
 
-        Backlog backlog = new Backlog(null, loggedUser, "Atualizou o status da conta: " + id + " para: " + isEnable, null);
+        Backlog backlog = new Backlog(null, loggedUser, "Atualizou o status da conta: " + id + " para " + isEnable, null);
         createBacklogUsecase.execute(backlog);
 
         return "Status atualizado para: " + isEnable;

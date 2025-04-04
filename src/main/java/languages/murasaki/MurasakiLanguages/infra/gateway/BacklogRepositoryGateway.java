@@ -8,6 +8,7 @@ import languages.murasaki.MurasakiLanguages.infra.persistence.backlog.BacklogRep
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Component
 public class BacklogRepositoryGateway implements BacklogGateway {
@@ -26,5 +27,10 @@ public class BacklogRepositoryGateway implements BacklogGateway {
         entity.setCreatedAt(LocalDateTime.now());
         BacklogEntity savedEntity = backlogRepository.save(entity);
         return backlogEntityMapper.toDomain(savedEntity);
+    }
+
+    @Override
+    public List<Backlog> getAllBacklog() {
+        return backlogRepository.findAll().stream().map(backlogEntityMapper::toDomain).toList();
     }
 }

@@ -29,6 +29,7 @@ public class UserRepositoryGateway implements UserGateway {
     private final AuthenticationManager authenticationManager;
     private final TokenConfiguration tokenConfiguration;
 
+
     public UserRepositoryGateway(UserRepository userRepository, UserEntityMapper userEntityMapper, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, TokenConfiguration tokenConfiguration) {
         this.userRepository = userRepository;
         this.userEntityMapper = userEntityMapper;
