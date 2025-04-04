@@ -52,8 +52,8 @@ public class UserRepositoryGateway implements UserGateway {
         String password = entity.getPassword();
         entity.setPassword(passwordEncoder.encode(password));
 
-        UserEntity newUSer = userRepository.save(entity);
-        return userEntityMapper.toDomain(newUSer);
+        UserEntity newUser = userRepository.save(entity);
+        return userEntityMapper.toDomain(newUser);
     }
 
     @Override
@@ -102,12 +102,13 @@ public class UserRepositoryGateway implements UserGateway {
 
         if(entity.isPresent()){
             UserEntity updatedUser = entity.get();
-            updatedUser.setPassword(newPassword);
+
+            updatedUser.setPassword(passwordEncoder.encode(newPassword));
             updatedUser.setUpdatedAt(LocalDateTime.now());
 
-            userRepository.save(updatedUser);
+            UserEntity newUser = userRepository.save(updatedUser);
 
-            return userEntityMapper.toDomain(updatedUser);
+            return userEntityMapper.toDomain(newUser);
         }
 
         return null;

@@ -4,27 +4,24 @@ import languages.murasaki.MurasakiLanguages.core.entities.user.User;
 import languages.murasaki.MurasakiLanguages.core.entities.user.UserInfo;
 import languages.murasaki.MurasakiLanguages.core.gateway.UserGateway;
 import languages.murasaki.MurasakiLanguages.core.usecases.security.AuthenticatedUsecase;
-import languages.murasaki.MurasakiLanguages.infra.exceptions.IdNotFoundException;
 import languages.murasaki.MurasakiLanguages.infra.exceptions.UserDoesNotHavePermissionException;
 
-public class UpdateUserUsecaseImpl implements UpdateUserUsecase{
+public class GetUserByIdUsecaseImpl implements GetUserByIdUsecase{
 
     private final UserGateway userGateway;
     private final AuthenticatedUsecase authenticatedUsecase;
 
-    public UpdateUserUsecaseImpl(UserGateway userGateway, AuthenticatedUsecase authenticatedUsecase) {
+    public GetUserByIdUsecaseImpl(UserGateway userGateway, AuthenticatedUsecase authenticatedUsecase) {
         this.userGateway = userGateway;
         this.authenticatedUsecase = authenticatedUsecase;
     }
 
     @Override
-    public User execute(String id, User user) {
+    public User execute(String id) {
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
-        if(!id.equals(userInfo.userId())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
+        if(!"ADMIN".equals(userInfo.userType()) && !"MOD".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
 
-        if(!userGateway.userIdExists(id)) throw new IdNotFoundException("Usuário não encontrado");
-
-        return userGateway.updateUser(id, user);
+        return userGateway.getUserById(id);
     }
 }

@@ -3,9 +3,7 @@ package languages.murasaki.MurasakiLanguages.infra.presentation;
 import languages.murasaki.MurasakiLanguages.core.entities.backlog.Backlog;
 import languages.murasaki.MurasakiLanguages.core.entities.user.User;
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.CreateBacklogUsecase;
-import languages.murasaki.MurasakiLanguages.core.usecases.user.CreateUserUsecase;
-import languages.murasaki.MurasakiLanguages.core.usecases.user.GetAllUsersUseCase;
-import languages.murasaki.MurasakiLanguages.core.usecases.user.LoginUsecase;
+import languages.murasaki.MurasakiLanguages.core.usecases.user.*;
 import languages.murasaki.MurasakiLanguages.infra.dtos.user.LoginDto;
 import languages.murasaki.MurasakiLanguages.infra.dtos.user.UserDto;
 import languages.murasaki.MurasakiLanguages.infra.dtos.user.response.LoginResponseDto;
@@ -31,9 +29,12 @@ public class UserController {
     private final LoginDtoMapper loginDtoMapper;
     private final UserResponseDtoMapper userResponseDtoMapper;
     private final CreateBacklogUsecase createBacklogUsecase;
+    private final GetUserByIdUsecase getUserByIdUsecase;
+    private final DeleteUserUsecase deleteUserUsecase;
+    private final UpdateUserUsecase updateUserUsecase;
+    private final UpdateUserPasswordUsecase updateUserPasswordUsecase;
 
-
-    public UserController(CreateUserUsecase createUserUsecase, LoginUsecase loginUsecase, GetAllUsersUseCase getAllUsersUseCase, UserDtoMapper userDtoMapper, LoginDtoMapper loginDtoMapper, UserResponseDtoMapper userResponseDtoMapper, CreateBacklogUsecase createBacklogUsecase) {
+    public UserController(CreateUserUsecase createUserUsecase, LoginUsecase loginUsecase, GetAllUsersUseCase getAllUsersUseCase, UserDtoMapper userDtoMapper, LoginDtoMapper loginDtoMapper, UserResponseDtoMapper userResponseDtoMapper, CreateBacklogUsecase createBacklogUsecase, GetUserByIdUsecase getUserByIdUsecase, DeleteUserUsecase deleteUserUsecase, UpdateUserUsecase updateUserUsecase, UpdateUserPasswordUsecase updateUserPasswordUsecase) {
         this.createUserUsecase = createUserUsecase;
         this.loginUsecase = loginUsecase;
         this.getAllUsersUseCase = getAllUsersUseCase;
@@ -41,6 +42,10 @@ public class UserController {
         this.loginDtoMapper = loginDtoMapper;
         this.userResponseDtoMapper = userResponseDtoMapper;
         this.createBacklogUsecase = createBacklogUsecase;
+        this.getUserByIdUsecase = getUserByIdUsecase;
+        this.deleteUserUsecase = deleteUserUsecase;
+        this.updateUserUsecase = updateUserUsecase;
+        this.updateUserPasswordUsecase = updateUserPasswordUsecase;
     }
 
     @PostMapping("create")
@@ -61,20 +66,45 @@ public class UserController {
         return getAllUsersUseCase.execute();
     }
 
-//    @GetMapping("list/{id}")
-//    public ResponseEntity<Map<String, Object>> getUserById(@PathVariable String id){
-//
-//    }
+    @GetMapping("list/{id}")
+    public User getUserById(@PathVariable String id){
+        return getUserByIdUsecase.execute(id);
+    }
 
-//    @PutMapping("update/{id}")
-//    public ResponseEntity<Map<String, Object>> updateUser(@PathVariable String id, @RequestBody UserDto userDto){
-//
-//    }
-//
-//    @DeleteMapping("delete/{id}")
-//    public ResponseEntity<Map<String, Object>> deleteUser(@PathVariable String id){
-//
-//    }
+    @PutMapping("update/{id}")
+    public ResponseEntity<Map<String, Object>> updateUser(@PathVariable String id, @RequestBody UserDto userDto){
+        User user = updateUserUsecase.execute(id, userDtoMapper.toDomain(userDto));
+        Map<String, Object> response = new HashMap<>();
+        response.put("Message: ", "Usuário atualizado");
+        response.put("User data: ", userResponseDtoMapper.toDto(user));
+
+        Backlog backlog = new Backlog(null, id, "Atualizou as informações da conta: " + userDto.name(), null);
+        createBacklogUsecase.execute(backlog);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @PutMapping("update-password/{id}")
+    public ResponseEntity<Map<String, Object>> updateUserPassword(@PathVariable String id, @RequestBody String newPassword){
+        User user = updateUserPasswordUsecase.execute(id, newPassword);
+        Map<String, Object> response = new HashMap<>();
+        response.put("Message: ", "Senha atualizado");
+
+        Backlog backlog = new Backlog(null, id, "Atualizou a senha: " + user.name(), null);
+        createBacklogUsecase.execute(backlog);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @DeleteMapping("delete/{id}")
+    public String deleteUser(@PathVariable String id, String userId){
+        deleteUserUsecase.execute(id);
+
+        Backlog backlog = new Backlog(null, userId, "Excluiu a conta: " + id, null);
+        createBacklogUsecase.execute(backlog);
+
+        return "Conta excluida";
+    }
 
     @PostMapping("login")
     public ResponseEntity<Object> login(@RequestBody LoginDto loginDto){

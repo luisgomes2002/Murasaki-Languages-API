@@ -11,6 +11,7 @@ import languages.murasaki.MurasakiLanguages.core.usecases.lessoncollection.*;
 import languages.murasaki.MurasakiLanguages.core.usecases.security.AuthenticatedUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.security.AuthenticatedUsecaseImpl;
 import languages.murasaki.MurasakiLanguages.core.usecases.user.*;
+import languages.murasaki.MurasakiLanguages.core.usecases.user.DeleteUserUsecase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -33,6 +34,21 @@ public class BeanConfiguration {
 
     @Bean
     public UpdateUserUsecase updateUserUsecase(UserGateway userGateway, AuthenticatedUsecase authenticatedUsecase) {return new UpdateUserUsecaseImpl(userGateway, authenticatedUsecase);}
+
+    @Bean
+    public GetUserByIdUsecase getUserByIdUsecase(UserGateway userGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new GetUserByIdUsecaseImpl(userGateway, authenticatedUsecase);
+    }
+
+    @Bean
+    public DeleteUserUsecase deleteUserUsecase(UserGateway userGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new DeleteUserUsecaseImpl(userGateway, authenticatedUsecase);
+    }
+
+    @Bean
+    public UpdateUserPasswordUsecase updateUserPasswordUsecase(UserGateway userGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new UpdateUserPasswordUsecaseImpl(userGateway, authenticatedUsecase);
+    }
 
     // Lesson
     @Bean
