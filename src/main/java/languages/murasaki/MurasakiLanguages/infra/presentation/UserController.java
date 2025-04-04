@@ -2,6 +2,7 @@ package languages.murasaki.MurasakiLanguages.infra.presentation;
 
 import languages.murasaki.MurasakiLanguages.core.entities.backlog.Backlog;
 import languages.murasaki.MurasakiLanguages.core.entities.user.User;
+import languages.murasaki.MurasakiLanguages.core.enums.UserType;
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.CreateBacklogUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.user.*;
 import languages.murasaki.MurasakiLanguages.infra.dtos.user.LoginDto;
@@ -33,8 +34,9 @@ public class UserController {
     private final DeleteUserUsecase deleteUserUsecase;
     private final UpdateUserUsecase updateUserUsecase;
     private final UpdateUserPasswordUsecase updateUserPasswordUsecase;
+    private final UpdateUserTypeUsecase updateUserTypeUsecase;
 
-    public UserController(CreateUserUsecase createUserUsecase, LoginUsecase loginUsecase, GetAllUsersUseCase getAllUsersUseCase, UserDtoMapper userDtoMapper, LoginDtoMapper loginDtoMapper, UserResponseDtoMapper userResponseDtoMapper, CreateBacklogUsecase createBacklogUsecase, GetUserByIdUsecase getUserByIdUsecase, DeleteUserUsecase deleteUserUsecase, UpdateUserUsecase updateUserUsecase, UpdateUserPasswordUsecase updateUserPasswordUsecase) {
+    public UserController(CreateUserUsecase createUserUsecase, LoginUsecase loginUsecase, GetAllUsersUseCase getAllUsersUseCase, UserDtoMapper userDtoMapper, LoginDtoMapper loginDtoMapper, UserResponseDtoMapper userResponseDtoMapper, CreateBacklogUsecase createBacklogUsecase, GetUserByIdUsecase getUserByIdUsecase, DeleteUserUsecase deleteUserUsecase, UpdateUserUsecase updateUserUsecase, UpdateUserPasswordUsecase updateUserPasswordUsecase, UpdateUserTypeUsecase updateUserTypeUsecase) {
         this.createUserUsecase = createUserUsecase;
         this.loginUsecase = loginUsecase;
         this.getAllUsersUseCase = getAllUsersUseCase;
@@ -46,6 +48,7 @@ public class UserController {
         this.deleteUserUsecase = deleteUserUsecase;
         this.updateUserUsecase = updateUserUsecase;
         this.updateUserPasswordUsecase = updateUserPasswordUsecase;
+        this.updateUserTypeUsecase = updateUserTypeUsecase;
     }
 
     @PostMapping("create")
@@ -105,6 +108,17 @@ public class UserController {
 
         return "Conta excluida";
     }
+
+    @PutMapping("update-role/{id}")
+    public String updateUserRole(@PathVariable String id, @RequestBody UserType userType, String loggedUser){
+        updateUserTypeUsecase.execute(id, userType);
+
+        Backlog backlog = new Backlog(null, loggedUser, "Atualizou o cargo da conta: " + id + " para: " + userType, null);
+        createBacklogUsecase.execute(backlog);
+
+        return "Cargo atualizado para: " + userType;
+    }
+
 
     @PostMapping("login")
     public ResponseEntity<Object> login(@RequestBody LoginDto loginDto){

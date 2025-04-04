@@ -50,6 +50,10 @@ public class BeanConfiguration {
         return new UpdateUserPasswordUsecaseImpl(userGateway, authenticatedUsecase);
     }
 
+    @Bean UpdateUserTypeUsecase updateUserTypeUsecase(UserGateway userGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new UpdateUserTypeUsecaseImpl(userGateway, authenticatedUsecase);
+    }
+
     // Lesson
     @Bean
     public CreateLessonUsecase createLessonUsecase(LessonGateway lessonGateway, AuthenticatedUsecase authenticatedUsecase){

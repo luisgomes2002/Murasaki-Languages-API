@@ -115,8 +115,17 @@ public class UserRepositoryGateway implements UserGateway {
     }
 
     @Override
-    public UserType updateUserType(String type) {
-        return null;
+    public void updateUserType(String id ,UserType type) {
+        Optional<UserEntity> entity = userRepository.findById(id);
+
+        if(entity.isPresent()){
+            UserEntity updatedUser = entity.get();
+
+            updatedUser.setUserType(type);
+            updatedUser.setUpdatedAt(LocalDateTime.now());
+
+            UserEntity newUser = userRepository.save(updatedUser);
+        }
     }
 
     @Override
