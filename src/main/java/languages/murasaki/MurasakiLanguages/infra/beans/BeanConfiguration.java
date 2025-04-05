@@ -7,8 +7,7 @@ import languages.murasaki.MurasakiLanguages.core.usecases.backlog.GetAllBacklogU
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.GetAllBacklogUsecaseImpl;
 import languages.murasaki.MurasakiLanguages.core.usecases.lesson.lesson.*;
 import languages.murasaki.MurasakiLanguages.core.usecases.plans.*;
-import languages.murasaki.MurasakiLanguages.core.usecases.report.CreateReportUsecase;
-import languages.murasaki.MurasakiLanguages.core.usecases.report.CreateReportUsecaseImpl;
+import languages.murasaki.MurasakiLanguages.core.usecases.report.*;
 import languages.murasaki.MurasakiLanguages.core.usecases.lessoncollection.*;
 import languages.murasaki.MurasakiLanguages.core.usecases.security.AuthenticatedUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.security.AuthenticatedUsecaseImpl;
@@ -90,6 +89,16 @@ public class BeanConfiguration {
     @Bean
     public CreateReportUsecase createReportUsecase(ReportGateway reportGateway){
         return new CreateReportUsecaseImpl(reportGateway);
+    }
+
+    @Bean
+    public GetAllReportsUsecase getAllReportsUsecase(ReportGateway reportGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new GetAllReportsUsecaseImpl(reportGateway, authenticatedUsecase);
+    }
+
+    @Bean
+    public UpdateReportStatusUsecase updateReportStatusUsecase(ReportGateway reportGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new UpdateReportStatusUsecaseImpl(reportGateway, authenticatedUsecase);
     }
 
     // Security

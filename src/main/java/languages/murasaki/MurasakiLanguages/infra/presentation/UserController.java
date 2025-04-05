@@ -111,6 +111,7 @@ public class UserController {
         return "Conta excluida";
     }
 
+    // TODO: mudar o id para pegar pelo body
     @PutMapping("update-role/{id}")
     public String updateUserRole(@PathVariable String id, @RequestBody UserType userType, String loggedUser){
         updateUserTypeUsecase.execute(id, userType);
@@ -121,6 +122,7 @@ public class UserController {
         return "Cargo atualizado para: " + userType;
     }
 
+    // TODO: mudar o id para pegar pelo body
     @PutMapping("update-status/{id}")
     public String updateUserState(@PathVariable String id, @RequestBody boolean isEnable, String loggedUser){
         updateUserEnableUsecase.execute(id, isEnable);
