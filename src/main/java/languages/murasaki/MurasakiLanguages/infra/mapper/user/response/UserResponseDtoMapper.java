@@ -11,6 +11,8 @@ public class UserResponseDtoMapper {
         return new UserResponseDto (
                 user.id(),
                 user.name(),
+                user.gender(),
+                user.birth(),
                 user.username(),
                 user.email(),
                 user.icon(),

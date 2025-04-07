@@ -12,6 +12,8 @@ public class UserEntityMapper {
             user.id(),
             user.name(),
             user.username(),
+            user.gender(),
+            user.birth(),
             user.email(),
             user.password(),
             user.icon(),
@@ -32,6 +34,8 @@ public class UserEntityMapper {
         return new User(
             userEntity.getId(),
             userEntity.getName(),
+            userEntity.getGender(),
+            userEntity.getBirth(),
             userEntity.getUsername(),
             userEntity.getEmail(),
             userEntity.getPassword(),

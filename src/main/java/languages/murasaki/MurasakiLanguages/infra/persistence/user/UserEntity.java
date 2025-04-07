@@ -1,11 +1,13 @@
 package languages.murasaki.MurasakiLanguages.infra.persistence.user;
 
+import languages.murasaki.MurasakiLanguages.core.enums.Gender;
 import languages.murasaki.MurasakiLanguages.core.enums.UserType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -18,6 +20,8 @@ public class UserEntity implements UserDetails{
 
     private String name;
     private String username;
+    private Gender gender;
+    private LocalDate birth;
     private String email;
     private String password;
     private String icon;
@@ -35,10 +39,12 @@ public class UserEntity implements UserDetails{
     public UserEntity() {
     }
 
-    public UserEntity(String id, String name, String username, String email, String password, String icon, String background, List<String> followersId, List<String> followingId, LocalDateTime createdAt, LocalDateTime updatedAt, String about, UserType userType, List<String> notificationsId, List<String> postsId, boolean isEnabled) {
+    public UserEntity(String id, String name, String username, Gender gender, LocalDate birth, String email, String password, String icon, String background, List<String> followersId, List<String> followingId, LocalDateTime createdAt, LocalDateTime updatedAt, String about, UserType userType, List<String> notificationsId, List<String> postsId, boolean isEnabled) {
         this.id = id;
         this.name = name;
         this.username = username;
+        this.gender = gender;
+        this.birth = birth;
         this.email = email;
         this.password = password;
         this.icon = icon;
@@ -70,12 +76,29 @@ public class UserEntity implements UserDetails{
         this.name = name;
     }
 
+    @Override
     public String getUsername() {
         return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public LocalDate getBirth() {
+        return birth;
+    }
+
+    public void setBirth(LocalDate birth) {
+        this.birth = birth;
     }
 
     public String getEmail() {
@@ -86,6 +109,7 @@ public class UserEntity implements UserDetails{
         this.email = email;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
@@ -174,12 +198,13 @@ public class UserEntity implements UserDetails{
         this.postsId = postsId;
     }
 
+    @Override
     public boolean isEnabled() {
         return isEnabled;
     }
 
-    public void setIsEnabled(boolean isEnabled) {
-        this.isEnabled = isEnabled;
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
     }
 
     @Override

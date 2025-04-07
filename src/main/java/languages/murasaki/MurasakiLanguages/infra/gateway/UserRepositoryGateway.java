@@ -48,7 +48,7 @@ public class UserRepositoryGateway implements UserGateway {
         entity.setBackground("");
         entity.setUserType(UserType.valueOf("COMMUM"));
         entity.setAbout("Ainda não criou uma descrição");
-        entity.setIsEnabled(true);
+        entity.setEnabled(true);
 
         String password = entity.getPassword();
         entity.setPassword(passwordEncoder.encode(password));
@@ -85,6 +85,8 @@ public class UserRepositoryGateway implements UserGateway {
             updatedUser.setIcon(user.icon());
             updatedUser.setBackground(user.background());
             updatedUser.setAbout(user.about());
+            updatedUser.setGender(user.gender());
+            updatedUser.setBirth(user.birth());
             updatedUser.setUpdatedAt(LocalDateTime.now());
 
             updatedUser.setCreatedAt(entity.get().getCreatedAt());
@@ -141,7 +143,7 @@ public class UserRepositoryGateway implements UserGateway {
         if(entity.isPresent()){
             UserEntity updatedUser = entity.get();
 
-            updatedUser.setIsEnabled(isEnable);
+            updatedUser.setEnabled(isEnable);
             updatedUser.setUpdatedAt(LocalDateTime.now());
 
             userRepository.save(updatedUser);

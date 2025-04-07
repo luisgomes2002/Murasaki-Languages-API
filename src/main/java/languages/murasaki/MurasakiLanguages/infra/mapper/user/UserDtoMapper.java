@@ -11,6 +11,8 @@ public class UserDtoMapper {
         return new UserDto (
             user.id(),
             user.name(),
+            user.gender(),
+            user.birth(),
             user.username(),
             user.email(),
             user.password(),
@@ -32,6 +34,8 @@ public class UserDtoMapper {
         return new User (
             userDto.id(),
             userDto.name(),
+            userDto.gender(),
+            userDto.birth(),
             userDto.username(),
             userDto.email(),
             userDto.password(),
