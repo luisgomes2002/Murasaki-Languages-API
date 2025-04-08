@@ -19,8 +19,8 @@ public class LessonEntity {
 
     private String title;
     private String text;
-    private List<Explanation> explanations;
-    private List<Worksheets> worksheets;
+    private List<String> explanations;
+    private List<String> worksheets;
     private List<String> links;
     private String username;
     private LanguageType languageType;
@@ -33,7 +33,7 @@ public class LessonEntity {
     public LessonEntity() {
     }
 
-    public LessonEntity(String id, String title, String text, List<Explanation> explanations, List<Worksheets> worksheets, List<String> links, String username, LanguageType languageType, JapaneseLevels japaneseLevels, LocalDateTime createAt, LocalDateTime updatedAt, boolean published, Visibility visibility) {
+    public LessonEntity(String id, String title, String text, List<String> explanations, List<String> worksheets, List<String> links, String username, LanguageType languageType, JapaneseLevels japaneseLevels, LocalDateTime createAt, LocalDateTime updatedAt, boolean published, Visibility visibility) {
         this.id = id;
         this.title = title;
         this.text = text;
@@ -73,19 +73,19 @@ public class LessonEntity {
         this.text = text;
     }
 
-    public List<Explanation> getExplanations() {
+    public List<String> getExplanations() {
         return explanations;
     }
 
-    public void setExplanations(List<Explanation> explanations) {
+    public void setExplanations(List<String> explanations) {
         this.explanations = explanations;
     }
 
-    public List<Worksheets> getWorksheets() {
+    public List<String> getWorksheets() {
         return worksheets;
     }
 
-    public void setWorksheets(List<Worksheets> worksheets) {
+    public void setWorksheets(List<String> worksheets) {
         this.worksheets = worksheets;
     }
 
