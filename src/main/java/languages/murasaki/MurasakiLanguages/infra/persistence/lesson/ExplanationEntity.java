@@ -1,6 +1,11 @@
 package languages.murasaki.MurasakiLanguages.infra.persistence.lesson;
 
+import org.springframework.data.annotation.Id;
+
 public class ExplanationEntity {
+
+    @Id
+    private String id;
 
     private String phrase;
     private String translation;
@@ -9,10 +14,19 @@ public class ExplanationEntity {
     public ExplanationEntity() {
     }
 
-    public ExplanationEntity(String phrase, String translation, String explanation) {
+    public ExplanationEntity(String id, String phrase, String translation, String explanation) {
+        this.id = id;
         this.phrase = phrase;
         this.translation = translation;
         this.explanation = explanation;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getPhrase() {

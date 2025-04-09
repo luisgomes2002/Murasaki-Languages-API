@@ -1,10 +1,14 @@
 package languages.murasaki.MurasakiLanguages.infra.persistence.lesson;
 
+import org.springframework.data.annotation.Id;
+
 import java.util.List;
 
 public class WorksheetsEntity {
 
-    private String lessonId;
+    @Id
+    private String id;
+
     private String question;
     private List<String> options;
     private String answer;
@@ -12,19 +16,19 @@ public class WorksheetsEntity {
     public WorksheetsEntity() {
     }
 
-    public WorksheetsEntity(String lessonId, String question, List<String> options, String answer) {
-        this.lessonId = lessonId;
+    public WorksheetsEntity(String id, String question, List<String> options, String answer) {
+        this.id = id;
         this.question = question;
         this.options = options;
         this.answer = answer;
     }
 
-    public String getLessonId() {
-        return lessonId;
+    public String getId() {
+        return id;
     }
 
-    public void setLessonId(String lessonId) {
-        this.lessonId = lessonId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getQuestion() {

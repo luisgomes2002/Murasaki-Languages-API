@@ -82,6 +82,4 @@ public class LessonRepositoryGateway implements LessonGateway {
     public boolean lessonIdExists(String id) {
         return lessonRepository.existsById(id);
     }
-
-
 }

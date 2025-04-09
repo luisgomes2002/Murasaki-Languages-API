@@ -9,7 +9,7 @@ public class WorksheetsDtoMapper {
 
     public WorksheetsDto toDto(Worksheets worksheets){
         return new WorksheetsDto(
-            worksheets.lessonId(),
+            worksheets.id(),
             worksheets.question(),
             worksheets.options(),
             worksheets.answer()
@@ -18,7 +18,7 @@ public class WorksheetsDtoMapper {
 
     public Worksheets toDomain(WorksheetsDto worksheetsDto){
         return new Worksheets(
-            worksheetsDto.lessonId(),
+            worksheetsDto.id(),
             worksheetsDto.question(),
             worksheetsDto.options(),
             worksheetsDto.answer()

@@ -79,6 +79,7 @@ public class UserRepositoryGateway implements UserGateway {
 
         if(entity.isPresent()){
             UserEntity updatedUser = entity.get();
+
             updatedUser.setName(user.name());
             updatedUser.setUsername(user.username());
             updatedUser.setEmail(user.email());

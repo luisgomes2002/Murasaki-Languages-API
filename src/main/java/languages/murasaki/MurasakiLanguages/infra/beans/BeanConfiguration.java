@@ -5,7 +5,9 @@ import languages.murasaki.MurasakiLanguages.core.usecases.backlog.CreateBacklogU
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.CreateBacklogUsecaseImpl;
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.GetAllBacklogUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.GetAllBacklogUsecaseImpl;
+import languages.murasaki.MurasakiLanguages.core.usecases.lesson.explanation.*;
 import languages.murasaki.MurasakiLanguages.core.usecases.lesson.lesson.*;
+import languages.murasaki.MurasakiLanguages.core.usecases.lesson.worksheets.*;
 import languages.murasaki.MurasakiLanguages.core.usecases.plans.*;
 import languages.murasaki.MurasakiLanguages.core.usecases.report.*;
 import languages.murasaki.MurasakiLanguages.core.usecases.lessoncollection.*;
@@ -83,6 +85,48 @@ public class BeanConfiguration {
     @Bean
     public PublishLessonUsecase publishLessoneUsecase(LessonGateway lessonGateway, AuthenticatedUsecase authenticatedUsecase){
         return new PublishLessonUsecaseImpl(lessonGateway, authenticatedUsecase);
+    }
+
+    //Explanations
+    @Bean
+    public CreateExplanationUsecase createExplanationUsecase(ExplanationGateway explanationGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new CreateExplanationUsecaseImpl(explanationGateway, authenticatedUsecase);
+    }
+
+    @Bean
+    public DeleteExplanationUsecase deleteExplanationUsecase(ExplanationGateway explanationGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new DeleteExplanationUsecaseImpl(explanationGateway, authenticatedUsecase);
+    }
+
+    @Bean
+    public GetExplanationByIdUsecase getExplanationByIdUsecase(ExplanationGateway explanationGateway){
+        return new GetExplanationUsecaseImpl(explanationGateway);
+    }
+
+    @Bean
+    public UpdateExplanationUsecase updateExplanationUsecase(ExplanationGateway explanationGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new UpdateExplanationUsecaseImpl(explanationGateway, authenticatedUsecase);
+    }
+
+    //Worksheets
+    @Bean
+    public CreateWorksheetsUseCase worksheetsUseCase(WorksheetsGateway worksheetsGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new CreateWorksheetsUseCaseImpl(worksheetsGateway, authenticatedUsecase);
+    }
+
+    @Bean
+    public DeleteWorksheetsUseCase deleteWorksheetsUseCase(WorksheetsGateway worksheetsGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new DeleteWorksheetsUseCaseImpl(worksheetsGateway, authenticatedUsecase);
+    }
+
+    @Bean
+    public GetWorksheetsByIdUseCase getWorksheetsByIdUseCase(WorksheetsGateway worksheetsGateway){
+        return new GetWorksheetsByIdUseCaseImpl(worksheetsGateway);
+    }
+
+    @Bean
+    public UpdateWorksheetsUseCase updateWorksheetsUseCase(WorksheetsGateway worksheetsGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new UpdateWorksheetsUseCaseImpl(worksheetsGateway, authenticatedUsecase);
     }
 
     // Report

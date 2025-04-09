@@ -9,6 +9,7 @@ public class ExplanationEntityMapper {
 
     public ExplanationEntity toEntity(Explanation explanation){
         return new ExplanationEntity(
+            explanation.id(),
             explanation.phrase(),
             explanation.translation(),
             explanation.explanation()
@@ -17,6 +18,7 @@ public class ExplanationEntityMapper {
 
     public Explanation toDomain(ExplanationEntity explanation){
         return new Explanation(
+            explanation.getId(),
             explanation.getPhrase(),
             explanation.getTranslation(),
             explanation.getExplanation()

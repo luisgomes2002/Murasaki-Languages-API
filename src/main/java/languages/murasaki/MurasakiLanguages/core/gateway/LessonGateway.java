@@ -15,5 +15,4 @@ public interface LessonGateway {
 
     boolean publishLesson(String lessonId);
     boolean lessonIdExists(String id);
-
 }

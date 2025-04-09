@@ -9,7 +9,7 @@ public class WorksheetsEntityMapper {
 
     public WorksheetsEntity toEntity(Worksheets worksheets){
         return new WorksheetsEntity(
-            worksheets.lessonId(),
+            worksheets.id(),
             worksheets.question(),
             worksheets.options(),
             worksheets.answer()
@@ -18,7 +18,7 @@ public class WorksheetsEntityMapper {
 
     public Worksheets toDomain(WorksheetsEntity worksheetsEntity){
         return new Worksheets(
-            worksheetsEntity.getLessonId(),
+            worksheetsEntity.getId(),
             worksheetsEntity.getQuestion(),
             worksheetsEntity.getOptions(),
             worksheetsEntity.getAnswer()

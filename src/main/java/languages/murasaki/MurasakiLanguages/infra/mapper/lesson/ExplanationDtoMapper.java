@@ -9,6 +9,7 @@ public class ExplanationDtoMapper {
 
     public ExplanationDto toDto(Explanation explanation){
         return new ExplanationDto(
+            explanation.id(),
             explanation.phrase(),
             explanation.translation(),
             explanation.explanation()
@@ -17,6 +18,7 @@ public class ExplanationDtoMapper {
 
     public Explanation toDomain(ExplanationDto explanationDto){
         return new Explanation(
+            explanationDto.id(),
             explanationDto.phrase(),
             explanationDto.translation(),
             explanationDto.explanation()
