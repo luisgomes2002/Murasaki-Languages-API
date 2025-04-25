@@ -27,8 +27,9 @@ public class LessonController {
     private final GetLessonByIdUsecase getLessonByIdUsecase;
     private final DeleteLessonUsecase deleteLessonUsecase;
     private final CreateBacklogUsecase createBacklogUsecase;
+    private final UpdateLessonUsecase updateLessonUsecase;
 
-    public LessonController(CreateLessonUsecase createLessonUsecase, PublishLessonUsecase publishLessonUsecase, LessonDtoMapper lessonDtoMapper, PublishLessonInCollectionUsecase publishLessonInCollectionUsecase, GetAllLessonUsecase getAllLessonUsecase, GetLessonByIdUsecase getLessonByIdUsecase, DeleteLessonUsecase deleteLessonUsecase, CreateBacklogUsecase createBacklogUsecase) {
+    public LessonController(CreateLessonUsecase createLessonUsecase, PublishLessonUsecase publishLessonUsecase, LessonDtoMapper lessonDtoMapper, PublishLessonInCollectionUsecase publishLessonInCollectionUsecase, GetAllLessonUsecase getAllLessonUsecase, GetLessonByIdUsecase getLessonByIdUsecase, DeleteLessonUsecase deleteLessonUsecase, CreateBacklogUsecase createBacklogUsecase, UpdateLessonUsecase updateLessonUsecase) {
         this.createLessonUsecase = createLessonUsecase;
         this.publishLessonUsecase = publishLessonUsecase;
         this.lessonDtoMapper = lessonDtoMapper;
@@ -37,10 +38,11 @@ public class LessonController {
         this.getLessonByIdUsecase = getLessonByIdUsecase;
         this.deleteLessonUsecase = deleteLessonUsecase;
         this.createBacklogUsecase = createBacklogUsecase;
+        this.updateLessonUsecase = updateLessonUsecase;
     }
 
-    @PostMapping("create")
-    public ResponseEntity<Map<String, Object>> createLesson(@RequestBody LessonDto lessonDto, String userId){
+    @PostMapping("create/{userId}")
+    public ResponseEntity<Map<String, Object>> createLesson(@RequestBody LessonDto lessonDto, @PathVariable String userId){
         Lesson newLesson = createLessonUsecase.execute(lessonDtoMapper.toDomain(lessonDto));
         Map<String, Object> response = new HashMap<>();
         response.put("Message: ", "Aula criado com sucesso.");
@@ -69,8 +71,8 @@ public class LessonController {
         return ResponseEntity.status(HttpStatus.OK).body("Aula deletado");
     }
 
-    @PostMapping("publish/{collectionId}/{lessonId}")
-    public ResponseEntity<String> updatePublishLesson(@PathVariable String collectionId, @PathVariable String lessonId, String userId){
+    @PostMapping("publish/{collectionId}/{lessonId}/{userId}")
+    public ResponseEntity<String> updatePublishLesson(@PathVariable String collectionId, @PathVariable String lessonId, @PathVariable String userId){
         boolean status = publishLessonUsecase.execute(lessonId);
         String message = publishLessonInCollectionUsecase.execute(collectionId, lessonId, status);
 
@@ -80,5 +82,16 @@ public class LessonController {
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 
-    // Update
+    @PutMapping("update/{lessonId}/{userId}")
+    public ResponseEntity<Map<String, Object>> updateLesson(@PathVariable String lessonId, @PathVariable String userId, @RequestBody LessonDto lessonDto){
+        Lesson lesson = updateLessonUsecase.execute(lessonId, lessonDtoMapper.toDomain(lessonDto));
+        Map<String, Object> response = new HashMap<>();
+        response.put("Message: ", "Aula atualizada");
+        response.put("Lesson data: ", lessonDtoMapper.toDto(lesson));
+
+        Backlog backlog = new Backlog(null, userId, "Atualizou o aula: " + lesson.title(), null);
+        createBacklogUsecase.execute(backlog);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }

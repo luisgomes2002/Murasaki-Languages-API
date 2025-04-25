@@ -39,6 +39,7 @@ public class SecurityConfiguration {
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .requestMatchers(HttpMethod.POST,"api/user/create").permitAll()
                         .requestMatchers(HttpMethod.POST,"api/user/login").permitAll()
+                        .requestMatchers(HttpMethod.GET, "api/plans/").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

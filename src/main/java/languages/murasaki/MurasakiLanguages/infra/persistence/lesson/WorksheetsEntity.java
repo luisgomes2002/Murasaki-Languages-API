@@ -1,9 +1,11 @@
 package languages.murasaki.MurasakiLanguages.infra.persistence.lesson;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
+@Document(collection = "work-sheets")
 public class WorksheetsEntity {
 
     @Id

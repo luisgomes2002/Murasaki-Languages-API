@@ -12,6 +12,10 @@ public interface LessonGateway {
     Lesson updateLesson(String id, Lesson lesson);
 
     void deleteLesson(String id);
+    void addExplanation(String lessonId, String explanationId);
+    void addWorksheets(String lessonId, String worksheetId);
+    void removeExplanation(String lessonId, String explanationId);
+    void removeWorksheets(String lessonId, String worksheetId);
 
     boolean publishLesson(String lessonId);
     boolean lessonIdExists(String id);

@@ -133,7 +133,6 @@ public class UserController {
         return "Status atualizado para: " + isEnable;
     }
 
-
     @PostMapping("login")
     public ResponseEntity<Object> login(@RequestBody LoginDto loginDto){
         String token = loginUsecase.execute(loginDtoMapper.toDomain(loginDto));

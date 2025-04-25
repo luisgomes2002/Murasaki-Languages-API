@@ -1,5 +1,6 @@
 package languages.murasaki.MurasakiLanguages.infra.beans;
 
+import languages.murasaki.MurasakiLanguages.core.entities.lesson.Lesson;
 import languages.murasaki.MurasakiLanguages.core.gateway.*;
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.CreateBacklogUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.CreateBacklogUsecaseImpl;
@@ -85,6 +86,31 @@ public class BeanConfiguration {
     @Bean
     public PublishLessonUsecase publishLessoneUsecase(LessonGateway lessonGateway, AuthenticatedUsecase authenticatedUsecase){
         return new PublishLessonUsecaseImpl(lessonGateway, authenticatedUsecase);
+    }
+
+    @Bean
+    public UpdateLessonUsecase updateLessonUsecase(LessonGateway lessonGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new UpdateLessonUsecaseImpl(lessonGateway, authenticatedUsecase);
+    }
+
+    @Bean
+    public AddWorksheetsUsecase addWorksheetsUsecase(LessonGateway lessonGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new AddWorksheetsUsecaseImpl(lessonGateway, authenticatedUsecase);
+    }
+
+    @Bean
+    public AddExplanationUsecase addExplanationUsecase(LessonGateway lessonGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new AddExplanationUsecaseImpl(lessonGateway, authenticatedUsecase);
+    }
+
+    @Bean
+    public RemoveWorksheetsUsecase removeWorksheetsUsecase(LessonGateway lessonGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new RemoveWorksheetsUsecaseImpl(lessonGateway, authenticatedUsecase);
+    }
+
+    @Bean
+    public RemoveExplanationUsecase removeExplanationUsecase(LessonGateway lessonGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new RemoveExplanationUsecaseImpl(lessonGateway, authenticatedUsecase);
     }
 
     //Explanations
@@ -195,8 +221,8 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public GetAllPlansUsecase getAllPlansUsecase(PlansGateway plansGateway, AuthenticatedUsecase authenticatedUsecase){
-        return new GetAllPlansUsecaseImpl(plansGateway, authenticatedUsecase);
+    public GetAllPlansUsecase getAllPlansUsecase(PlansGateway plansGateway){
+        return new GetAllPlansUsecaseImpl(plansGateway);
     }
 
     @Bean

@@ -11,18 +11,13 @@ import java.util.List;
 public class GetAllPlansUsecaseImpl implements GetAllPlansUsecase{
 
     private final PlansGateway plansGateway;
-    private final AuthenticatedUsecase authenticatedUsecase;
 
-    public GetAllPlansUsecaseImpl(PlansGateway plansGateway, AuthenticatedUsecase authenticatedUsecase) {
+    public GetAllPlansUsecaseImpl(PlansGateway plansGateway) {
         this.plansGateway = plansGateway;
-        this.authenticatedUsecase = authenticatedUsecase;
     }
 
     @Override
     public List<Plans> execute() {
-        UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
-
-        if(!"ADMIN".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
 
         return plansGateway.getAllPlans();
     }

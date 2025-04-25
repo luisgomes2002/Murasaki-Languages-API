@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class LessonRepositoryGateway implements LessonGateway {
@@ -53,7 +54,25 @@ public class LessonRepositoryGateway implements LessonGateway {
 
     @Override
     public Lesson updateLesson(String id, Lesson lesson) {
-        return null;
+        Optional<LessonEntity> entity = lessonRepository.findById(id);
+
+        if(entity.isPresent()){
+            LessonEntity updatedLesson = entity.get();
+
+            updatedLesson.setTitle(lesson.title());
+            updatedLesson.setText(lesson.text());
+            updatedLesson.setLinks(lesson.links());
+            updatedLesson.setLanguageType(lesson.languageType());
+            updatedLesson.setJapaneseLevels(lesson.japaneseLevels());
+            updatedLesson.setPublished(lesson.published());
+            updatedLesson.setVisibility(lesson.visibility());
+            updatedLesson.setUpdatedAt(LocalDateTime.now());
+
+            lessonRepository.save(updatedLesson);
+
+            return lessonEntityMapper.toDomain(updatedLesson);
+        }
+            return null;
     }
 
     @Override
@@ -81,5 +100,60 @@ public class LessonRepositoryGateway implements LessonGateway {
     @Override
     public boolean lessonIdExists(String id) {
         return lessonRepository.existsById(id);
+    }
+
+    @Override
+    public void addExplanation(String lessonId, String explanationId) {
+        Optional<LessonEntity> entity = lessonRepository.findById(lessonId);
+
+        if (entity.isPresent()) {
+            LessonEntity updatedLesson = entity.get();
+
+            updatedLesson.getExplanations().add(explanationId);
+
+            lessonRepository.save(updatedLesson);
+        }
+    }
+
+    @Override
+    public void addWorksheets(String lessonId, String worksheetId) {
+        Optional<LessonEntity> entity = lessonRepository.findById(lessonId);
+
+        if (entity.isPresent()) {
+            LessonEntity updatedLesson = entity.get();
+
+            updatedLesson.getWorksheets().add(worksheetId);
+
+            lessonRepository.save(updatedLesson);
+        }
+    }
+
+    @Override
+    public void removeExplanation(String lessonId, String explanationId) {
+        Optional<LessonEntity> entity = lessonRepository.findById(lessonId);
+
+        if (entity.isPresent()) {
+            LessonEntity updatedLesson = entity.get();
+
+            updatedLesson.getExplanations().remove(explanationId);
+
+            lessonRepository.save(updatedLesson);
+        }
+    }
+
+    @Override
+    public void removeWorksheets(String lessonId, String worksheetId) {
+        Optional<LessonEntity> entity = lessonRepository.findById(lessonId);
+        System.out.println(entity.isPresent());
+
+        if (entity.isPresent()) {
+            LessonEntity updatedLesson = entity.get();
+
+            updatedLesson.getWorksheets().remove(worksheetId);
+
+            System.out.println("Atualizou");
+
+            lessonRepository.save(updatedLesson);
+        }
     }
 }
