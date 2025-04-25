@@ -12,7 +12,8 @@ public class WorksheetsDtoMapper {
             worksheets.id(),
             worksheets.question(),
             worksheets.options(),
-            worksheets.answer()
+            worksheets.answer(),
+            worksheets.explanation()
         );
     }
 
@@ -21,7 +22,8 @@ public class WorksheetsDtoMapper {
             worksheetsDto.id(),
             worksheetsDto.question(),
             worksheetsDto.options(),
-            worksheetsDto.answer()
+            worksheetsDto.answer(),
+            worksheetsDto.explanation()
         );
     }
 }

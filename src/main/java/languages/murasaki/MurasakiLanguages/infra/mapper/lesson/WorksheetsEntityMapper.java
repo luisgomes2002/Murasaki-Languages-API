@@ -12,7 +12,8 @@ public class WorksheetsEntityMapper {
             worksheets.id(),
             worksheets.question(),
             worksheets.options(),
-            worksheets.answer()
+            worksheets.answer(),
+            worksheets.explanation()
         );
     }
 
@@ -21,7 +22,8 @@ public class WorksheetsEntityMapper {
             worksheetsEntity.getId(),
             worksheetsEntity.getQuestion(),
             worksheetsEntity.getOptions(),
-            worksheetsEntity.getAnswer()
+            worksheetsEntity.getAnswer(),
+            worksheetsEntity.getExplanation()
         );
     }
 }

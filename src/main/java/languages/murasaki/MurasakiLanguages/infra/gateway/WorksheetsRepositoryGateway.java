@@ -39,6 +39,7 @@ public class WorksheetsRepositoryGateway implements WorksheetsGateway {
             updatedWork.setQuestion(worksheets.question());
             updatedWork.setOptions(worksheets.options());
             updatedWork.setAnswer(worksheets.answer());
+            updatedWork.setExplanation(worksheets.explanation());
 
             workSheetsRepository.save(updatedWork);
 
