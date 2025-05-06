@@ -1,9 +1,22 @@
 # Murasaki Languages API Documentation
 
+## 🔧 Tecnologias
+
+- Java 23
+- Spring Boot
+- Spring Security + OAuth2 Resource Server
+- MapStruct
+- Testcontainers
+- Mongodb
+- JUnit 5
+- Mockito
+- Docker (para ambiente de desenvolvimento/testes)
+- AI 
+
 ## Autenticação
 Todas as rotas (exceto login e criação de usuário) requerem um token JWT no header:
 
-## 🔒 Configuração de Variáveis de Ambiente
+### 🔒 Configuração de Variáveis de Ambiente
 
 Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis ou adicione environment variables
 `SECRET=sua_chave_JWT`
@@ -38,7 +51,47 @@ Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis ou adicion
   mvn spring-boot:run
 ```
 
-## Rotas
+## Endpoints da API
+
+## Endpoints da API
+
+| Método | Caminho                                  | Descrição                     |
+|--------|------------------------------------------|-------------------------------|
+| POST   | `/api/user/login`                        | Login                         |
+| POST   | `/api/user/create`                       | Criar Usuário                 |
+| GET    | `/api/user/`                             | Listar Todos Usuários         |
+| GET    | `/api/user/list/{userId}`                | Obter Usuário por ID          |
+| PUT    | `/api/user/update/{userId}`              | Atualizar Usuário             |
+| PUT    | `/api/user/update-password/{userId}`     | Atualizar Senha do Usuário    |
+| PUT    | `/api/user/update-role/{userId}`         | Atualizar Role do Usuário     |
+| PUT    | `/api/user/update-status/{userId}`       | Atualizar Status do Usuário   |
+| DELETE | `/api/user/delete/{userId}`              | Deletar Usuário               |
+| POST   | `/api/lesson/create/{collectionId}`      | Criar Lição                   |
+| POST   | `/api/lesson/publish/{userId}/{lessonId}`| Publicar Lição                |
+| GET    | `/api/lesson/`                           | Listar Todas Lições           |
+| GET    | `/api/lesson/{lessonId}`                 | Obter Lição por ID            |
+| PUT    | `/api/lesson/update/{userId}/{lessonId}` | Atualizar Lição               |
+| DELETE | `/api/lesson/delete/{userId}/{lessonId}` | Deletar Lição                 |
+| POST   | `/api/plans/create`                      | Criar Plano                   |
+| GET    | `/api/plans/`                            | Listar Todos Planos           |
+| GET    | `/api/plans/list/{planId}`               | Obter Plano por ID            |
+| PUT    | `/api/plans/update/{planId}`             | Atualizar Plano               |
+| DELETE | `/api/plans/delete/{planId}`             | Deletar Plano                 |
+| POST   | `/api/lesson-collection/create`          | Criar Coleção de Lições       |
+| GET    | `/api/lesson-collection/`                | Listar Todas Coleções         |
+| POST   | `/api/report/create`                     | Criar Reporte                 |
+| GET    | `/api/report/`                           | Listar Todos Reportes         |
+| PUT    | `/api/report/update-status/{reportId}`   | Atualizar Status do Reporte   |
+| GET    | `/api/backlog/`                          | Listar Backlog                |
+| POST   | `/api/work-sheets/create/{userId}/{lessonId}` | Criar Worksheet         |
+| GET    | `/api/work-sheets/{worksheetId}`         | Obter Worksheet por ID        |
+| PUT    | `/api/work-sheets/update/{worksheetId}/{userId}` | Atualizar Worksheet   |
+| DELETE | `/api/work-sheets/delete/{worksheetId}/{userId}/{lessonId}` | Deletar Worksheet |
+| POST   | `/api/explanation/create/{userId}/{lessonId}` | Criar Explicação        |
+| GET    | `/api/explanation/{explanationId}`       | Obter Explicação por ID       |
+| PUT    | `/api/explanation/update/{explanationId}/{userId}` | Atualizar Explicação |
+| DELETE | `/api/explanation/delete/{userId}/{explanationId}` | Deletar Explicação   |
+
 
 ### Login
 ```
@@ -58,16 +111,6 @@ POST /api/user/create
   "email": "luis@gmail.com",
   "password": "123123123"
 }
-```
-
-### Listar Todos Usuários
-```
-GET /api/user/
-```
-
-### Obter Usuário por ID
-```
-GET /api/user/list/{userId}
 ```
 
 ### Atualizar Usuário
@@ -100,10 +143,6 @@ Body: true ou false
 ```
 
 ```
-DELETE /api/user/delete/{userId}
-```
-
-```
 POST /api/lesson/create/{collectionId}
 {
   "title": "Título da Lição",
@@ -117,24 +156,8 @@ POST /api/lesson/create/{collectionId}
 ```
 
 ```
-POST /api/lesson/publish/{userId}/{lessonId}
-```
-
-```
-GET /api/lesson/
-```
-
-```
-GET /api/lesson/{lessonId}
-```
-
-```
 PUT /api/lesson/update/{userId}/{lessonId}
 Body: (mesmo formato de criação, com campos atualizados)
-```
-
-```
-DELETE /api/lesson/delete/{userId}/{lessonId}
 ```
 
 ```
@@ -147,32 +170,18 @@ POST /api/plans/create
 }
 ```
 
-```
-GET /api/plans/
-```
-
-```
-GET /api/plans/list/{planId}
-```
 
 ```
 PUT /api/plans/update/{planId}
 Body: (mesmo formato de criação)
 ```
 
-```
-DELETE /api/plans/delete/{planId}
-```
 
 ```
 POST /api/lesson-collection/create
 {
   "languageName": "Coreano"
 }
-```
-
-```
-GET /api/lesson-collection/
 ```
 
 ```
@@ -186,16 +195,8 @@ POST /api/report/create
 ```
 
 ```
-GET /api/report/
-```
-
-```
 PUT /api/report/update-status/{reportId}
 Body: true ou false
-```
-
-```
-GET /api/backlog/
 ```
 
 ```
@@ -209,10 +210,6 @@ POST /api/work-sheets/create/{userId}/{lessonId}
 ```
 
 ```
-GET /api/work-sheets/{worksheetId}
-```
-
-```
 PUT /api/work-sheets/update/{worksheetId}/{userId}
 {
   "question": "Pergunta",
@@ -220,10 +217,6 @@ PUT /api/work-sheets/update/{worksheetId}/{userId}
   "answer": "A",
   "explanation": "Explicação da resposta"
 }
-```
-
-```
-DELETE /api/work-sheets/delete/{worksheetId}/{userId}/{lessonId}
 ```
 
 ```
@@ -236,10 +229,6 @@ POST /api/explanation/create/{userId}/{lessonId}
 ```
 
 ```
-GET /api/explanation/{explanationId}
-```
-
-```
 PUT /api/explanation/update/{explanationId}/{userId}
 {
   "phrase": "Frase em japonês",
@@ -248,6 +237,3 @@ PUT /api/explanation/update/{explanationId}/{userId}
 }
 ```
 
-```
-DELETE /api/explanation/delete/{userId}/{explanationId}
-```
