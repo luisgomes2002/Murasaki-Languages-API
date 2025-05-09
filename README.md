@@ -55,42 +55,46 @@ Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis ou adicion
 
 ## Endpoints da API
 
-| Método | Caminho                                  | Descrição                     |
-|--------|------------------------------------------|-------------------------------|
-| POST   | `/api/user/login`                        | Login                         |
-| POST   | `/api/user/create`                       | Criar Usuário                 |
-| GET    | `/api/user/`                             | Listar Todos Usuários         |
-| GET    | `/api/user/list/{userId}`                | Obter Usuário por ID          |
-| PUT    | `/api/user/update/{userId}`              | Atualizar Usuário             |
-| PUT    | `/api/user/update-password/{userId}`     | Atualizar Senha do Usuário    |
-| PUT    | `/api/user/update-role/{userId}`         | Atualizar Role do Usuário     |
-| PUT    | `/api/user/update-status/{userId}`       | Atualizar Status do Usuário   |
-| DELETE | `/api/user/delete/{userId}`              | Deletar Usuário               |
-| POST   | `/api/lesson/create/{collectionId}`      | Criar Lição                   |
-| POST   | `/api/lesson/publish/{userId}/{lessonId}`| Publicar Lição                |
-| GET    | `/api/lesson/`                           | Listar Todas Lições           |
-| GET    | `/api/lesson/{lessonId}`                 | Obter Lição por ID            |
-| PUT    | `/api/lesson/update/{userId}/{lessonId}` | Atualizar Lição               |
-| DELETE | `/api/lesson/delete/{userId}/{lessonId}` | Deletar Lição                 |
-| POST   | `/api/plans/create`                      | Criar Plano                   |
-| GET    | `/api/plans/`                            | Listar Todos Planos           |
-| GET    | `/api/plans/list/{planId}`               | Obter Plano por ID            |
-| PUT    | `/api/plans/update/{planId}`             | Atualizar Plano               |
-| DELETE | `/api/plans/delete/{planId}`             | Deletar Plano                 |
-| POST   | `/api/lesson-collection/create`          | Criar Coleção de Lições       |
-| GET    | `/api/lesson-collection/`                | Listar Todas Coleções         |
-| POST   | `/api/report/create`                     | Criar Reporte                 |
-| GET    | `/api/report/`                           | Listar Todos Reportes         |
-| PUT    | `/api/report/update-status/{reportId}`   | Atualizar Status do Reporte   |
-| GET    | `/api/backlog/`                          | Listar Backlog                |
-| POST   | `/api/work-sheets/create/{userId}/{lessonId}` | Criar Worksheet         |
-| GET    | `/api/work-sheets/{worksheetId}`         | Obter Worksheet por ID        |
-| PUT    | `/api/work-sheets/update/{worksheetId}/{userId}` | Atualizar Worksheet   |
-| DELETE | `/api/work-sheets/delete/{worksheetId}/{userId}/{lessonId}` | Deletar Worksheet |
-| POST   | `/api/explanation/create/{userId}/{lessonId}` | Criar Explicação        |
-| GET    | `/api/explanation/{explanationId}`       | Obter Explicação por ID       |
-| PUT    | `/api/explanation/update/{explanationId}/{userId}` | Atualizar Explicação |
-| DELETE | `/api/explanation/delete/{userId}/{explanationId}` | Deletar Explicação   |
+| Método | Caminho                                                     | Descrição                             |
+|--------|-------------------------------------------------------------|---------------------------------------|
+| POST   | `/api/user/login`                                           | Login                                 |
+| POST   | `/api/user/create`                                          | Criar Usuário                         |
+| GET    | `/api/user/`                                                | Listar Todos Usuários                 |
+| GET    | `/api/user/list/{userId}`                                   | Obter Usuário por ID                  |
+| PUT    | `/api/user/update/{userId}`                                 | Atualizar Usuário                     |
+| PUT    | `/api/user/update-password/{userId}`                        | Atualizar Senha do Usuário            |
+| PUT    | `/api/user/update-role/{userId}`                            | Atualizar Role do Usuário             |
+| PUT    | `/api/user/update-status/{userId}`                          | Atualizar Status do Usuário           |
+| DELETE | `/api/user/delete/{userId}`                                 | Deletar Usuário                       |
+| POST   | `/api/lesson/create/{collectionId}`                         | Criar Lição                           |
+| POST   | `/api/lesson/publish/{userId}/{lessonId}`                   | Publicar Lição                        |
+| GET    | `/api/lesson/`                                              | Listar Todas Lições                   |
+| GET    | `/api/lesson/visibility/{visibility}`                       | Obter Lições publicas ou privadas     |
+| GET    | `/api/lesson/published/{published}`                         | Obter Lições postadas ou não postadas |
+| GET    | `/api/lesson/public`                                        | Obter Lições publicas                 |
+| GET    | `/api/lesson/published-true`                                | Obter Lições publicadas               |
+| GET    | `/api/lesson/{id}`                                          | Obter Lição por ID                    |
+| PUT    | `/api/lesson/update/{userId}/{lessonId}`                    | Atualizar Lição                       |
+| DELETE | `/api/lesson/delete/{userId}/{lessonId}`                    | Deletar Lição                         |
+| POST   | `/api/plans/create`                                         | Criar Plano                           |
+| GET    | `/api/plans/`                                               | Listar Todos Planos                   |
+| GET    | `/api/plans/list/{planId}`                                  | Obter Plano por ID                    |
+| PUT    | `/api/plans/update/{planId}`                                | Atualizar Plano                       |
+| DELETE | `/api/plans/delete/{planId}`                                | Deletar Plano                         |
+| POST   | `/api/lesson-collection/create`                             | Criar Coleção de Lições               |
+| GET    | `/api/lesson-collection/`                                   | Listar Todas Coleções                 |
+| POST   | `/api/report/create`                                        | Criar Reporte                         |
+| GET    | `/api/report/`                                              | Listar Todos Reportes                 |
+| PUT    | `/api/report/update-status/{reportId}`                      | Atualizar Status do Reporte           |
+| GET    | `/api/backlog/`                                             | Listar Backlog                        |
+| POST   | `/api/work-sheets/create/{userId}/{lessonId}`               | Criar Worksheet                       |
+| GET    | `/api/work-sheets/{worksheetId}`                            | Obter Worksheet por ID                |
+| PUT    | `/api/work-sheets/update/{worksheetId}/{userId}`            | Atualizar Worksheet                   |
+| DELETE | `/api/work-sheets/delete/{worksheetId}/{userId}/{lessonId}` | Deletar Worksheet                     |
+| POST   | `/api/explanation/create/{userId}/{lessonId}`               | Criar Explicação                      |
+| GET    | `/api/explanation/{explanationId}`                          | Obter Explicação por ID               |
+| PUT    | `/api/explanation/update/{explanationId}/{userId}`          | Atualizar Explicação                  |
+| DELETE | `/api/explanation/delete/{userId}/{explanationId}`          | Deletar Explicação                    |
 
 
 ### Login
