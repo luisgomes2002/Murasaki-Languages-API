@@ -1,11 +1,12 @@
 package languages.murasaki.MurasakiLanguages.infra.beans;
 
-import languages.murasaki.MurasakiLanguages.core.entities.lesson.Lesson;
 import languages.murasaki.MurasakiLanguages.core.gateway.*;
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.CreateBacklogUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.CreateBacklogUsecaseImpl;
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.GetAllBacklogUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.GetAllBacklogUsecaseImpl;
+import languages.murasaki.MurasakiLanguages.core.usecases.email.SendEmailUsecase;
+import languages.murasaki.MurasakiLanguages.core.usecases.email.SendEmailUsecaseImpl;
 import languages.murasaki.MurasakiLanguages.core.usecases.lesson.explanation.*;
 import languages.murasaki.MurasakiLanguages.core.usecases.lesson.lesson.*;
 import languages.murasaki.MurasakiLanguages.core.usecases.lesson.worksheets.*;
@@ -253,5 +254,11 @@ public class BeanConfiguration {
     @Bean
     public UpdatePlanUsecase updatePlanUsecase(PlansGateway plansGateway, AuthenticatedUsecase authenticatedUsecase){
         return new UpdatePlanUsecaseImpl(plansGateway, authenticatedUsecase);
+    }
+
+    // Mail
+    @Bean
+    public SendEmailUsecase sendEmailUsecase(EmailGateway emailGateway){
+        return new SendEmailUsecaseImpl(emailGateway);
     }
 }

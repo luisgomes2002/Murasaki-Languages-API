@@ -35,11 +35,12 @@ public class UserEntity implements UserDetails{
     private List<String> notificationsId;
     private List<String> postsId;
     private boolean isEnabled;
+    private boolean isBanned;
 
     public UserEntity() {
     }
 
-    public UserEntity(String id, String name, String username, Gender gender, LocalDate birth, String email, String password, String icon, String background, List<String> followersId, List<String> followingId, LocalDateTime createdAt, LocalDateTime updatedAt, String about, UserType userType, List<String> notificationsId, List<String> postsId, boolean isEnabled) {
+    public UserEntity(String id, String name, String username, Gender gender, LocalDate birth, String email, String password, String icon, String background, List<String> followersId, List<String> followingId, LocalDateTime createdAt, LocalDateTime updatedAt, String about, UserType userType, List<String> notificationsId, List<String> postsId, boolean isEnabled, boolean isBanned) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -58,6 +59,7 @@ public class UserEntity implements UserDetails{
         this.notificationsId = notificationsId;
         this.postsId = postsId;
         this.isEnabled = isEnabled;
+        this.isBanned = isBanned;
     }
 
     public String getId() {
@@ -196,6 +198,14 @@ public class UserEntity implements UserDetails{
 
     public void setPostsId(List<String> postsId) {
         this.postsId = postsId;
+    }
+
+    public boolean isBanned() {
+        return isBanned;
+    }
+
+    public void setBanned(boolean banned) {
+        isBanned = banned;
     }
 
     @Override

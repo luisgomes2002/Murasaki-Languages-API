@@ -51,5 +51,21 @@ public class ControllerExceptionsHandler {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(UserBannedException.class)
+    public ResponseEntity<Map<String, String>> handleUserBannedException(UserBannedException exception){
+        Map<String, String> response = new HashMap<>();
+        response.put("Error", exception.getMessage());
+        response.put("Message", "Usuário banido, entre em contato com a via email");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UserNotEnabledException.class)
+    public ResponseEntity<Map<String, String>> handleUserNotEnabledException(UserNotEnabledException exception) {
+        Map<String, String> response = new HashMap<>();
+        response.put("Error", exception.getMessage());
+        response.put("Message", "E-mail não verificado. Confirme sua conta através do link enviado para sua caixa de entrada.");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
     // Update password
 }

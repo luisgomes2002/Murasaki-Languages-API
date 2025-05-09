@@ -25,6 +25,7 @@ public record User(String id,
                    UserType userType,
                    List<String> notificationsId,
                    List<String> postsId,
-                   boolean isEnabled
+                   boolean isEnabled,
+                   boolean isBanned
 ) implements Serializable {
 }

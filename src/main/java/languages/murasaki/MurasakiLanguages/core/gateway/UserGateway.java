@@ -22,4 +22,6 @@ public interface UserGateway {
 
     boolean userAlreadyCreated(String email);
     boolean userIdExists(String id);
+    boolean userIsBanned(String email);
+    boolean userisEnabled(String email);
 }

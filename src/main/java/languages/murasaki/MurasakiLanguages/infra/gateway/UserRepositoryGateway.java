@@ -89,6 +89,8 @@ public class UserRepositoryGateway implements UserGateway {
             updatedUser.setAbout(user.about());
             updatedUser.setGender(user.gender());
             updatedUser.setBirth(user.birth());
+            updatedUser.setEnabled(false);
+            updatedUser.setBanned(false);
             updatedUser.setUpdatedAt(LocalDateTime.now());
 
             updatedUser.setCreatedAt(entity.get().getCreatedAt());
@@ -136,6 +138,16 @@ public class UserRepositoryGateway implements UserGateway {
     @Override
     public boolean userIdExists(String id) {
         return userRepository.existsById(id);
+    }
+
+    @Override
+    public boolean userIsBanned(String email) {
+        return userRepository.findUserByEmail(email).map(UserEntity::isBanned).orElse(false);
+    }
+
+    @Override
+    public boolean userisEnabled(String email) {
+        return userRepository.findUserByEmail(email).map(UserEntity::isEnabled).orElse(false);
     }
 
     @Override

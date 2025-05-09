@@ -1,9 +1,11 @@
 package languages.murasaki.MurasakiLanguages.infra.presentation;
 
 import languages.murasaki.MurasakiLanguages.core.entities.backlog.Backlog;
+import languages.murasaki.MurasakiLanguages.core.entities.email.Email;
 import languages.murasaki.MurasakiLanguages.core.entities.user.User;
 import languages.murasaki.MurasakiLanguages.core.enums.UserType;
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.CreateBacklogUsecase;
+import languages.murasaki.MurasakiLanguages.core.usecases.email.SendEmailUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.user.*;
 import languages.murasaki.MurasakiLanguages.infra.dtos.user.LoginDto;
 import languages.murasaki.MurasakiLanguages.infra.dtos.user.UserDto;
@@ -36,8 +38,9 @@ public class UserController {
     private final UpdateUserPasswordUsecase updateUserPasswordUsecase;
     private final UpdateUserTypeUsecase updateUserTypeUsecase;
     private final UpdateUserEnableUsecase updateUserEnableUsecase;
+    private final SendEmailUsecase sendEmailUsecase;
 
-    public UserController(CreateUserUsecase createUserUsecase, LoginUsecase loginUsecase, GetAllUsersUseCase getAllUsersUseCase, UserDtoMapper userDtoMapper, LoginDtoMapper loginDtoMapper, UserResponseDtoMapper userResponseDtoMapper, CreateBacklogUsecase createBacklogUsecase, GetUserByIdUsecase getUserByIdUsecase, DeleteUserUsecase deleteUserUsecase, UpdateUserUsecase updateUserUsecase, UpdateUserPasswordUsecase updateUserPasswordUsecase, UpdateUserTypeUsecase updateUserTypeUsecase, UpdateUserEnableUsecase updateUserEnableUsecase) {
+    public UserController(CreateUserUsecase createUserUsecase, LoginUsecase loginUsecase, GetAllUsersUseCase getAllUsersUseCase, UserDtoMapper userDtoMapper, LoginDtoMapper loginDtoMapper, UserResponseDtoMapper userResponseDtoMapper, CreateBacklogUsecase createBacklogUsecase, GetUserByIdUsecase getUserByIdUsecase, DeleteUserUsecase deleteUserUsecase, UpdateUserUsecase updateUserUsecase, UpdateUserPasswordUsecase updateUserPasswordUsecase, UpdateUserTypeUsecase updateUserTypeUsecase, UpdateUserEnableUsecase updateUserEnableUsecase, SendEmailUsecase sendEmailUsecase) {
         this.createUserUsecase = createUserUsecase;
         this.loginUsecase = loginUsecase;
         this.getAllUsersUseCase = getAllUsersUseCase;
@@ -51,6 +54,7 @@ public class UserController {
         this.updateUserPasswordUsecase = updateUserPasswordUsecase;
         this.updateUserTypeUsecase = updateUserTypeUsecase;
         this.updateUserEnableUsecase = updateUserEnableUsecase;
+        this.sendEmailUsecase = sendEmailUsecase;
     }
 
     @PostMapping("create")
@@ -59,8 +63,12 @@ public class UserController {
         Map<String, Object > response = new HashMap<>();
         response.put("Message: ", "Usuário criado com sucesso.");
 
-        Backlog backlog = new Backlog(null, userDto.id(),newUser.name() + " criou uma conta", null);
+        Backlog backlog = new Backlog(null, newUser.id(),newUser.name() + " criou uma conta", null);
         createBacklogUsecase.execute(backlog);
+
+        Email newEmail = new Email(newUser.email(),"Confirmação de Cadastro", "Olá! Obrigado por se cadastrar. Clique no link abaixo para confirmar seu e-mail:\n" +
+                "http://localhost:8080/api/confirm?email=" + newUser.id());
+        sendEmailUsecase.execute(newEmail);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
