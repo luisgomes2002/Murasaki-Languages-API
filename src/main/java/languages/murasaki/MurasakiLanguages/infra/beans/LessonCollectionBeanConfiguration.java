@@ -1,0 +1,31 @@
+package languages.murasaki.MurasakiLanguages.infra.beans;
+
+import languages.murasaki.MurasakiLanguages.core.gateway.LessonCollectionGateway;
+import languages.murasaki.MurasakiLanguages.core.usecases.lessoncollection.*;
+import languages.murasaki.MurasakiLanguages.core.usecases.security.AuthenticatedUsecase;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class LessonCollectionBeanConfiguration {
+
+    @Bean
+    public CreateLessonCollectionUsecase createLessonCollectionUsecase(LessonCollectionGateway lessonCollectionGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new CreateLessonCollectionUsecaseImpl(lessonCollectionGateway, authenticatedUsecase);
+    }
+
+    @Bean
+    public GetAllCollectionsUsecase getAllCollectionsUsecase(LessonCollectionGateway lessonCollectionGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new GetAllCollectionsUsecaseImpl(lessonCollectionGateway, authenticatedUsecase);
+    }
+
+    @Bean
+    public GetLessonCollectionByIdUsecase getLessonCollectionByIdUsecase(LessonCollectionGateway lessonCollectionGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new GetLessonCollectionByIdUsecaseImpl(lessonCollectionGateway, authenticatedUsecase);
+    }
+
+    @Bean
+    public PublishLessonInCollectionUsecase publishLessonInCollectionUsecase(LessonCollectionGateway lessonCollectionGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new PublishLessonInCollectionUsecaseImpl(lessonCollectionGateway, authenticatedUsecase);
+    }
+}
