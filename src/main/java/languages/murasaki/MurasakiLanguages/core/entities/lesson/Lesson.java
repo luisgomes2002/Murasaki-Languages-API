@@ -8,5 +8,18 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public record Lesson(String id, String title, String text, List<String> explanations, List<String> worksheets, List<String> links, String username, LanguageType languageType, JapaneseLevels japaneseLevels, LocalDateTime createAt, LocalDateTime updatedAt, boolean published, Visibility visibility) implements Serializable {
+public record Lesson(String id,
+                     String title,
+                     String text,
+                     List<String> explanations,
+                     List<String> worksheets,
+                     List<String> links,
+                     String username,
+                     LanguageType languageType,
+                     JapaneseLevels japaneseLevels,
+                     LocalDateTime createAt,
+                     LocalDateTime updatedAt,
+                     boolean published,
+                     Visibility visibility
+) implements Serializable {
 }

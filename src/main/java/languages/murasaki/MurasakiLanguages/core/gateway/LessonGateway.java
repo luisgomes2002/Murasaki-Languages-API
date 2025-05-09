@@ -1,6 +1,7 @@
 package languages.murasaki.MurasakiLanguages.core.gateway;
 
 import languages.murasaki.MurasakiLanguages.core.entities.lesson.Lesson;
+import languages.murasaki.MurasakiLanguages.core.enums.Visibility;
 
 import java.util.List;
 
@@ -10,6 +11,10 @@ public interface LessonGateway {
     List<Lesson> getAllLessons();
     Lesson getLessonById(String id);
     Lesson updateLesson(String id, Lesson lesson);
+    List<Lesson> getLessonsByVisibility(Visibility visibility);
+    List<Lesson> getLessonsByPublished(boolean published);
+    List<Lesson> getPublicLessons();
+    List<Lesson> getLessonsByPublishedTrue();
 
     void deleteLesson(String id);
     void addExplanation(String lessonId, String explanationId);

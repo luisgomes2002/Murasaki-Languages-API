@@ -5,7 +5,7 @@ import languages.murasaki.MurasakiLanguages.core.gateway.ReportGateway;
 import languages.murasaki.MurasakiLanguages.infra.mapper.report.ReportEntityMapper;
 import languages.murasaki.MurasakiLanguages.infra.persistence.report.ReportEntity;
 import languages.murasaki.MurasakiLanguages.infra.persistence.report.ReportRepository;
-import languages.murasaki.MurasakiLanguages.infra.persistence.user.UserEntity;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -32,6 +32,7 @@ public class ReportRepositoryGateway implements ReportGateway {
     }
 
     @Override
+    @Cacheable(value = "all-reports")
     public List<Report> getAllReports() {
         return reportRepository.findAll().stream().map(reportEntityMapper::toDomain).toList();
     }

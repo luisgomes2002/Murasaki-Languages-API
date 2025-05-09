@@ -4,27 +4,26 @@ import languages.murasaki.MurasakiLanguages.core.entities.lesson.Lesson;
 import languages.murasaki.MurasakiLanguages.core.entities.user.UserInfo;
 import languages.murasaki.MurasakiLanguages.core.gateway.LessonGateway;
 import languages.murasaki.MurasakiLanguages.core.usecases.security.AuthenticatedUsecase;
-import languages.murasaki.MurasakiLanguages.infra.exceptions.IdNotFoundException;
 import languages.murasaki.MurasakiLanguages.infra.exceptions.UserDoesNotHavePermissionException;
 
-public class GetLessonByIdUsecaseImpl implements GetLessonByIdUsecase {
+import java.util.List;
+
+public class GetLessonsByPublishedUsecaseImpl implements GetLessonsByPublishedUsecase {
 
     private final LessonGateway lessonGateway;
     private final AuthenticatedUsecase authenticatedUsecase;
 
-    public GetLessonByIdUsecaseImpl(LessonGateway lessonGateway, AuthenticatedUsecase authenticatedUsecase) {
+    public GetLessonsByPublishedUsecaseImpl(LessonGateway lessonGateway, AuthenticatedUsecase authenticatedUsecase) {
         this.lessonGateway = lessonGateway;
         this.authenticatedUsecase = authenticatedUsecase;
     }
 
     @Override
-    public Lesson execute(String id) {
+    public List<Lesson> execute(boolean published) {
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
         if(!"ADMIN".equals(userInfo.userType()) && !"MOD".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
 
-        if(!lessonGateway.lessonIdExists(id)) throw new IdNotFoundException("Aula não encontrado");
-
-        return lessonGateway.getLessonById(id);
+        return lessonGateway.getLessonsByPublished(published);
     }
 }

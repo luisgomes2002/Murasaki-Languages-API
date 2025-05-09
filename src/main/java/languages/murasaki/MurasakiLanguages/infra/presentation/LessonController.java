@@ -2,6 +2,7 @@ package languages.murasaki.MurasakiLanguages.infra.presentation;
 
 import languages.murasaki.MurasakiLanguages.core.entities.backlog.Backlog;
 import languages.murasaki.MurasakiLanguages.core.entities.lesson.Lesson;
+import languages.murasaki.MurasakiLanguages.core.enums.Visibility;
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.CreateBacklogUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.lesson.lesson.*;
 import languages.murasaki.MurasakiLanguages.core.usecases.lessoncollection.PublishLessonInCollectionUsecase;
@@ -28,8 +29,12 @@ public class LessonController {
     private final DeleteLessonUsecase deleteLessonUsecase;
     private final CreateBacklogUsecase createBacklogUsecase;
     private final UpdateLessonUsecase updateLessonUsecase;
+    private final GetLessonsByPublishedTrueUsecase getLessonsByPublishedTrueUsecase;
+    private final GetLessonsByPublishedUsecase getLessonsByPublishedUsecase;
+    private final GetLessonsByVisibilityUsecase getLessonsByVisibilityUsecase;
+    private final GetPublicLessonsUsecase getPublicLessonsUsecase;
 
-    public LessonController(CreateLessonUsecase createLessonUsecase, PublishLessonUsecase publishLessonUsecase, LessonDtoMapper lessonDtoMapper, PublishLessonInCollectionUsecase publishLessonInCollectionUsecase, GetAllLessonUsecase getAllLessonUsecase, GetLessonByIdUsecase getLessonByIdUsecase, DeleteLessonUsecase deleteLessonUsecase, CreateBacklogUsecase createBacklogUsecase, UpdateLessonUsecase updateLessonUsecase) {
+    public LessonController(CreateLessonUsecase createLessonUsecase, PublishLessonUsecase publishLessonUsecase, LessonDtoMapper lessonDtoMapper, PublishLessonInCollectionUsecase publishLessonInCollectionUsecase, GetAllLessonUsecase getAllLessonUsecase, GetLessonByIdUsecase getLessonByIdUsecase, DeleteLessonUsecase deleteLessonUsecase, CreateBacklogUsecase createBacklogUsecase, UpdateLessonUsecase updateLessonUsecase, GetLessonsByPublishedTrueUsecase getLessonsByPublishedTrueUsecase, GetLessonsByPublishedUsecase getLessonsByPublishedUsecase, GetLessonsByVisibilityUsecase getLessonsByVisibilityUsecase, GetPublicLessonsUsecase getPublicLessonsUsecase) {
         this.createLessonUsecase = createLessonUsecase;
         this.publishLessonUsecase = publishLessonUsecase;
         this.lessonDtoMapper = lessonDtoMapper;
@@ -39,6 +44,10 @@ public class LessonController {
         this.deleteLessonUsecase = deleteLessonUsecase;
         this.createBacklogUsecase = createBacklogUsecase;
         this.updateLessonUsecase = updateLessonUsecase;
+        this.getLessonsByPublishedTrueUsecase = getLessonsByPublishedTrueUsecase;
+        this.getLessonsByPublishedUsecase = getLessonsByPublishedUsecase;
+        this.getLessonsByVisibilityUsecase = getLessonsByVisibilityUsecase;
+        this.getPublicLessonsUsecase = getPublicLessonsUsecase;
     }
 
     @PostMapping("create/{userId}")
@@ -56,6 +65,26 @@ public class LessonController {
 
     @GetMapping("/")
     public List<Lesson> getAllLessons(){ return getAllLessonUsecase.execute(); }
+
+    @GetMapping("visibility/{visibility}")
+    public List<Lesson> getLessonsByVisibility(@PathVariable String visibility) {
+        return getLessonsByVisibilityUsecase.execute(Visibility.valueOf(visibility.toUpperCase()));
+    }
+
+    @GetMapping("published/{published}")
+    public List<Lesson> getLessonsByPublished(@PathVariable boolean published) {
+        return getLessonsByPublishedUsecase.execute(published);
+    }
+
+    @GetMapping("public")
+    public List<Lesson> getPublicLessons() {
+        return getPublicLessonsUsecase.execute();
+    }
+
+    @GetMapping("published-true")
+    public List<Lesson> getLessonsByPublishedTrue() {
+        return getLessonsByPublishedTrueUsecase.execute();
+    }
 
     @GetMapping("{id}")
     public Lesson getLessonById(@PathVariable String id){ return getLessonByIdUsecase.execute(id); }

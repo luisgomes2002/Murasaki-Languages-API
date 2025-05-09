@@ -58,9 +58,8 @@ public class UserController {
         User newUser = createUserUsecase.execute(userDtoMapper.toDomain(userDto));
         Map<String, Object > response = new HashMap<>();
         response.put("Message: ", "Usuário criado com sucesso.");
-        response.put("User data: ", userResponseDtoMapper.toDto(newUser));
 
-        Backlog backlog = new Backlog(null, userDto.id(),  newUser.name() + " criou uma conta", null);
+        Backlog backlog = new Backlog(null, userDto.id(),newUser.name() + " criou uma conta", null);
         createBacklogUsecase.execute(backlog);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -83,7 +82,7 @@ public class UserController {
         response.put("Message: ", "Usuário atualizado");
         response.put("User data: ", userResponseDtoMapper.toDto(user));
 
-        Backlog backlog = new Backlog(null, id, "Atualizou as informações da conta: " + userDto.name(), null);
+        Backlog backlog = new Backlog(null, id,"Atualizou as informações da conta: " + userDto.name(), null);
         createBacklogUsecase.execute(backlog);
 
         return ResponseEntity.status(HttpStatus.OK).body(response);

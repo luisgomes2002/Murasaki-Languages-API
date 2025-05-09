@@ -69,13 +69,33 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public GetAllLessonUsecase getAllLessonUsecase(LessonGateway lessonGateway, AuthenticatedUsecase authenticatedUsecase){
-        return new GetAllLessonUsecaseImpl(lessonGateway, authenticatedUsecase);
+    public GetAllLessonUsecase getAllLessonUsecase(LessonGateway lessonGateway){
+        return new GetAllLessonUsecaseImpl(lessonGateway);
     }
 
     @Bean
     public GetLessonByIdUsecase getLessonByIdUsecase(LessonGateway lessonGateway, AuthenticatedUsecase authenticatedUsecase){
         return new GetLessonByIdUsecaseImpl(lessonGateway, authenticatedUsecase);
+    }
+
+    @Bean
+    public GetLessonsByPublishedTrueUsecase getLessonsByPublishedTrueUsecase(LessonGateway lessonGateway) {
+        return new GetLessonsByPublishedTrueUsecaseImpl(lessonGateway);
+    }
+
+    @Bean
+    public GetLessonsByPublishedUsecase getLessonsByPublishedUsecase(LessonGateway lessonGateway,AuthenticatedUsecase authenticatedUsecase ){
+        return new GetLessonsByPublishedUsecaseImpl(lessonGateway, authenticatedUsecase);
+    }
+
+    @Bean
+    public GetLessonsByVisibilityUsecase getLessonsByVisibilityUsecase(LessonGateway lessonGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new GetLessonsByVisibilityUsecaseImpl(lessonGateway, authenticatedUsecase);
+    }
+
+    @Bean
+    public GetPublicLessonsUsecase getPublicLessonsUsecase(LessonGateway lessonGateway){
+        return new GetPublicLessonsUsecaseImpl(lessonGateway);
     }
 
     @Bean

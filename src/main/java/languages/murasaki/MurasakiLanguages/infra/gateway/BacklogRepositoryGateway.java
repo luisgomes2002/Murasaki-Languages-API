@@ -5,6 +5,7 @@ import languages.murasaki.MurasakiLanguages.core.gateway.BacklogGateway;
 import languages.murasaki.MurasakiLanguages.infra.mapper.backlog.BacklogEntityMapper;
 import languages.murasaki.MurasakiLanguages.infra.persistence.backlog.BacklogEntity;
 import languages.murasaki.MurasakiLanguages.infra.persistence.backlog.BacklogRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -30,6 +31,7 @@ public class BacklogRepositoryGateway implements BacklogGateway {
     }
 
     @Override
+    @Cacheable(value = "all-backlogs")
     public List<Backlog> getAllBacklog() {
         return backlogRepository.findAll().stream().map(backlogEntityMapper::toDomain).toList();
     }

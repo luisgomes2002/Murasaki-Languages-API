@@ -42,6 +42,7 @@ public class LessonRepositoryGateway implements LessonGateway {
     }
 
     @Override
+    @Cacheable(value = "all-lessons")
     public List<Lesson> getAllLessons() {
         return lessonRepository.findAll().stream().map(lessonEntityMapper::toDomain).toList();
     }
@@ -50,6 +51,37 @@ public class LessonRepositoryGateway implements LessonGateway {
     @Cacheable(value = "lesson", key = "#id")
     public Lesson getLessonById(String id) {
         return lessonRepository.findById(id).map(lessonEntityMapper::toDomain).orElse(null);
+    }
+
+    @Override
+    public List<Lesson> getLessonsByPublished(boolean published) {
+        return lessonRepository.findByPublished(published)
+                .stream()
+                .map(lessonEntityMapper::toDomain)
+                .toList();
+    }
+
+    @Override
+    public List<Lesson> getLessonsByPublishedTrue() {
+        return lessonRepository.findByPublished(true)
+                .stream()
+                .map(lessonEntityMapper::toDomain)
+                .toList();
+    }
+
+    @Override
+    public List<Lesson> getLessonsByVisibility(Visibility visibility) {
+        return lessonRepository.findByVisibility(visibility)
+                .stream()
+                .map(lessonEntityMapper::toDomain)
+                .toList();
+    }
+
+    public List<Lesson> getPublicLessons() {
+        return lessonRepository.findByVisibility(Visibility.PUBLIC)
+                .stream()
+                .map(lessonEntityMapper::toDomain)
+                .toList();
     }
 
     @Override
@@ -150,8 +182,6 @@ public class LessonRepositoryGateway implements LessonGateway {
             LessonEntity updatedLesson = entity.get();
 
             updatedLesson.getWorksheets().remove(worksheetId);
-
-            System.out.println("Atualizou");
 
             lessonRepository.save(updatedLesson);
         }

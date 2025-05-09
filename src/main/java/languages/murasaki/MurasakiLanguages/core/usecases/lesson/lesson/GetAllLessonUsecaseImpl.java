@@ -11,19 +11,13 @@ import java.util.List;
 public class GetAllLessonUsecaseImpl implements GetAllLessonUsecase {
 
     private final LessonGateway lessonGateway;
-    private final AuthenticatedUsecase authenticatedUsecase;
 
-    public GetAllLessonUsecaseImpl(LessonGateway lessonGateway, AuthenticatedUsecase authenticatedUsecase) {
+    public GetAllLessonUsecaseImpl(LessonGateway lessonGateway) {
         this.lessonGateway = lessonGateway;
-        this.authenticatedUsecase = authenticatedUsecase;
     }
 
     @Override
     public List<Lesson> execute() {
-        UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
-
-        if(!"ADMIN".equals(userInfo.userType()) && !"MOD".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
-
         return lessonGateway.getAllLessons();
     }
 }

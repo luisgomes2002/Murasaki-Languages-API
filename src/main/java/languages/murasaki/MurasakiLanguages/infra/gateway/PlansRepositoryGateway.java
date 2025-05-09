@@ -30,6 +30,7 @@ public class PlansRepositoryGateway implements PlansGateway {
     }
 
     @Override
+    @Cacheable(value = "all-plans")
     public List<Plans> getAllPlans() {
         return plansRepository.findAll().stream().map(plansEntityMapper::toDomain).toList();
     }

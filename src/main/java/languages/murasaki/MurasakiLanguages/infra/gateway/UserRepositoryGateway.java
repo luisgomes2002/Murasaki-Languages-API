@@ -58,6 +58,7 @@ public class UserRepositoryGateway implements UserGateway {
     }
 
     @Override
+    @Cacheable(value = "all-user")
     public List<User> getAllUsers() {
         return userRepository.findAll().stream().map(userEntityMapper::toDomain).toList();
     }
