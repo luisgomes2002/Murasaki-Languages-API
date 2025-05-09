@@ -20,7 +20,7 @@ public class LoginUsecaseImpl implements LoginUsecase{
 
         if(userGateway.userIsBanned(login.email())) throw new UserBannedException("Usuário não tem permissão para fazer essa ação!");
 
-        if(!userGateway.userisEnabled(login.email())) throw new UserNotEnabledException("Usuário não tem permissão para fazer essa ação!");
+        if(!userGateway.userIsEnabled(login.email())) throw new UserNotEnabledException("Usuário não tem permissão para fazer essa ação!");
 
         return userGateway.login(login);
     }

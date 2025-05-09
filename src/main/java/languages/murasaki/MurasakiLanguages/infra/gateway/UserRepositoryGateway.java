@@ -146,7 +146,7 @@ public class UserRepositoryGateway implements UserGateway {
     }
 
     @Override
-    public boolean userisEnabled(String email) {
+    public boolean userIsEnabled(String email) {
         return userRepository.findUserByEmail(email).map(UserEntity::isEnabled).orElse(false);
     }
 

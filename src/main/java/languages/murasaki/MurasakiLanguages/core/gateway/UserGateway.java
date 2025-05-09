@@ -15,7 +15,7 @@ public interface UserGateway {
     User updateUserPassword(String id, String newPassword);
 
     void deleteUser(String id);
-    void updateUserType(String id ,UserType type);
+    void updateUserType(String id, UserType type);
     void isEnable(String id, boolean isEnable);
 
     String login(Login login);
@@ -23,5 +23,5 @@ public interface UserGateway {
     boolean userAlreadyCreated(String email);
     boolean userIdExists(String id);
     boolean userIsBanned(String email);
-    boolean userisEnabled(String email);
+    boolean userIsEnabled(String email);
 }
