@@ -1,6 +1,6 @@
 package languages.murasaki.MurasakiLanguages.infra.gateway;
 
-import languages.murasaki.MurasakiLanguages.core.entities.lessonCollection.lessonCollection;
+import languages.murasaki.MurasakiLanguages.core.entities.lessoncollection.lessonCollection;
 import languages.murasaki.MurasakiLanguages.core.gateway.LessonCollectionGateway;
 import languages.murasaki.MurasakiLanguages.infra.mapper.lessoncollection.LessonCollectionEntityMapper;
 import languages.murasaki.MurasakiLanguages.infra.persistence.lessoncollection.LessonsCollectionEntity;

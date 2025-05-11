@@ -1,20 +1,23 @@
 package languages.murasaki.MurasakiLanguages.infra.persistence.user;
 
+
 public class UserInfoEntity {
 
     private String userId;
     private String username;
     private String userType;
     private String email;
+    private String subscription;
 
     public UserInfoEntity() {
     }
 
-    public UserInfoEntity(String userId, String username, String userType, String email) {
+    public UserInfoEntity(String userId, String username, String userType, String email, String subscription) {
         this.userId = userId;
         this.username = username;
         this.userType = userType;
         this.email = email;
+        this.subscription = subscription;
     }
 
     public String getUserId() {
@@ -47,5 +50,13 @@ public class UserInfoEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getSubscription() {
+        return subscription;
+    }
+
+    public void setSubscription(String subscription) {
+        this.subscription = subscription;
     }
 }

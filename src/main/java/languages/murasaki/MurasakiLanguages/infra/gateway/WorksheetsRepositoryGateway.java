@@ -59,4 +59,13 @@ public class WorksheetsRepositoryGateway implements WorksheetsGateway {
     public void deleteWorksheets(String id) {
         workSheetsRepository.deleteById(id);
     }
+
+    @Override
+    public String answerWorkSheet(Worksheets worksheets) {
+        if(worksheets.userAnswer().equals(worksheets.answer()))
+            return null;
+        else
+            return worksheets.explanation();
+
+    }
 }

@@ -27,7 +27,8 @@ public class UserEntityMapper {
             user.notificationsId(),
             user.postsId(),
             user.isEnabled(),
-            user.isBanned()
+            user.isBanned(),
+            user.subscription()
         );
     }
 
@@ -51,7 +52,8 @@ public class UserEntityMapper {
             userEntity.getNotificationsId(),
             userEntity.getPostsId(),
             userEntity.isEnabled(),
-            userEntity.isBanned()
+            userEntity.isBanned(),
+            userEntity.getSubscription()
         );
     }
 }

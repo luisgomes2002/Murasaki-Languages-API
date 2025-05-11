@@ -1,6 +1,6 @@
 package languages.murasaki.MurasakiLanguages.infra.mapper.lessoncollection;
 
-import languages.murasaki.MurasakiLanguages.core.entities.lessonCollection.lessonCollection;
+import languages.murasaki.MurasakiLanguages.core.entities.lessoncollection.lessonCollection;
 import languages.murasaki.MurasakiLanguages.infra.dtos.lessoncollection.LessonCollectionDto;
 import org.springframework.stereotype.Component;
 

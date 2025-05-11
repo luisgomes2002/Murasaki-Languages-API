@@ -9,4 +9,5 @@ public interface WorksheetsGateway {
     Worksheets getWorksheetsById(String id);
 
     void deleteWorksheets(String id);
+    String answerWorkSheet(Worksheets worksheets);
 }

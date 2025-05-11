@@ -1,6 +1,7 @@
 package languages.murasaki.MurasakiLanguages.core.entities.user;
 
 import languages.murasaki.MurasakiLanguages.core.enums.Gender;
+import languages.murasaki.MurasakiLanguages.core.enums.SubscriptionType;
 import languages.murasaki.MurasakiLanguages.core.enums.UserType;
 
 import java.io.Serializable;
@@ -26,6 +27,7 @@ public record User(String id,
                    List<String> notificationsId,
                    List<String> postsId,
                    boolean isEnabled,
-                   boolean isBanned
+                   boolean isBanned,
+                   SubscriptionType subscription
 ) implements Serializable {
 }

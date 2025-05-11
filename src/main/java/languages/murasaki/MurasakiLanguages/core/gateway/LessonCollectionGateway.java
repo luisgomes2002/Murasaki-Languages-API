@@ -1,6 +1,6 @@
 package languages.murasaki.MurasakiLanguages.core.gateway;
 
-import languages.murasaki.MurasakiLanguages.core.entities.lessonCollection.lessonCollection;
+import languages.murasaki.MurasakiLanguages.core.entities.lessoncollection.lessonCollection;
 
 import java.util.List;
 

@@ -26,6 +26,7 @@ public class TokenConfiguration {
                 .withClaim("userId", userEntity.getId())
                 .withClaim("username", userEntity.getUsername())
                 .withClaim("userType", userEntity.getUserType().name())
+                .withClaim("subscription", userEntity.getSubscription().name())
                 .withExpiresAt(Instant.now().plusSeconds(86400))
                 .withIssuedAt(Instant.now())
                 .withIssuer("API Murasaki Languages")
@@ -42,9 +43,10 @@ public class TokenConfiguration {
             String username = verify.getClaim("username").asString();
             String userType = verify.getClaim("userType").asString();
             String email = verify.getSubject();
+            String subscription = verify.getClaim("subscription").asString();
 
-            UserInfoEntity userData = new UserInfoEntity(userId, username, userType, email);
 
+            UserInfoEntity userData = new UserInfoEntity(userId, username, userType, email, subscription);
 
             return Optional.of(userData);
 

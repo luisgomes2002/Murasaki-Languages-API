@@ -2,6 +2,7 @@ package languages.murasaki.MurasakiLanguages.infra.gateway;
 
 import languages.murasaki.MurasakiLanguages.core.entities.user.Login;
 import languages.murasaki.MurasakiLanguages.core.entities.user.User;
+import languages.murasaki.MurasakiLanguages.core.enums.SubscriptionType;
 import languages.murasaki.MurasakiLanguages.core.enums.UserType;
 import languages.murasaki.MurasakiLanguages.core.gateway.UserGateway;
 import languages.murasaki.MurasakiLanguages.infra.config.TokenConfiguration;
@@ -29,7 +30,6 @@ public class UserRepositoryGateway implements UserGateway {
     private final AuthenticationManager authenticationManager;
     private final TokenConfiguration tokenConfiguration;
 
-
     public UserRepositoryGateway(UserRepository userRepository, UserEntityMapper userEntityMapper, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, TokenConfiguration tokenConfiguration) {
         this.userRepository = userRepository;
         this.userEntityMapper = userEntityMapper;
@@ -49,6 +49,7 @@ public class UserRepositoryGateway implements UserGateway {
         entity.setUserType(UserType.valueOf("COMMUM"));
         entity.setAbout("Ainda não criou uma descrição");
         entity.setEnabled(true);
+        entity.setSubscription(SubscriptionType.FREE);
 
         String password = entity.getPassword();
         entity.setPassword(passwordEncoder.encode(password));
@@ -129,6 +130,9 @@ public class UserRepositoryGateway implements UserGateway {
             UserEntity updatedUser = entity.get();
 
             updatedUser.setUserType(type);
+            if(type == UserType.ADMIN || type == UserType.MOD) updatedUser.setSubscription(SubscriptionType.PREMIUM);
+            if(type == UserType.COMMUM) updatedUser.setSubscription(SubscriptionType.FREE);
+
             updatedUser.setUpdatedAt(LocalDateTime.now());
 
             userRepository.save(updatedUser);

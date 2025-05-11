@@ -1,7 +1,7 @@
 package languages.murasaki.MurasakiLanguages.infra.presentation;
 
 import languages.murasaki.MurasakiLanguages.core.entities.backlog.Backlog;
-import languages.murasaki.MurasakiLanguages.core.entities.lessonCollection.lessonCollection;
+import languages.murasaki.MurasakiLanguages.core.entities.lessoncollection.lessonCollection;
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.CreateBacklogUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.lessoncollection.CreateLessonCollectionUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.lessoncollection.GetAllCollectionsUsecase;

@@ -28,4 +28,9 @@ public class WorksheetsBeanConfiguration {
     public UpdateWorksheetsUseCase updateWorksheetsUseCase(WorksheetsGateway worksheetsGateway, AuthenticatedUsecase authenticatedUsecase){
         return new UpdateWorksheetsUseCaseImpl(worksheetsGateway, authenticatedUsecase);
     }
+
+    @Bean
+    public AnswerUsecase answerUsecase(WorksheetsGateway worksheetsGateway){
+        return new AnswerUsecaseImpl(worksheetsGateway);
+    }
 }

@@ -1,4 +1,4 @@
-package languages.murasaki.MurasakiLanguages.core.entities.lessonCollection;
+package languages.murasaki.MurasakiLanguages.core.entities.lessoncollection;
 
 import java.io.Serializable;
 import java.util.List;

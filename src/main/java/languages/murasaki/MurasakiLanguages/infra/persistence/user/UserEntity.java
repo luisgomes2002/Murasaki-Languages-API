@@ -1,6 +1,7 @@
 package languages.murasaki.MurasakiLanguages.infra.persistence.user;
 
 import languages.murasaki.MurasakiLanguages.core.enums.Gender;
+import languages.murasaki.MurasakiLanguages.core.enums.SubscriptionType;
 import languages.murasaki.MurasakiLanguages.core.enums.UserType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -36,11 +37,12 @@ public class UserEntity implements UserDetails{
     private List<String> postsId;
     private boolean isEnabled;
     private boolean isBanned;
+    private SubscriptionType subscription;
 
     public UserEntity() {
     }
 
-    public UserEntity(String id, String name, String username, Gender gender, LocalDate birth, String email, String password, String icon, String background, List<String> followersId, List<String> followingId, LocalDateTime createdAt, LocalDateTime updatedAt, String about, UserType userType, List<String> notificationsId, List<String> postsId, boolean isEnabled, boolean isBanned) {
+    public UserEntity(String id, String name, String username, Gender gender, LocalDate birth, String email, String password, String icon, String background, List<String> followersId, List<String> followingId, LocalDateTime createdAt, LocalDateTime updatedAt, String about, UserType userType, List<String> notificationsId, List<String> postsId, boolean isEnabled, boolean isBanned, SubscriptionType subscription) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -60,6 +62,7 @@ public class UserEntity implements UserDetails{
         this.postsId = postsId;
         this.isEnabled = isEnabled;
         this.isBanned = isBanned;
+        this.subscription = subscription;
     }
 
     public String getId() {
@@ -206,6 +209,14 @@ public class UserEntity implements UserDetails{
 
     public void setBanned(boolean banned) {
         isBanned = banned;
+    }
+
+    public SubscriptionType getSubscription() {
+        return subscription;
+    }
+
+    public void setSubscription(SubscriptionType subscription) {
+        this.subscription = subscription;
     }
 
     @Override

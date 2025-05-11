@@ -28,6 +28,13 @@ spring:
           starttls:
             enable: true
 
+  ai:
+    openai:
+      api-key: ${OPEN_AI_KEY}
+    chat:
+      model: gpt-4.1-mini
+
 murasakilanguages:
   security:
     secret: ${SECRET}
+

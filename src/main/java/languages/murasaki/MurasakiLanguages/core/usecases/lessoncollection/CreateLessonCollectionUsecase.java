@@ -1,6 +1,6 @@
 package languages.murasaki.MurasakiLanguages.core.usecases.lessoncollection;
 
-import languages.murasaki.MurasakiLanguages.core.entities.lessonCollection.lessonCollection;
+import languages.murasaki.MurasakiLanguages.core.entities.lessoncollection.lessonCollection;
 
 public interface CreateLessonCollectionUsecase {
 

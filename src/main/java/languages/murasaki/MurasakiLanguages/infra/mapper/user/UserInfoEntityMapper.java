@@ -12,7 +12,8 @@ public class UserInfoEntityMapper {
             userInfo.userId(),
             userInfo.username(),
             userInfo.userType(),
-            userInfo.email()
+            userInfo.email(),
+            userInfo.subscription()
         );
     }
 
@@ -21,7 +22,8 @@ public class UserInfoEntityMapper {
             userInfoEntity.getUserId(),
             userInfoEntity.getUsername(),
             userInfoEntity.getUserType(),
-            userInfoEntity.getEmail()
+            userInfoEntity.getEmail(),
+            userInfoEntity.getSubscription()
         );
     }
 
