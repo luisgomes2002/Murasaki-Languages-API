@@ -10,6 +10,7 @@ public class PlansDtoMapper {
     public PlansDto toDto(Plans plans){
        return new PlansDto(
            plans.id(),
+           plans.planId(),
            plans.title(),
            plans.description(),
            plans.value(),
@@ -20,6 +21,7 @@ public class PlansDtoMapper {
     public Plans toDomain(PlansDto plansDto){
         return new Plans(
             plansDto.id(),
+            plansDto.planId(),
             plansDto.title(),
             plansDto.description(),
             plansDto.value(),

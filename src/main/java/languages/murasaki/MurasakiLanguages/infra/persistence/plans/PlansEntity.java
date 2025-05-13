@@ -12,6 +12,7 @@ public class PlansEntity {
     @Id
     private String id;
 
+    private String planId;
     private String title;
     private String description;
     private BigDecimal value;
@@ -20,8 +21,9 @@ public class PlansEntity {
     public PlansEntity() {
     }
 
-    public PlansEntity(String id, String title, String description, BigDecimal value, List<String> advantages) {
+    public PlansEntity(String id, String planId, String title, String description, BigDecimal value, List<String> advantages) {
         this.id = id;
+        this.planId = planId;
         this.title = title;
         this.description = description;
         this.value = value;
@@ -34,6 +36,14 @@ public class PlansEntity {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getPlanId() {
+        return planId;
+    }
+
+    public void setPlanId(String planId) {
+        this.planId = planId;
     }
 
     public String getTitle() {

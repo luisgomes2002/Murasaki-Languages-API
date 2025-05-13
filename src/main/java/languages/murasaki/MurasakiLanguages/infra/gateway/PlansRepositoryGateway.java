@@ -48,6 +48,7 @@ public class PlansRepositoryGateway implements PlansGateway {
         if(entity.isPresent()){
             PlansEntity updatedPlan = entity.get();
             updatedPlan.setTitle(plan.title());
+            updatedPlan.setPlanId(plan.planId());
             updatedPlan.setDescription(plan.description());
             updatedPlan.setValue(plan.value());
             updatedPlan.setAdvantages(plan.advantages());

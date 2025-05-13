@@ -26,7 +26,8 @@ public class UserResponseDtoMapper {
                 user.notificationsId(),
                 user.postsId(),
                 user.isEnabled(),
-                user.isBanned()
+                user.isBanned(),
+                user.subscription()
         );
     }
 }

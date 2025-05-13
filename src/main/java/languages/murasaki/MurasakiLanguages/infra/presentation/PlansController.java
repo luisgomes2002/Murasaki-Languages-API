@@ -4,7 +4,6 @@ import languages.murasaki.MurasakiLanguages.core.entities.backlog.Backlog;
 import languages.murasaki.MurasakiLanguages.core.entities.plans.Plans;
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.CreateBacklogUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.plans.*;
-import languages.murasaki.MurasakiLanguages.core.usecases.user.UpdateUserUsecase;
 import languages.murasaki.MurasakiLanguages.infra.dtos.plans.PlansDto;
 import languages.murasaki.MurasakiLanguages.infra.mapper.plans.PlansDtoMapper;
 import org.springframework.http.HttpStatus;

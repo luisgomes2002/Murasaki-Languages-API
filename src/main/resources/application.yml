@@ -38,3 +38,6 @@ murasakilanguages:
   security:
     secret: ${SECRET}
 
+mercadopago:
+  token: ${MERCADO_PAGO_TOKEN}
+

@@ -48,7 +48,7 @@ public class UserRepositoryGateway implements UserGateway {
         entity.setBackground("");
         entity.setUserType(UserType.valueOf("COMMUM"));
         entity.setAbout("Ainda não criou uma descrição");
-        entity.setEnabled(true);
+        entity.setEnabled(false);
         entity.setSubscription(SubscriptionType.FREE);
 
         String password = entity.getPassword();

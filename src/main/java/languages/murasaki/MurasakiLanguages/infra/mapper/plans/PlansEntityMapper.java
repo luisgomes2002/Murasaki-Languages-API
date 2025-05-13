@@ -10,6 +10,7 @@ public class PlansEntityMapper {
     public PlansEntity toEntity(Plans plans){
         return new PlansEntity(
             plans.id(),
+            plans.planId(),
             plans.title(),
             plans.description(),
             plans.value(),
@@ -20,6 +21,7 @@ public class PlansEntityMapper {
     public Plans toDomain(PlansEntity plansEntity){
         return new Plans(
             plansEntity.getId(),
+            plansEntity.getPlanId(),
             plansEntity.getTitle(),
             plansEntity.getDescription(),
             plansEntity.getValue(),

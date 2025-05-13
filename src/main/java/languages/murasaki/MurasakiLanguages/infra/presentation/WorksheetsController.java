@@ -86,7 +86,7 @@ public class WorksheetsController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @PostMapping("/answer/${name}/${userId}")
+    @PostMapping("/answer/{name}/{userId}")
     public void answerQuestion(@RequestBody WorksheetsDto worksheetsDto, @PathVariable String name, @PathVariable String userId){
         String text = answerUsecase.execute(worksheetsDtoMapper.toDomain(worksheetsDto));
 
