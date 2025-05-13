@@ -1,7 +1,10 @@
 package languages.murasaki.MurasakiLanguages.infra.gateway;
 
+import languages.murasaki.MurasakiLanguages.core.entities.lesson.AnswerRequest;
 import languages.murasaki.MurasakiLanguages.core.entities.lesson.Worksheets;
+import languages.murasaki.MurasakiLanguages.core.entities.userreport.UserReportDetail;
 import languages.murasaki.MurasakiLanguages.core.gateway.WorksheetsGateway;
+import languages.murasaki.MurasakiLanguages.infra.dtos.lesson.AnswerRequestDto;
 import languages.murasaki.MurasakiLanguages.infra.mapper.lesson.WorksheetsEntityMapper;
 import languages.murasaki.MurasakiLanguages.infra.persistence.lesson.WorkSheetsRepository;
 import languages.murasaki.MurasakiLanguages.infra.persistence.lesson.WorksheetsEntity;
@@ -61,11 +64,11 @@ public class WorksheetsRepositoryGateway implements WorksheetsGateway {
     }
 
     @Override
-    public String answerWorkSheet(Worksheets worksheets) {
-        if(worksheets.userAnswer().equals(worksheets.answer()))
+    public UserReportDetail answerWorkSheet(AnswerRequest answerRequest) {
+        if(answerRequest.answer().equals(answerRequest.worksheets().answer()))
             return null;
         else
-            return worksheets.explanation();
-
+            return new UserReportDetail(answerRequest.worksheets().id(), answerRequest.worksheets().explanation());
     }
+
 }

@@ -13,7 +13,6 @@ public class WorksheetsEntityMapper {
             worksheets.question(),
             worksheets.options(),
             worksheets.answer(),
-            worksheets.userAnswer(),
             worksheets.explanation()
         );
     }
@@ -24,7 +23,6 @@ public class WorksheetsEntityMapper {
             worksheetsEntity.getQuestion(),
             worksheetsEntity.getOptions(),
             worksheetsEntity.getAnswer(),
-            worksheetsEntity.getUserAnswer(),
             worksheetsEntity.getExplanation()
         );
     }

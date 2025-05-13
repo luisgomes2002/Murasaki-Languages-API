@@ -31,7 +31,7 @@ public class LessonRepositoryGateway implements LessonGateway {
         UserInfoEntity principal = (UserInfoEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         LessonEntity entity = lessonEntityMapper.toEntity(lesson);
-        entity.setUsername(principal.getUsername());
+        entity.setName(principal.getName());
         entity.setCreateAt(LocalDateTime.now());
         entity.setUpdatedAt(LocalDateTime.now());
         entity.setVisibility(Visibility.valueOf("PRIVATE"));
@@ -176,7 +176,6 @@ public class LessonRepositoryGateway implements LessonGateway {
     @Override
     public void removeWorksheets(String lessonId, String worksheetId) {
         Optional<LessonEntity> entity = lessonRepository.findById(lessonId);
-        System.out.println(entity.isPresent());
 
         if (entity.isPresent()) {
             LessonEntity updatedLesson = entity.get();

@@ -15,18 +15,16 @@ public class WorksheetsEntity {
     private List<String> options;
     private String answer;
     private String explanation;
-    private String userAnswer;
 
     public WorksheetsEntity() {
     }
 
-    public WorksheetsEntity(String id, String question, List<String> options, String answer, String explanation, String userAnswer) {
+    public WorksheetsEntity(String id, String question, List<String> options, String answer, String explanation) {
         this.id = id;
         this.question = question;
         this.options = options;
         this.answer = answer;
         this.explanation = explanation;
-        this.userAnswer = userAnswer;
     }
 
     public String getId() {
@@ -69,11 +67,4 @@ public class WorksheetsEntity {
         this.explanation = explanation;
     }
 
-    public String getUserAnswer() {
-        return userAnswer;
-    }
-
-    public void setUserAnswer(String userAnswer) {
-        this.userAnswer = userAnswer;
-    }
 }

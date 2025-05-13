@@ -22,7 +22,7 @@ public class LessonEntity {
     private List<String> explanations;
     private List<String> worksheets;
     private List<String> links;
-    private String username;
+    private String name;
     private LanguageType languageType;
     private JapaneseLevels japaneseLevels;
     private LocalDateTime createAt;
@@ -33,14 +33,14 @@ public class LessonEntity {
     public LessonEntity() {
     }
 
-    public LessonEntity(String id, String title, String text, List<String> explanations, List<String> worksheets, List<String> links, String username, LanguageType languageType, JapaneseLevels japaneseLevels, LocalDateTime createAt, LocalDateTime updatedAt, boolean published, Visibility visibility) {
+    public LessonEntity(String id, String title, String text, List<String> explanations, List<String> worksheets, List<String> links, String name, LanguageType languageType, JapaneseLevels japaneseLevels, LocalDateTime createAt, LocalDateTime updatedAt, boolean published, Visibility visibility) {
         this.id = id;
         this.title = title;
         this.text = text;
         this.explanations = explanations;
         this.worksheets = worksheets;
         this.links = links;
-        this.username = username;
+        this.name = name;
         this.languageType = languageType;
         this.japaneseLevels = japaneseLevels;
         this.createAt = createAt;
@@ -97,12 +97,12 @@ public class LessonEntity {
         this.links = links;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public LanguageType getLanguageType() {

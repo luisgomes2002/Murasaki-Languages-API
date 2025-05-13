@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserInfoEntityMapper {
 
-    public UserInfoEntity toDto(UserInfo userInfo){
+    public UserInfoEntity toEntity(UserInfo userInfo){
         return new UserInfoEntity(
             userInfo.userId(),
-            userInfo.username(),
+            userInfo.name(),
             userInfo.userType(),
             userInfo.email(),
             userInfo.subscription()
@@ -20,7 +20,7 @@ public class UserInfoEntityMapper {
     public UserInfo toDomain(UserInfoEntity userInfoEntity){
         return new UserInfo(
             userInfoEntity.getUserId(),
-            userInfoEntity.getUsername(),
+            userInfoEntity.getName(),
             userInfoEntity.getUserType(),
             userInfoEntity.getEmail(),
             userInfoEntity.getSubscription()

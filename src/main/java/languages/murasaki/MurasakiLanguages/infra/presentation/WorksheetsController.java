@@ -2,12 +2,16 @@ package languages.murasaki.MurasakiLanguages.infra.presentation;
 
 import languages.murasaki.MurasakiLanguages.core.entities.backlog.Backlog;
 import languages.murasaki.MurasakiLanguages.core.entities.lesson.Worksheets;
+import languages.murasaki.MurasakiLanguages.core.entities.userreport.UserReportDetail;
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.CreateBacklogUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.lesson.lesson.AddWorksheetsUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.lesson.lesson.RemoveWorksheetsUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.lesson.worksheets.*;
 import languages.murasaki.MurasakiLanguages.core.usecases.userreport.CreateUserReportUsecase;
+import languages.murasaki.MurasakiLanguages.core.usecases.userreport.RemoveUserReportUsecase;
+import languages.murasaki.MurasakiLanguages.infra.dtos.lesson.AnswerRequestDto;
 import languages.murasaki.MurasakiLanguages.infra.dtos.lesson.WorksheetsDto;
+import languages.murasaki.MurasakiLanguages.infra.mapper.lesson.AnswerRequestDtoMapper;
 import languages.murasaki.MurasakiLanguages.infra.mapper.lesson.WorksheetsDtoMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,8 +34,10 @@ public class WorksheetsController {
     private final UpdateWorksheetsUseCase updateWorksheetsUseCase;
     private final CreateUserReportUsecase createUserReportUsecase;
     private final AnswerUsecase answerUsecase;
+    private final AnswerRequestDtoMapper answerRequestDtoMapper;
+    private final RemoveUserReportUsecase removeUserReportUsecase;
 
-    public WorksheetsController(CreateWorksheetsUseCase createWorksheetsUseCase, DeleteWorksheetsUseCase deleteWorksheetsUseCase, GetWorksheetsByIdUseCase getWorksheetsByIdUseCase, WorksheetsDtoMapper worksheetsDtoMapper, AddWorksheetsUsecase addWorksheetsUsecase, CreateBacklogUsecase createBacklogUsecase, RemoveWorksheetsUsecase removeWorksheetsUsecase, UpdateWorksheetsUseCase updateWorksheetsUseCase, CreateUserReportUsecase createUserReportUsecase, AnswerUsecase answerUsecase) {
+    public WorksheetsController(CreateWorksheetsUseCase createWorksheetsUseCase, DeleteWorksheetsUseCase deleteWorksheetsUseCase, GetWorksheetsByIdUseCase getWorksheetsByIdUseCase, WorksheetsDtoMapper worksheetsDtoMapper, AddWorksheetsUsecase addWorksheetsUsecase, CreateBacklogUsecase createBacklogUsecase, RemoveWorksheetsUsecase removeWorksheetsUsecase, UpdateWorksheetsUseCase updateWorksheetsUseCase, CreateUserReportUsecase createUserReportUsecase, AnswerUsecase answerUsecase, AnswerRequestDtoMapper answerRequestDtoMapper, RemoveUserReportUsecase removeUserReportUsecase) {
         this.createWorksheetsUseCase = createWorksheetsUseCase;
         this.deleteWorksheetsUseCase = deleteWorksheetsUseCase;
         this.getWorksheetsByIdUseCase = getWorksheetsByIdUseCase;
@@ -42,6 +48,8 @@ public class WorksheetsController {
         this.updateWorksheetsUseCase = updateWorksheetsUseCase;
         this.createUserReportUsecase = createUserReportUsecase;
         this.answerUsecase = answerUsecase;
+        this.answerRequestDtoMapper = answerRequestDtoMapper;
+        this.removeUserReportUsecase = removeUserReportUsecase;
     }
 
     @PostMapping("create/{lessonId}/{userId}")
@@ -87,9 +95,10 @@ public class WorksheetsController {
     }
 
     @PostMapping("/answer/{name}/{userId}")
-    public void answerQuestion(@RequestBody WorksheetsDto worksheetsDto, @PathVariable String name, @PathVariable String userId){
-        String text = answerUsecase.execute(worksheetsDtoMapper.toDomain(worksheetsDto));
+    public void answerQuestion(@RequestBody AnswerRequestDto answerRequestDto, @PathVariable String name, @PathVariable String userId){
+        UserReportDetail detail = answerUsecase.execute(answerRequestDtoMapper.toDomain(answerRequestDto));
 
-        createUserReportUsecase.execute(userId, name ,text);
+        if(detail == null) removeUserReportUsecase.execute(name, answerRequestDto.worksheets().id());
+        else createUserReportUsecase.execute(name, userId, detail);
     }
 }

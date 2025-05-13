@@ -1,6 +1,8 @@
 package languages.murasaki.MurasakiLanguages.core.gateway;
 
+import languages.murasaki.MurasakiLanguages.core.entities.lesson.AnswerRequest;
 import languages.murasaki.MurasakiLanguages.core.entities.lesson.Worksheets;
+import languages.murasaki.MurasakiLanguages.core.entities.userreport.UserReportDetail;
 
 public interface WorksheetsGateway {
 
@@ -9,5 +11,5 @@ public interface WorksheetsGateway {
     Worksheets getWorksheetsById(String id);
 
     void deleteWorksheets(String id);
-    String answerWorkSheet(Worksheets worksheets);
+    UserReportDetail answerWorkSheet(AnswerRequest answerRequest);
 }

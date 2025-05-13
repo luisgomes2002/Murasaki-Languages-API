@@ -13,7 +13,6 @@ public class WorksheetsDtoMapper {
             worksheets.question(),
             worksheets.options(),
             worksheets.answer(),
-            worksheets.userAnswer(),
             worksheets.explanation()
         );
     }
@@ -24,7 +23,6 @@ public class WorksheetsDtoMapper {
             worksheetsDto.question(),
             worksheetsDto.options(),
             worksheetsDto.answer(),
-            worksheetsDto.userAnswer(),
             worksheetsDto.explanation()
         );
     }

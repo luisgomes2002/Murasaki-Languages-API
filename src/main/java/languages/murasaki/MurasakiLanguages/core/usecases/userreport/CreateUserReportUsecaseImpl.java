@@ -1,6 +1,7 @@
 package languages.murasaki.MurasakiLanguages.core.usecases.userreport;
 
 import languages.murasaki.MurasakiLanguages.core.entities.user.UserInfo;
+import languages.murasaki.MurasakiLanguages.core.entities.userreport.UserReportDetail;
 import languages.murasaki.MurasakiLanguages.core.gateway.UserReportGateway;
 import languages.murasaki.MurasakiLanguages.core.usecases.security.AuthenticatedUsecase;
 
@@ -15,11 +16,11 @@ public class CreateUserReportUsecaseImpl implements CreateUserReportUsecase{
     }
 
     @Override
-    public void execute(String name, String userId, String text) {
+    public void execute(String name, String userId, UserReportDetail detail) {
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
 //        if(userInfo.subscription() != SubscriptionType.PREMIUM)
 
-        userReportGateway.createUserReport(name, userId, text);
+        userReportGateway.createUserReport(name, userId, detail);
     }
 }

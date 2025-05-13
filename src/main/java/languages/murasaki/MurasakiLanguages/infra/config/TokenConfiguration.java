@@ -24,7 +24,7 @@ public class TokenConfiguration {
         return JWT.create()
                 .withSubject(userEntity.getEmail())
                 .withClaim("userId", userEntity.getId())
-                .withClaim("username", userEntity.getUsername())
+                .withClaim("name", userEntity.getName())
                 .withClaim("userType", userEntity.getUserType().name())
                 .withClaim("subscription", userEntity.getSubscription().name())
                 .withExpiresAt(Instant.now().plusSeconds(86400))
@@ -40,13 +40,13 @@ public class TokenConfiguration {
             DecodedJWT verify = JWT.require(algorithm).build().verify(token);
 
             String userId = verify.getClaim("userId").asString();
-            String username = verify.getClaim("username").asString();
+            String name = verify.getClaim("name").asString();
             String userType = verify.getClaim("userType").asString();
             String email = verify.getSubject();
             String subscription = verify.getClaim("subscription").asString();
 
 
-            UserInfoEntity userData = new UserInfoEntity(userId, username, userType, email, subscription);
+            UserInfoEntity userData = new UserInfoEntity(userId, name, userType, email, subscription);
 
             return Optional.of(userData);
 

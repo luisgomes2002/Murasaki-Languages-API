@@ -1,7 +1,8 @@
 package languages.murasaki.MurasakiLanguages.core.usecases.lesson.worksheets;
 
-import languages.murasaki.MurasakiLanguages.core.entities.lesson.Worksheets;
+import languages.murasaki.MurasakiLanguages.core.entities.lesson.AnswerRequest;
+import languages.murasaki.MurasakiLanguages.core.entities.userreport.UserReportDetail;
 
 public interface AnswerUsecase {
-    String execute(Worksheets worksheets);
+    UserReportDetail execute(AnswerRequest answerRequest);
 }

@@ -1,5 +1,6 @@
 package languages.murasaki.MurasakiLanguages.infra.persistence.userreport;
 
+import languages.murasaki.MurasakiLanguages.core.entities.userreport.UserReportDetail;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,12 +15,12 @@ public class UserReportEntity {
     private String userId;
     private String name;
     private LocalDateTime updatedAt;
-    private List<String> reports;
+    private List<UserReportDetail> reports;
 
     public UserReportEntity() {
     }
 
-    public UserReportEntity(String id, String userId, String name, LocalDateTime updatedAt, List<String> reports) {
+    public UserReportEntity(String id, String userId, String name, LocalDateTime updatedAt, List<UserReportDetail> reports) {
         this.id = id;
         this.userId = userId;
         this.name = name;
@@ -59,11 +60,11 @@ public class UserReportEntity {
         this.updatedAt = updatedAt;
     }
 
-    public List<String> getReports() {
+    public List<UserReportDetail> getReports() {
         return reports;
     }
 
-    public void setReports(List<String> reports) {
+    public void setReports(List<UserReportDetail> reports) {
         this.reports = reports;
     }
 }
