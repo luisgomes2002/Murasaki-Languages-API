@@ -21,4 +21,5 @@ public class BacklogBeanConfiguration {
     public GetAllBacklogUsecase getAllBacklogUsecase(BacklogGateway backlogGateway, AuthenticatedUsecase authenticatedUsecase){
         return new GetAllBacklogUsecaseImpl(backlogGateway, authenticatedUsecase);
     }
+
 }
