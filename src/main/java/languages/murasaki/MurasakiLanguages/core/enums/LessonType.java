@@ -4,4 +4,5 @@ public enum LessonType {
     MUSIC,
     NEWS,
     INTERVIEWS,
+    GRAMMAR,
 }

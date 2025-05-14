@@ -30,9 +30,11 @@ spring:
 
   ai:
     openai:
-      api-key: ${OPEN_AI_KEY}
-    chat:
-      model: gpt-4.1-mini
+      api-key: ${OPENAI_API_KEY}
+      base-url: https://api.openai.com/v1
+      chat:
+        options:
+          model: gpt-4.1-mini
 
 murasakilanguages:
   security:

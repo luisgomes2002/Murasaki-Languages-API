@@ -18,8 +18,6 @@ public class SubscriptionRepositoryGateway implements SubscriptionGateway {
     public String createSubscription(String planId) {
         Plans plan = plansGateway.getPlanById(planId);
 
-        String externalReference = "REF-" + System.currentTimeMillis();
-
         return createCheckoutUrl(plan.id());
     }
 

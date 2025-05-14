@@ -1,9 +1,7 @@
 package languages.murasaki.MurasakiLanguages.infra.gateway;
 
-import languages.murasaki.MurasakiLanguages.core.entities.userreport.UserReport;
 import languages.murasaki.MurasakiLanguages.core.entities.userreport.UserReportDetail;
 import languages.murasaki.MurasakiLanguages.core.gateway.UserReportGateway;
-import languages.murasaki.MurasakiLanguages.infra.mapper.userreport.UserReportEntityMapper;
 import languages.murasaki.MurasakiLanguages.infra.persistence.userreport.UserReportEntity;
 import languages.murasaki.MurasakiLanguages.infra.persistence.userreport.UserReportRepository;
 import org.springframework.context.annotation.Configuration;
