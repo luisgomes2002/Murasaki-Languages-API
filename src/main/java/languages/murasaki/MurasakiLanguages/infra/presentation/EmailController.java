@@ -24,7 +24,7 @@ public class EmailController {
         this.updateUserEnableUsecase = updateUserEnableUsecase;
     }
 
-    @GetMapping("/confirm")
+    @GetMapping("/confirm-account")
     public ResponseEntity<String> confirmEmail(@RequestParam String token) {
         String userId = getUserIdByTokenUsecase.execute(token);
 

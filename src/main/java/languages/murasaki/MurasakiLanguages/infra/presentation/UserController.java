@@ -7,6 +7,7 @@ import languages.murasaki.MurasakiLanguages.core.enums.UserType;
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.CreateBacklogUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.email.SendEmailUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.generatetoken.GenerateAndStoreTokenUsecase;
+import languages.murasaki.MurasakiLanguages.core.usecases.generatetoken.GetUserIdByTokenUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.user.*;
 import languages.murasaki.MurasakiLanguages.infra.dtos.user.LoginDto;
 import languages.murasaki.MurasakiLanguages.infra.dtos.user.UserDto;
@@ -41,8 +42,9 @@ public class UserController {
     private final UpdateUserEnableUsecase updateUserEnableUsecase;
     private final SendEmailUsecase sendEmailUsecase;
     private final GenerateAndStoreTokenUsecase generateAndStoreTokenUsecase;
+    private final GetUserIdByTokenUsecase getUserIdByTokenUsecase;
 
-    public UserController(CreateUserUsecase createUserUsecase, LoginUsecase loginUsecase, GetAllUsersUseCase getAllUsersUseCase, UserDtoMapper userDtoMapper, LoginDtoMapper loginDtoMapper, UserResponseDtoMapper userResponseDtoMapper, CreateBacklogUsecase createBacklogUsecase, GetUserByIdUsecase getUserByIdUsecase, DeleteUserUsecase deleteUserUsecase, UpdateUserUsecase updateUserUsecase, UpdateUserPasswordUsecase updateUserPasswordUsecase, UpdateUserTypeUsecase updateUserTypeUsecase, UpdateUserEnableUsecase updateUserEnableUsecase, SendEmailUsecase sendEmailUsecase, GenerateAndStoreTokenUsecase generateAndStoreTokenUsecase) {
+    public UserController(CreateUserUsecase createUserUsecase, LoginUsecase loginUsecase, GetAllUsersUseCase getAllUsersUseCase, UserDtoMapper userDtoMapper, LoginDtoMapper loginDtoMapper, UserResponseDtoMapper userResponseDtoMapper, CreateBacklogUsecase createBacklogUsecase, GetUserByIdUsecase getUserByIdUsecase, DeleteUserUsecase deleteUserUsecase, UpdateUserUsecase updateUserUsecase, UpdateUserPasswordUsecase updateUserPasswordUsecase, UpdateUserTypeUsecase updateUserTypeUsecase, UpdateUserEnableUsecase updateUserEnableUsecase, SendEmailUsecase sendEmailUsecase, GenerateAndStoreTokenUsecase generateAndStoreTokenUsecase, GetUserIdByTokenUsecase getUserIdByTokenUsecase) {
         this.createUserUsecase = createUserUsecase;
         this.loginUsecase = loginUsecase;
         this.getAllUsersUseCase = getAllUsersUseCase;
@@ -58,6 +60,7 @@ public class UserController {
         this.updateUserEnableUsecase = updateUserEnableUsecase;
         this.sendEmailUsecase = sendEmailUsecase;
         this.generateAndStoreTokenUsecase = generateAndStoreTokenUsecase;
+        this.getUserIdByTokenUsecase = getUserIdByTokenUsecase;
     }
 
     @PostMapping("create")
@@ -94,14 +97,37 @@ public class UserController {
         return getUserByIdUsecase.execute(id);
     }
 
-    @PutMapping("update/{id}")
-    public ResponseEntity<Map<String, Object>> updateUser(@PathVariable String id, @RequestBody UserDto userDto){
-        User user = updateUserUsecase.execute(id, userDtoMapper.toDomain(userDto));
+    @GetMapping("request-password/{userId}/{userEmail}")
+    public String requestToChangePassword(@PathVariable String userId, @PathVariable String userEmail){
+        String token = generateAndStoreTokenUsecase.execute(userId);
+
+        Email newEmail = new Email(
+                userEmail,
+                "Confirmação de Atualização de Senha",
+                "Olá! Seu pedido para alteração da senha. Se você não fez essa alteração, por favor, clique no link abaixo para redefinir sua senha:\n" + token
+        );
+
+        sendEmailUsecase.execute(newEmail);
+
+        return "Email enviado";
+    }
+
+    @PutMapping("update/{userID}")
+    public ResponseEntity<Map<String, Object>> updateUser(@PathVariable String userID, @RequestBody UserDto userDto, @RequestParam String token){
+        String userId = getUserIdByTokenUsecase.execute(token);
+
+        if (userId == null) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("error", "Token inválido ou expirado.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        }
+
+        User user = updateUserUsecase.execute(userID, userDtoMapper.toDomain(userDto));
         Map<String, Object> response = new HashMap<>();
         response.put("Message: ", "Usuário atualizado");
         response.put("User data: ", userResponseDtoMapper.toDto(user));
 
-        Backlog backlog = new Backlog(null, id,"Atualizou as informações da conta: " + userDto.name(), null);
+        Backlog backlog = new Backlog(null, userID,"Atualizou as informações da conta: " + userDto.name(), null);
         createBacklogUsecase.execute(backlog);
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
