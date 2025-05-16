@@ -26,8 +26,6 @@ public class AiReportController {
 
     @PostMapping("/create-ai-report/{userId}")
     public void createAiReport(@PathVariable String userId, @RequestBody String userReportId){
-        System.out.println("UserId: " + userId);
-        System.out.println("ReportId: " + userReportId);
         UserReport report = getReportByIdUsecase.execute(userReportId);
         createAiReportUsecase.execute(userId, report);
     }
