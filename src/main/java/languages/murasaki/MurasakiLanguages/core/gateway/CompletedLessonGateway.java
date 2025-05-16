@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CompletedLessonGateway {
 
-    List<CompletedLesson> getAllCompletedLessons();
+    List<CompletedLesson> getAllCompletedLessons(String userId);
 
     void addLesson(String userId, String lessonId);
     void removeLesson(String userId, String lessonId);

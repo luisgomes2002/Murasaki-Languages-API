@@ -9,6 +9,7 @@ public class CompletedLessonDtoMapper {
 
     public CompletedLessonDto toDto(CompletedLesson completedLesson){
         return new CompletedLessonDto(
+          completedLesson.id(),
           completedLesson.userId(),
           completedLesson.completedLessons()
         );
@@ -16,6 +17,7 @@ public class CompletedLessonDtoMapper {
 
     public CompletedLesson toDomain(CompletedLessonDto completedLessonDto){
         return new CompletedLesson(
+          completedLessonDto.id(),
           completedLessonDto.userId(),
           completedLessonDto.completedLessons()
         );

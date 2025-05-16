@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface GetAllCompletedLessonsUsecase {
 
-    List<CompletedLesson> execute();
+    List<CompletedLesson> execute(String userId);
 }

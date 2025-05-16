@@ -39,6 +39,7 @@ public class CompletedLessonRepositoryGateway implements CompletedLessonGateway 
         }else {
             CompletedLessonEntity completedLesson = new CompletedLessonEntity();
 
+            completedLesson.setUserId(userId);
             completedLesson.getCompletedLesson().add(lessonId);
 
             completedLessonRepository.save(completedLesson);
@@ -49,19 +50,17 @@ public class CompletedLessonRepositoryGateway implements CompletedLessonGateway 
     public void removeLesson(String userId, String lessonId) {
         Optional<CompletedLessonEntity> entity = completedLessonRepository.findCompletedLessonByUserId(userId);
 
-        if(entity.isPresent()){
+        if (entity.isPresent()) {
             CompletedLessonEntity lesson = entity.get();
 
-            boolean remove = lesson.getCompletedLesson().removeIf(l -> l.equals(lessonId));
+            boolean removed = lesson.getCompletedLesson().removeIf(l -> l.equals(lessonId));
 
-            if(remove){
-                completedLessonRepository.save(lesson);
-            }
+            if (removed) completedLessonRepository.save(lesson);
         }
     }
 
     @Override
-    public List<CompletedLesson> getAllCompletedLessons() {
-        return completedLessonRepository.findAll().stream().map(completedLessonEntityMapper::toDomain).toList();
+    public List<CompletedLesson> getAllCompletedLessons(String userId) {
+        return completedLessonRepository.findCompletedLessonByUserId(userId).stream().map(completedLessonEntityMapper::toDomain).toList();
     }
 }

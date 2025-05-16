@@ -9,13 +9,15 @@ public class CompletedLessonEntityMapper {
 
     public CompletedLessonEntity toEntity(CompletedLesson completedLesson){
         return new CompletedLessonEntity(
-                completedLesson.userId(),
-                completedLesson.completedLessons()
+            completedLesson.id(),
+            completedLesson.userId(),
+            completedLesson.completedLessons()
         );
     }
 
     public CompletedLesson toDomain(CompletedLessonEntity completedLessonEntity){
         return new CompletedLesson(
+          completedLessonEntity.getId(),
           completedLessonEntity.getUserId(),
           completedLessonEntity.getCompletedLesson()
         );

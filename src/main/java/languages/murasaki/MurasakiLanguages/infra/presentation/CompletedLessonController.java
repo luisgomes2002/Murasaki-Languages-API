@@ -28,14 +28,14 @@ public class CompletedLessonController {
         return "Aula completa";
     }
 
-    @PostMapping("/remove/{userId}/{lessonId}")
+    @DeleteMapping("/remove/{userId}/{lessonId}")
     public String removeCompletedLesson(@PathVariable String userId, @PathVariable String lessonId){
         removeLessonUsecase.execute(userId, lessonId);
         return "Aula não concluída";
     }
 
-    @GetMapping("/")
-    public List<CompletedLesson> getAllCompletedLessons(){ return getAllCompletedLessonsUsecase.execute();}
+    @GetMapping("/{userId}")
+    public List<CompletedLesson> getAllCompletedLessons(@PathVariable String userId){ return getAllCompletedLessonsUsecase.execute(userId);}
 
 }
 

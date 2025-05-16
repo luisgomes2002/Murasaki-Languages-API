@@ -14,7 +14,7 @@ public class GetAllCompletedLessonsUsecaseImpl implements GetAllCompletedLessons
     }
 
     @Override
-    public List<CompletedLesson> execute() {
-        return completedLessonGateway.getAllCompletedLessons();
+    public List<CompletedLesson> execute(String userId) {
+        return completedLessonGateway.getAllCompletedLessons(userId);
     }
 }
