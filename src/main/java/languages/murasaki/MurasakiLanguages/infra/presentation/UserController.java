@@ -6,6 +6,7 @@ import languages.murasaki.MurasakiLanguages.core.entities.user.User;
 import languages.murasaki.MurasakiLanguages.core.enums.UserType;
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.CreateBacklogUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.email.SendEmailUsecase;
+import languages.murasaki.MurasakiLanguages.core.usecases.generatetoken.GenerateAndStoreTokenUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.user.*;
 import languages.murasaki.MurasakiLanguages.infra.dtos.user.LoginDto;
 import languages.murasaki.MurasakiLanguages.infra.dtos.user.UserDto;
@@ -39,8 +40,9 @@ public class UserController {
     private final UpdateUserTypeUsecase updateUserTypeUsecase;
     private final UpdateUserEnableUsecase updateUserEnableUsecase;
     private final SendEmailUsecase sendEmailUsecase;
+    private final GenerateAndStoreTokenUsecase generateAndStoreTokenUsecase;
 
-    public UserController(CreateUserUsecase createUserUsecase, LoginUsecase loginUsecase, GetAllUsersUseCase getAllUsersUseCase, UserDtoMapper userDtoMapper, LoginDtoMapper loginDtoMapper, UserResponseDtoMapper userResponseDtoMapper, CreateBacklogUsecase createBacklogUsecase, GetUserByIdUsecase getUserByIdUsecase, DeleteUserUsecase deleteUserUsecase, UpdateUserUsecase updateUserUsecase, UpdateUserPasswordUsecase updateUserPasswordUsecase, UpdateUserTypeUsecase updateUserTypeUsecase, UpdateUserEnableUsecase updateUserEnableUsecase, SendEmailUsecase sendEmailUsecase) {
+    public UserController(CreateUserUsecase createUserUsecase, LoginUsecase loginUsecase, GetAllUsersUseCase getAllUsersUseCase, UserDtoMapper userDtoMapper, LoginDtoMapper loginDtoMapper, UserResponseDtoMapper userResponseDtoMapper, CreateBacklogUsecase createBacklogUsecase, GetUserByIdUsecase getUserByIdUsecase, DeleteUserUsecase deleteUserUsecase, UpdateUserUsecase updateUserUsecase, UpdateUserPasswordUsecase updateUserPasswordUsecase, UpdateUserTypeUsecase updateUserTypeUsecase, UpdateUserEnableUsecase updateUserEnableUsecase, SendEmailUsecase sendEmailUsecase, GenerateAndStoreTokenUsecase generateAndStoreTokenUsecase) {
         this.createUserUsecase = createUserUsecase;
         this.loginUsecase = loginUsecase;
         this.getAllUsersUseCase = getAllUsersUseCase;
@@ -55,6 +57,7 @@ public class UserController {
         this.updateUserTypeUsecase = updateUserTypeUsecase;
         this.updateUserEnableUsecase = updateUserEnableUsecase;
         this.sendEmailUsecase = sendEmailUsecase;
+        this.generateAndStoreTokenUsecase = generateAndStoreTokenUsecase;
     }
 
     @PostMapping("create")
@@ -66,8 +69,16 @@ public class UserController {
         Backlog backlog = new Backlog(null, newUser.id(),newUser.name() + " criou uma conta", null);
         createBacklogUsecase.execute(backlog);
 
-        Email newEmail = new Email(newUser.email(),"Confirmação de Cadastro", "Olá! Obrigado por se cadastrar. Clique no link abaixo para confirmar seu e-mail:\n" +
-                "http://localhost:8080/api/confirm?email=" + newUser.id());
+        String token = generateAndStoreTokenUsecase.execute(newUser.id());
+
+        String confirmationLink = "http://localhost:8080/api/confirm?token=" + token;
+
+        Email newEmail = new Email(
+                newUser.email(),
+                "Confirmação de Cadastro",
+                "Olá! Obrigado por se cadastrar. Clique no link abaixo para confirmar seu e-mail:\n" + confirmationLink
+        );
+
         sendEmailUsecase.execute(newEmail);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);

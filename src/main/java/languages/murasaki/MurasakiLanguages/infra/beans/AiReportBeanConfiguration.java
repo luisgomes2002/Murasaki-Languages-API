@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class AiReportBenConfiguration {
+public class AiReportBeanConfiguration {
 
     @Bean
     public CreateAiReportUsecase createAiReportUsecase(AiReportGateway aiReportGateway){
