@@ -3,5 +3,5 @@ package languages.murasaki.MurasakiLanguages.infra.dtos.plans;
 import java.math.BigDecimal;
 import java.util.List;
 
-public record PlansDto(String id, String planId, String title, String description, BigDecimal value, List<String> advantages) {
+public record PlansDto(String id, String title, String description, BigDecimal value, List<String> advantages, String link) {
 }

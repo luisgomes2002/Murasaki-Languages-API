@@ -45,6 +45,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST,"api/user/create").permitAll()
                         .requestMatchers(HttpMethod.POST,"api/user/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "api/plans/").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/webhook/stripe").permitAll()
                         .anyRequest().authenticated()
                 )
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))

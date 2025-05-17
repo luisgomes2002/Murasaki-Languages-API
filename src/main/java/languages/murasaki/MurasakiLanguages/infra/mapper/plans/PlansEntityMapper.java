@@ -10,22 +10,22 @@ public class PlansEntityMapper {
     public PlansEntity toEntity(Plans plans){
         return new PlansEntity(
             plans.id(),
-            plans.planId(),
             plans.title(),
             plans.description(),
             plans.value(),
-            plans.advantages()
+            plans.advantages(),
+            plans.link()
         );
     }
 
     public Plans toDomain(PlansEntity plansEntity){
         return new Plans(
             plansEntity.getId(),
-            plansEntity.getPlanId(),
             plansEntity.getTitle(),
             plansEntity.getDescription(),
             plansEntity.getValue(),
-            plansEntity.getAdvantages()
+            plansEntity.getAdvantages(),
+            plansEntity.getLink()
         );
     }
 }

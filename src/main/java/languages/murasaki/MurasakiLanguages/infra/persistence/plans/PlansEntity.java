@@ -12,22 +12,22 @@ public class PlansEntity {
     @Id
     private String id;
 
-    private String planId;
     private String title;
     private String description;
     private BigDecimal value;
     private List<String> advantages;
+    private String link;
 
     public PlansEntity() {
     }
 
-    public PlansEntity(String id, String planId, String title, String description, BigDecimal value, List<String> advantages) {
+    public PlansEntity(String id, String title, String description, BigDecimal value, List<String> advantages, String link) {
         this.id = id;
-        this.planId = planId;
         this.title = title;
         this.description = description;
         this.value = value;
         this.advantages = advantages;
+        this.link = link;
     }
 
     public String getId() {
@@ -36,14 +36,6 @@ public class PlansEntity {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getPlanId() {
-        return planId;
-    }
-
-    public void setPlanId(String planId) {
-        this.planId = planId;
     }
 
     public String getTitle() {
@@ -76,5 +68,13 @@ public class PlansEntity {
 
     public void setAdvantages(List<String> advantages) {
         this.advantages = advantages;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 }

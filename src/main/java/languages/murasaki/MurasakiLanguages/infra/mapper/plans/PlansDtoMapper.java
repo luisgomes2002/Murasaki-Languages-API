@@ -10,22 +10,22 @@ public class PlansDtoMapper {
     public PlansDto toDto(Plans plans){
        return new PlansDto(
            plans.id(),
-           plans.planId(),
            plans.title(),
            plans.description(),
            plans.value(),
-           plans.advantages()
+           plans.advantages(),
+           plans.link()
        );
     }
 
     public Plans toDomain(PlansDto plansDto){
         return new Plans(
             plansDto.id(),
-            plansDto.planId(),
             plansDto.title(),
             plansDto.description(),
             plansDto.value(),
-            plansDto.advantages()
+            plansDto.advantages(),
+            plansDto.link()
         );
     }
 }
