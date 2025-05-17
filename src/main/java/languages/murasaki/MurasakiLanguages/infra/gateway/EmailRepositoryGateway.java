@@ -90,5 +90,16 @@ public class EmailRepositoryGateway implements EmailGateway {
         sendEmail(new Email(email, "Até breve!", body));
     }
 
+    @Override
+    public void renewedSubscription(String email) {
+        String body = """
+        NOTA FISCAL
+       
+        Equipe Murasaki Languages.
+        """;
+
+        sendEmail(new Email(email, "Assinatura Renovada com Sucesso!", body));
+    }
+
 
 }

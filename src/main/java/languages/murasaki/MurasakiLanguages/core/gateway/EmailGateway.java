@@ -8,4 +8,5 @@ public interface EmailGateway {
     void sendEmail(Email email);
     void completedSubscription(CheckoutResponse checkoutResponse, String email, String token, boolean accountExist);
     void deletedSubscription(String email);
+    void renewedSubscription(String email);
 }

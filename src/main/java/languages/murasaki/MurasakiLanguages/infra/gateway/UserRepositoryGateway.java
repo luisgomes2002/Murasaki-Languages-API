@@ -213,8 +213,8 @@ public class UserRepositoryGateway implements UserGateway {
         String random = Long.toString(timestamp, 36);
 
         entity.setEmail(email);
-        entity.setName("User" + random);
-        entity.setUsername("UserName" + random);
+        entity.setName("User_" + random);
+        entity.setUsername("UserName_" + random);
         entity.setCreatedAt(LocalDateTime.now());
         entity.setUpdatedAt(LocalDateTime.now());
         entity.setIcon("");

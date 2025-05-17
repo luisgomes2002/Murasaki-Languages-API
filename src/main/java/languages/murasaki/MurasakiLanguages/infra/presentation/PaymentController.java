@@ -5,6 +5,7 @@ import languages.murasaki.MurasakiLanguages.core.entities.payment.PaymentRespons
 import languages.murasaki.MurasakiLanguages.core.enums.PaymentType;
 import languages.murasaki.MurasakiLanguages.core.usecases.email.CompletedSubscriptionUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.email.DeletedSubscriptionUsecase;
+import languages.murasaki.MurasakiLanguages.core.usecases.email.RenewedSubscriptionUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.generatetoken.GenerateAndStoreTokenUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.payment.PaymentHandleEventUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.user.CheckoutCompletedUsecase;
@@ -22,14 +23,16 @@ public class PaymentController {
     private final DeletedSubscriptionUsecase deletedSubscriptionEmailUsecase;
     private final GenerateAndStoreTokenUsecase generateAndStoreTokenUsecase;
     private final SubscriptionDeletedUsecase subscriptionDeletedUsecase;
+    private final RenewedSubscriptionUsecase renewedSubscriptionUsecase;
 
-    public PaymentController(CheckoutCompletedUsecase checkoutCompletedUsecase, PaymentHandleEventUsecase paymentHandleEventUsecase, CompletedSubscriptionUsecase completedSubscriptionUsecase, DeletedSubscriptionUsecase deletedSubscriptionEmailUsecase, GenerateAndStoreTokenUsecase generateAndStoreTokenUsecase, SubscriptionDeletedUsecase subscriptionDeletedUsecase) {
+    public PaymentController(CheckoutCompletedUsecase checkoutCompletedUsecase, PaymentHandleEventUsecase paymentHandleEventUsecase, CompletedSubscriptionUsecase completedSubscriptionUsecase, DeletedSubscriptionUsecase deletedSubscriptionEmailUsecase, GenerateAndStoreTokenUsecase generateAndStoreTokenUsecase, SubscriptionDeletedUsecase subscriptionDeletedUsecase, RenewedSubscriptionUsecase renewedSubscriptionUsecase) {
         this.checkoutCompletedUsecase = checkoutCompletedUsecase;
         this.paymentHandleEventUsecase = paymentHandleEventUsecase;
         this.completedSubscriptionUsecase = completedSubscriptionUsecase;
         this.deletedSubscriptionEmailUsecase = deletedSubscriptionEmailUsecase;
         this.generateAndStoreTokenUsecase = generateAndStoreTokenUsecase;
         this.subscriptionDeletedUsecase = subscriptionDeletedUsecase;
+        this.renewedSubscriptionUsecase = renewedSubscriptionUsecase;
     }
 
     @PostMapping
@@ -50,6 +53,11 @@ public class PaymentController {
             subscriptionDeletedUsecase.execute(paymentResponse.email());
             deletedSubscriptionEmailUsecase.execute(paymentResponse.email());
         }
+
+        if(paymentResponse.paymentType().equals(PaymentType.RENEWED)) {
+            renewedSubscriptionUsecase.execute(paymentResponse.email());
+        }
+
 
         return ResponseEntity.ok("Received");
     }

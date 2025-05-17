@@ -22,4 +22,9 @@ public class MailBeanConfiguration {
     public DeletedSubscriptionUsecase deletedSubscriptionUsecase(EmailGateway emailGateway){
         return new DeletedSubscriptionUsecaseImpl(emailGateway);
     }
+
+    @Bean
+    public RenewedSubscriptionUsecase renewedSubscriptionUsecase(EmailGateway emailGateway){
+        return new RenewedSubscriptionUsecaseImpl(emailGateway);
+    }
 }

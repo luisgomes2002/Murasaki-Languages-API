@@ -79,6 +79,22 @@ public class PaymentEventRepositoryGateway implements PaymentGateway {
 
                 return new PaymentResponse(emailDel, null, null, PaymentType.DELETED);
 
+            case "invoice.paid":
+                Invoice invoice = (Invoice) event.getDataObjectDeserializer()
+                        .getObject().orElseThrow();
+
+                String customerIdRenewed = invoice.getCustomer();
+                String emailRenewed;
+
+                try {
+                    Customer customerRenewed = Customer.retrieve(customerIdRenewed);
+                    emailRenewed = customerRenewed.getEmail();
+                } catch (StripeException e) {
+                    throw new RuntimeException("Erro ao buscar cliente da renovação", e);
+                }
+
+                return new PaymentResponse(emailRenewed, null, null, PaymentType.RENEWED);
+
             default:
                 return null;
         }
