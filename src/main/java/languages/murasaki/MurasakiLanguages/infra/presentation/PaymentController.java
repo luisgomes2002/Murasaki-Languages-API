@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/webhook/stripe")
-public class StripeWebhookController {
+public class PaymentController {
 
 
     private final PaymentHandleEventUsecase paymentHandleEventUsecase;
 
-    public StripeWebhookController(PaymentHandleEventUsecase paymentHandleEventUsecase) {
+    public PaymentController(PaymentHandleEventUsecase paymentHandleEventUsecase) {
         this.paymentHandleEventUsecase = paymentHandleEventUsecase;
     }
 
