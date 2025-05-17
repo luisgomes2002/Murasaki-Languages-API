@@ -1,8 +1,6 @@
-package languages.murasaki.MurasakiLanguages.infra.beans;
+package languages.murasaki.MurasakiLanguages.infra.config;
 
 import jakarta.servlet.DispatcherType;
-import languages.murasaki.MurasakiLanguages.infra.config.AuthConfiguration;
-import languages.murasaki.MurasakiLanguages.infra.config.SecurityFilter;
 import languages.murasaki.MurasakiLanguages.infra.persistence.user.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -46,6 +44,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST,"api/user/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "api/plans/").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/webhook/stripe").permitAll()
+                        .requestMatchers(HttpMethod.GET, "api/mail/confirm-account").permitAll()
                         .anyRequest().authenticated()
                 )
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))

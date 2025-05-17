@@ -1,5 +1,6 @@
 package languages.murasaki.MurasakiLanguages.core.usecases.payment;
 
+import languages.murasaki.MurasakiLanguages.core.entities.payment.PaymentResponse;
 import languages.murasaki.MurasakiLanguages.core.gateway.PaymentGateway;
 
 public class PaymentHandleEventUsecaseImpl implements PaymentHandleEventUsecase {
@@ -11,7 +12,7 @@ public class PaymentHandleEventUsecaseImpl implements PaymentHandleEventUsecase 
     }
 
     @Override
-    public void handleEvent(String payload, String sigHeader) {
-            paymentGateway.processEvent(payload, sigHeader);
+    public PaymentResponse handleEvent(String payload, String sigHeader) {
+         return paymentGateway.processEvent(payload, sigHeader);
     }
 }

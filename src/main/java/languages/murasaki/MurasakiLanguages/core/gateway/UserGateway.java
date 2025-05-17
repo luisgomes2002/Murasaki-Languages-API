@@ -1,5 +1,6 @@
 package languages.murasaki.MurasakiLanguages.core.gateway;
 
+import languages.murasaki.MurasakiLanguages.core.entities.payment.CheckoutResponse;
 import languages.murasaki.MurasakiLanguages.core.entities.user.Login;
 import languages.murasaki.MurasakiLanguages.core.entities.user.User;
 import languages.murasaki.MurasakiLanguages.core.enums.UserType;
@@ -17,8 +18,10 @@ public interface UserGateway {
     void deleteUser(String id);
     void updateUserType(String id, UserType type);
     void isEnable(String id, boolean isEnable);
+    void SubscriptionDeleted(String email);
 
     String login(Login login);
+    CheckoutResponse checkoutCompleted(String email, String productName, String userName);
 
     boolean userAlreadyCreated(String email);
     boolean userIdExists(String id);

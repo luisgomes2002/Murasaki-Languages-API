@@ -7,8 +7,8 @@ import com.stripe.model.*;
 import com.stripe.model.checkout.Session;
 import com.stripe.net.Webhook;
 
-import languages.murasaki.MurasakiLanguages.core.entities.payment.CheckoutCompletedEvent;
-import languages.murasaki.MurasakiLanguages.core.entities.payment.SubscriptionDeletedEvent;
+import languages.murasaki.MurasakiLanguages.core.entities.payment.PaymentResponse;
+import languages.murasaki.MurasakiLanguages.core.enums.PaymentType;
 import languages.murasaki.MurasakiLanguages.core.gateway.PaymentGateway;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -24,11 +24,10 @@ public class PaymentEventRepositoryGateway implements PaymentGateway {
 
 
     @Override
-    public void processEvent(String payload, String sigHeader) {
+    public PaymentResponse processEvent(String payload, String sigHeader) {
         Stripe.apiKey = STRIPE_SECRET_KEY;
-
-
         Event event;
+
         try {
             event = Webhook.constructEvent(payload, sigHeader, STRIPE_WEBHOOK_SECRET);
         } catch (SignatureVerificationException e) {
@@ -40,66 +39,48 @@ public class PaymentEventRepositoryGateway implements PaymentGateway {
                 Session session = (Session) event.getDataObjectDeserializer()
                         .getObject().orElseThrow();
 
-                handleCheckoutCompleted(new CheckoutCompletedEvent(
-                        session.getCustomer(),
-                        session.getSubscription()
-                ));
-
-                // Recupere dados adicionais
                 String customerId = session.getCustomer();
                 String subscriptionId = session.getSubscription();
 
-                try {
-                    // Obtenha o email do cliente
-                    Customer customer = Customer.retrieve(customerId);
-                    String email = customer.getEmail();
+                String email;
+                String productName;
+                String userName;
 
-                    // Obtenha o nome do produto associado à assinatura
+                try {
+                    Customer customer = Customer.retrieve(customerId);
+                    email = customer.getEmail();
+                    userName = customer.getName();
+
                     Subscription subscription = Subscription.retrieve(subscriptionId);
-                    SubscriptionItem item = subscription.getItems().getData().get(0); // primeiro item
+                    SubscriptionItem item = subscription.getItems().getData().get(0);
                     Price price = item.getPrice();
                     Product product = Product.retrieve(price.getProduct());
-                    String productName = product.getName();
+                    productName = product.getName();
 
-                    System.out.println("Checkout concluído:");
-                    System.out.println("Email do cliente: " + email);
-                    System.out.println("Nome do produto: " + productName);
-                    System.out.println("Customer ID: " + customerId);
-                    System.out.println("Subscription ID: " + subscriptionId);
-
-                    handleCheckoutCompleted(new CheckoutCompletedEvent(customerId, subscriptionId));
                 } catch (StripeException e) {
                     throw new RuntimeException("Erro ao buscar dados da Stripe", e);
                 }
 
-                break;
+                return new PaymentResponse(email, productName, userName, PaymentType.COMPLETED);
 
             case "customer.subscription.deleted":
                 Subscription sub = (Subscription) event.getDataObjectDeserializer()
                         .getObject().orElseThrow();
 
-                handleSubscriptionDeleted(new SubscriptionDeletedEvent(
-                        sub.getId(),
-                        sub.getCustomer()
-                ));
-                break;
+                String customerIdDel = sub.getCustomer();
+                String emailDel;
+
+                try {
+                    Customer customerDel = Customer.retrieve(customerIdDel);
+                    emailDel = customerDel.getEmail();
+                } catch (StripeException e) {
+                    throw new RuntimeException("Erro ao buscar o cliente da assinatura cancelada", e);
+                }
+
+                return new PaymentResponse(emailDel, null, null, PaymentType.DELETED);
 
             default:
-                // ignorar ou logar
-                break;
+                return null;
         }
-    }
-
-
-    @Override
-    public void handleCheckoutCompleted(CheckoutCompletedEvent event) {
-        System.out.println("Checkout concluído: Customer ID: " + event.customerId() +
-                ", Subscription ID: " + event.subscriptionId());
-    }
-
-    @Override
-    public void handleSubscriptionDeleted(SubscriptionDeletedEvent event) {
-        System.out.println("Assinatura cancelada: Subscription ID: " + event.subscriptionId() +
-                ", Customer ID: " + event.customerId());
     }
 }

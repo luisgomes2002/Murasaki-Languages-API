@@ -8,18 +8,13 @@ import languages.murasaki.MurasakiLanguages.infra.exceptions.UserDoesNotHavePerm
 public class UpdateUserEnableUsecaseImpl implements  UpdateUserEnableUsecase{
 
     private final UserGateway userGateway;
-    private final AuthenticatedUsecase authenticatedUsecase;
 
-    public UpdateUserEnableUsecaseImpl(UserGateway userGateway, AuthenticatedUsecase authenticatedUsecase) {
+    public UpdateUserEnableUsecaseImpl(UserGateway userGateway) {
         this.userGateway = userGateway;
-        this.authenticatedUsecase = authenticatedUsecase;
     }
 
     @Override
     public void execute(String id, boolean isEnable) {
-        UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
-
-        if(!"ADMIN".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
 
         userGateway.isEnable(id, isEnable);
     }

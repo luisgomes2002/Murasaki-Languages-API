@@ -45,7 +45,17 @@ public class UserBeanConfiguration {
         return new UpdateUserTypeUsecaseImpl(userGateway, authenticatedUsecase);
     }
 
-    @Bean UpdateUserEnableUsecase updateUserEnableUsecase(UserGateway userGateway, AuthenticatedUsecase authenticatedUsecase){
-        return new UpdateUserEnableUsecaseImpl(userGateway, authenticatedUsecase);
+    @Bean UpdateUserEnableUsecase updateUserEnableUsecase(UserGateway userGateway){
+        return new UpdateUserEnableUsecaseImpl(userGateway);
+    }
+
+    @Bean
+    public CheckoutCompletedUsecase checkoutCompletedUsecase(UserGateway userGateway){
+        return new CheckoutCompletedUsecaseImpl(userGateway);
+    }
+
+    @Bean
+    public SubscriptionDeletedUsecase subscriptionDeletedUsecase(UserGateway userGateway){
+        return new SubscriptionDeletedUsecaseImpl(userGateway);
     }
 }

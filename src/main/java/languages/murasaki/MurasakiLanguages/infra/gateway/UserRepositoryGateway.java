@@ -1,5 +1,6 @@
 package languages.murasaki.MurasakiLanguages.infra.gateway;
 
+import languages.murasaki.MurasakiLanguages.core.entities.payment.CheckoutResponse;
 import languages.murasaki.MurasakiLanguages.core.entities.user.Login;
 import languages.murasaki.MurasakiLanguages.core.entities.user.User;
 import languages.murasaki.MurasakiLanguages.core.enums.SubscriptionType;
@@ -187,5 +188,62 @@ public class UserRepositoryGateway implements UserGateway {
         UserEntity user = (UserEntity) authentication.getPrincipal();
 
         return tokenConfiguration.generateToken(user);
+    }
+
+    @Override
+    public CheckoutResponse checkoutCompleted(String email, String productName, String userName) {
+        Optional<UserEntity> user = userRepository.findUserByEmail(email);
+
+        if(user.isPresent()){
+            UserEntity newUser = user.get();
+
+            if(productName.equals("Plano Básico")) newUser.setSubscription(SubscriptionType.BASIC);
+            if(productName.equals("Plano Intermediário")) newUser.setSubscription(SubscriptionType.PRO);
+            if(productName.equals("Plano Premium")) newUser.setSubscription(SubscriptionType.PREMIUM);
+
+            userRepository.save(newUser);
+
+            return new CheckoutResponse(newUser.getId(), null, true);
+        }
+
+        UserEntity entity = new UserEntity();
+
+        long timestamp = System.currentTimeMillis();
+        String password = String.valueOf(timestamp).substring(5, 13);
+        String random = Long.toString(timestamp, 36);
+
+        entity.setEmail(email);
+        entity.setName("User" + random);
+        entity.setUsername("UserName" + random);
+        entity.setCreatedAt(LocalDateTime.now());
+        entity.setUpdatedAt(LocalDateTime.now());
+        entity.setIcon("");
+        entity.setBackground("");
+        entity.setUserType(UserType.valueOf("COMMUM"));
+        entity.setAbout("Ainda não criou uma descrição");
+        entity.setEnabled(false);
+
+        if(productName.equals("Plano Básico")) entity.setSubscription(SubscriptionType.BASIC);
+        if(productName.equals("Plano Intermediário"))   entity.setSubscription(SubscriptionType.PRO);
+        if(productName.equals("Plano Premium"))   entity.setSubscription(SubscriptionType.PREMIUM);
+
+        entity.setPassword(passwordEncoder.encode(password));
+
+        UserEntity newUser = userRepository.save(entity);
+
+        return new CheckoutResponse(newUser.getId(), password, false);
+    }
+
+    @Override
+    public void SubscriptionDeleted(String email) {
+        Optional<UserEntity> user = userRepository.findUserByEmail(email);
+
+        if(user.isPresent()){
+            UserEntity newUser = user.get();
+
+            newUser.setSubscription(SubscriptionType.FREE);
+
+            userRepository.save(newUser);
+        }
     }
 }
