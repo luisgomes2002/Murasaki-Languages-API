@@ -5,6 +5,7 @@ import languages.murasaki.MurasakiLanguages.core.usecases.aireport.CreateAiRepor
 import languages.murasaki.MurasakiLanguages.core.usecases.aireport.CreateAiReportUsecaseImpl;
 import languages.murasaki.MurasakiLanguages.core.usecases.aireport.GetAllAiReportUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.aireport.GetAllAiReportUsecaseImpl;
+import languages.murasaki.MurasakiLanguages.core.usecases.security.AuthenticatedUsecase;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,8 +14,8 @@ import org.springframework.context.annotation.Configuration;
 public class AiReportBeanConfiguration {
 
     @Bean
-    public CreateAiReportUsecase createAiReportUsecase(AiReportGateway aiReportGateway){
-        return new CreateAiReportUsecaseImpl(aiReportGateway);
+    public CreateAiReportUsecase createAiReportUsecase(AiReportGateway aiReportGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new CreateAiReportUsecaseImpl(aiReportGateway, authenticatedUsecase);
     }
 
     @Bean

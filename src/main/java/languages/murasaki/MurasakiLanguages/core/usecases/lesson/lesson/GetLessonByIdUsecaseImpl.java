@@ -10,18 +10,14 @@ import languages.murasaki.MurasakiLanguages.infra.exceptions.UserDoesNotHavePerm
 public class GetLessonByIdUsecaseImpl implements GetLessonByIdUsecase {
 
     private final LessonGateway lessonGateway;
-    private final AuthenticatedUsecase authenticatedUsecase;
 
-    public GetLessonByIdUsecaseImpl(LessonGateway lessonGateway, AuthenticatedUsecase authenticatedUsecase) {
+    public GetLessonByIdUsecaseImpl(LessonGateway lessonGateway) {
         this.lessonGateway = lessonGateway;
-        this.authenticatedUsecase = authenticatedUsecase;
     }
 
     @Override
     public Lesson execute(String id) {
-        UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
-        if(!"ADMIN".equals(userInfo.userType()) && !"MOD".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
 
         if(!lessonGateway.lessonIdExists(id)) throw new IdNotFoundException("Aula não encontrado");
 

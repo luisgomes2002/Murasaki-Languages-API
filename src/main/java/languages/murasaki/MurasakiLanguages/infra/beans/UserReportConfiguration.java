@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Configuration;
 public class UserReportConfiguration {
 
     @Bean
-    public CreateUserReportUsecase createUserReportUsecase(UserReportGateway userReportGateway, AuthenticatedUsecase authenticatedUsecase){
-        return new CreateUserReportUsecaseImpl(userReportGateway, authenticatedUsecase);
+    public CreateUserReportUsecase createUserReportUsecase(UserReportGateway userReportGateway){
+        return new CreateUserReportUsecaseImpl(userReportGateway);
     }
 
     @Bean

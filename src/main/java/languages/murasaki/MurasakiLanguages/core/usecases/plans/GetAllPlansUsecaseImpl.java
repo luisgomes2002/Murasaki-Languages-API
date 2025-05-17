@@ -18,7 +18,6 @@ public class GetAllPlansUsecaseImpl implements GetAllPlansUsecase{
 
     @Override
     public List<Plans> execute() {
-
         return plansGateway.getAllPlans();
     }
 }

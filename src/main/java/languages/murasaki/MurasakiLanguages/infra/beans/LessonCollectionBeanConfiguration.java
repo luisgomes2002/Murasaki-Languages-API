@@ -15,8 +15,8 @@ public class LessonCollectionBeanConfiguration {
     }
 
     @Bean
-    public GetAllCollectionsUsecase getAllCollectionsUsecase(LessonCollectionGateway lessonCollectionGateway, AuthenticatedUsecase authenticatedUsecase){
-        return new GetAllCollectionsUsecaseImpl(lessonCollectionGateway, authenticatedUsecase);
+    public GetAllCollectionsUsecase getAllCollectionsUsecase(LessonCollectionGateway lessonCollectionGateway){
+        return new GetAllCollectionsUsecaseImpl(lessonCollectionGateway);
     }
 
     @Bean

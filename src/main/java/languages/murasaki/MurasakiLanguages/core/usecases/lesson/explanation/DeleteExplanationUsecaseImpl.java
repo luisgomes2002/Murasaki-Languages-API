@@ -19,7 +19,7 @@ public class DeleteExplanationUsecaseImpl implements DeleteExplanationUsecase{
     public void execute(String id) {
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
-        if(!"ADMIN".equals(userInfo.userType()) && !"MOD".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
+        if(!"ADMIN".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
 
         explanationGateway.deleteExplanation(id);
     }

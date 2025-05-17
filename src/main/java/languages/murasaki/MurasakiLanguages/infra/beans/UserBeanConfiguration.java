@@ -45,8 +45,8 @@ public class UserBeanConfiguration {
         return new UpdateUserTypeUsecaseImpl(userGateway, authenticatedUsecase);
     }
 
-    @Bean UpdateUserEnableUsecase updateUserEnableUsecase(UserGateway userGateway){
-        return new UpdateUserEnableUsecaseImpl(userGateway);
+    @Bean UpdateUserEnableUsecase updateUserEnableUsecase(UserGateway userGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new UpdateUserEnableUsecaseImpl(userGateway, authenticatedUsecase);
     }
 
     @Bean

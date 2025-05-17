@@ -8,19 +8,13 @@ import languages.murasaki.MurasakiLanguages.core.usecases.security.Authenticated
 public class CreateUserReportUsecaseImpl implements CreateUserReportUsecase{
 
     private final UserReportGateway userReportGateway;
-    private final AuthenticatedUsecase authenticatedUsecase;
 
-    public CreateUserReportUsecaseImpl(UserReportGateway userReportGateway, AuthenticatedUsecase authenticatedUsecase) {
+    public CreateUserReportUsecaseImpl(UserReportGateway userReportGateway) {
         this.userReportGateway = userReportGateway;
-        this.authenticatedUsecase = authenticatedUsecase;
     }
 
     @Override
     public void execute(String name, String userId, UserReportDetail detail) {
-        UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
-
-//        if(userInfo.subscription() != SubscriptionType.PREMIUM)
-
         userReportGateway.createUserReport(name, userId, detail);
     }
 }
