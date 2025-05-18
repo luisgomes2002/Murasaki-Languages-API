@@ -8,12 +8,12 @@ import languages.murasaki.MurasakiLanguages.infra.exceptions.UserDoesNotHavePerm
 
 import java.util.List;
 
-public class GetLessonsByPublishedUsecaseImpl implements GetLessonsByPublishedUsecase {
+public class GetLessonsByPublishedOrNotUsecaseImpl implements GetLessonsByPublishedOrNotUsecase {
 
     private final LessonGateway lessonGateway;
     private final AuthenticatedUsecase authenticatedUsecase;
 
-    public GetLessonsByPublishedUsecaseImpl(LessonGateway lessonGateway, AuthenticatedUsecase authenticatedUsecase) {
+    public GetLessonsByPublishedOrNotUsecaseImpl(LessonGateway lessonGateway, AuthenticatedUsecase authenticatedUsecase) {
         this.lessonGateway = lessonGateway;
         this.authenticatedUsecase = authenticatedUsecase;
     }
@@ -24,6 +24,6 @@ public class GetLessonsByPublishedUsecaseImpl implements GetLessonsByPublishedUs
 
         if(!"ADMIN".equals(userInfo.userType()) && !"MOD".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
 
-        return lessonGateway.getLessonsByPublished(published);
+        return lessonGateway.getLessonsByPublishedOrNot(published);
     }
 }

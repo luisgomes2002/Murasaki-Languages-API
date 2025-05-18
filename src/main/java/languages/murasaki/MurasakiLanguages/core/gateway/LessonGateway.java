@@ -12,7 +12,7 @@ public interface LessonGateway {
     Lesson getLessonById(String id);
     Lesson updateLesson(String id, Lesson lesson);
     List<Lesson> getLessonsByVisibility(Visibility visibility);
-    List<Lesson> getLessonsByPublished(boolean published);
+    List<Lesson> getLessonsByPublishedOrNot(boolean published);
     List<Lesson> getPublicLessons();
     List<Lesson> getLessonsByPublishedTrue();
 

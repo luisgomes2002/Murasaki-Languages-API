@@ -30,8 +30,8 @@ public class LessonBeanConfiguration {
     }
 
     @Bean
-    public GetLessonsByPublishedUsecase getLessonsByPublishedUsecase(LessonGateway lessonGateway,AuthenticatedUsecase authenticatedUsecase ){
-        return new GetLessonsByPublishedUsecaseImpl(lessonGateway, authenticatedUsecase);
+    public GetLessonsByPublishedOrNotUsecase getLessonsByPublishedUsecase(LessonGateway lessonGateway, AuthenticatedUsecase authenticatedUsecase ){
+        return new GetLessonsByPublishedOrNotUsecaseImpl(lessonGateway, authenticatedUsecase);
     }
 
     @Bean

@@ -54,7 +54,8 @@ public class LessonRepositoryGateway implements LessonGateway {
     }
 
     @Override
-    public List<Lesson> getLessonsByPublished(boolean published) {
+    @Cacheable(value = "lesson-by-published-or-not")
+    public List<Lesson> getLessonsByPublishedOrNot(boolean published) {
         return lessonRepository.findByPublished(published)
                 .stream()
                 .map(lessonEntityMapper::toDomain)
@@ -62,6 +63,7 @@ public class LessonRepositoryGateway implements LessonGateway {
     }
 
     @Override
+    @Cacheable(value = "lesson-by-published")
     public List<Lesson> getLessonsByPublishedTrue() {
         return lessonRepository.findByPublished(true)
                 .stream()
@@ -70,6 +72,7 @@ public class LessonRepositoryGateway implements LessonGateway {
     }
 
     @Override
+    @Cacheable(value = "lesson-by-visibility")
     public List<Lesson> getLessonsByVisibility(Visibility visibility) {
         return lessonRepository.findByVisibility(visibility)
                 .stream()
@@ -77,6 +80,8 @@ public class LessonRepositoryGateway implements LessonGateway {
                 .toList();
     }
 
+    @Override
+    @Cacheable(value = "lesson-public")
     public List<Lesson> getPublicLessons() {
         return lessonRepository.findByVisibility(Visibility.PUBLIC)
                 .stream()

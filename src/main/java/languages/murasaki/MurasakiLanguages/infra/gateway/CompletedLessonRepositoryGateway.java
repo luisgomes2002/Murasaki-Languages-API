@@ -5,6 +5,7 @@ import languages.murasaki.MurasakiLanguages.core.gateway.CompletedLessonGateway;
 import languages.murasaki.MurasakiLanguages.infra.mapper.lesson.CompletedLessonEntityMapper;
 import languages.murasaki.MurasakiLanguages.infra.persistence.lesson.CompletedLessonEntity;
 import languages.murasaki.MurasakiLanguages.infra.persistence.lesson.CompletedLessonRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -60,6 +61,7 @@ public class CompletedLessonRepositoryGateway implements CompletedLessonGateway 
     }
 
     @Override
+    @Cacheable(value = "completed-lesson",  key = "#userId")
     public List<CompletedLesson> getAllCompletedLessons(String userId) {
         return completedLessonRepository.findCompletedLessonByUserId(userId).stream().map(completedLessonEntityMapper::toDomain).toList();
     }

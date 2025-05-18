@@ -4,7 +4,7 @@ import languages.murasaki.MurasakiLanguages.core.entities.lesson.Lesson;
 
 import java.util.List;
 
-public interface GetLessonsByPublishedUsecase {
+public interface GetLessonsByPublishedOrNotUsecase {
 
     List<Lesson> execute(boolean published);
 }

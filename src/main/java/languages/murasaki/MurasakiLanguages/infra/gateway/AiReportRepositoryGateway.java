@@ -53,14 +53,14 @@ public class AiReportRepositoryGateway implements AiReportGateway {
                 .map(report -> "- " + report.response())
                 .collect(Collectors.joining("\n"));
 
-        String mensagemFinal = prompt + explicacoesDeErro;
+        String finalMessage = prompt + explicacoesDeErro;
 
-        UserMessage userMessage = new UserMessage(mensagemFinal);
+        UserMessage userMessage = new UserMessage(finalMessage);
         Prompt chatPrompt = new Prompt(List.of(userMessage));
 
-        String relatorioCompleto = chatClient.prompt(chatPrompt).call().content();
+        String fullReport = chatClient.prompt(chatPrompt).call().content();
 
-        AiReportEntity entity = new AiReportEntity(userId, relatorioCompleto);
+        AiReportEntity entity = new AiReportEntity(userId, fullReport);
 
         aiReportRepository.save(entity);
     }

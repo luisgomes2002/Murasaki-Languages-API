@@ -30,11 +30,11 @@ public class LessonController {
     private final CreateBacklogUsecase createBacklogUsecase;
     private final UpdateLessonUsecase updateLessonUsecase;
     private final GetLessonsByPublishedTrueUsecase getLessonsByPublishedTrueUsecase;
-    private final GetLessonsByPublishedUsecase getLessonsByPublishedUsecase;
+    private final GetLessonsByPublishedOrNotUsecase getLessonsByPublishedOrNotUsecase;
     private final GetLessonsByVisibilityUsecase getLessonsByVisibilityUsecase;
     private final GetPublicLessonsUsecase getPublicLessonsUsecase;
 
-    public LessonController(CreateLessonUsecase createLessonUsecase, PublishLessonUsecase publishLessonUsecase, LessonDtoMapper lessonDtoMapper, PublishLessonInCollectionUsecase publishLessonInCollectionUsecase, GetAllLessonUsecase getAllLessonUsecase, GetLessonByIdUsecase getLessonByIdUsecase, DeleteLessonUsecase deleteLessonUsecase, CreateBacklogUsecase createBacklogUsecase, UpdateLessonUsecase updateLessonUsecase, GetLessonsByPublishedTrueUsecase getLessonsByPublishedTrueUsecase, GetLessonsByPublishedUsecase getLessonsByPublishedUsecase, GetLessonsByVisibilityUsecase getLessonsByVisibilityUsecase, GetPublicLessonsUsecase getPublicLessonsUsecase) {
+    public LessonController(CreateLessonUsecase createLessonUsecase, PublishLessonUsecase publishLessonUsecase, LessonDtoMapper lessonDtoMapper, PublishLessonInCollectionUsecase publishLessonInCollectionUsecase, GetAllLessonUsecase getAllLessonUsecase, GetLessonByIdUsecase getLessonByIdUsecase, DeleteLessonUsecase deleteLessonUsecase, CreateBacklogUsecase createBacklogUsecase, UpdateLessonUsecase updateLessonUsecase, GetLessonsByPublishedTrueUsecase getLessonsByPublishedTrueUsecase, GetLessonsByPublishedOrNotUsecase getLessonsByPublishedOrNotUsecase, GetLessonsByVisibilityUsecase getLessonsByVisibilityUsecase, GetPublicLessonsUsecase getPublicLessonsUsecase) {
         this.createLessonUsecase = createLessonUsecase;
         this.publishLessonUsecase = publishLessonUsecase;
         this.lessonDtoMapper = lessonDtoMapper;
@@ -45,7 +45,7 @@ public class LessonController {
         this.createBacklogUsecase = createBacklogUsecase;
         this.updateLessonUsecase = updateLessonUsecase;
         this.getLessonsByPublishedTrueUsecase = getLessonsByPublishedTrueUsecase;
-        this.getLessonsByPublishedUsecase = getLessonsByPublishedUsecase;
+        this.getLessonsByPublishedOrNotUsecase = getLessonsByPublishedOrNotUsecase;
         this.getLessonsByVisibilityUsecase = getLessonsByVisibilityUsecase;
         this.getPublicLessonsUsecase = getPublicLessonsUsecase;
     }
@@ -72,8 +72,8 @@ public class LessonController {
     }
 
     @GetMapping("published/{published}")
-    public List<Lesson> getLessonsByPublished(@PathVariable boolean published) {
-        return getLessonsByPublishedUsecase.execute(published);
+    public List<Lesson> getLessonsByPublishedOrNot(@PathVariable boolean published) {
+        return getLessonsByPublishedOrNotUsecase.execute(published);
     }
 
     @GetMapping("public")
