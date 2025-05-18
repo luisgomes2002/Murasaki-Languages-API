@@ -5,6 +5,7 @@ import languages.murasaki.MurasakiLanguages.core.entities.user.UserInfo;
 import languages.murasaki.MurasakiLanguages.core.gateway.LessonGateway;
 import languages.murasaki.MurasakiLanguages.core.usecases.security.AuthenticatedUsecase;
 import languages.murasaki.MurasakiLanguages.infra.exceptions.IdNotFoundException;
+import languages.murasaki.MurasakiLanguages.infra.exceptions.MissingArgumentsException;
 import languages.murasaki.MurasakiLanguages.infra.exceptions.UserDoesNotHavePermissionException;
 
 public class UpdateLessonUsecaseImpl implements UpdateLessonUsecase{
@@ -24,6 +25,9 @@ public class UpdateLessonUsecaseImpl implements UpdateLessonUsecase{
         if(!"ADMIN".equals(userInfo.userType()) && !"MOD".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
 
         if(!lessonGateway.lessonIdExists(id)) throw new IdNotFoundException("Aula não encontrado");
+
+        if(lesson.title() == null || lesson.text() == null || lesson.languageType() == null || lesson.japaneseLevels() == null || lesson.explanations() == null || lesson.links() == null)
+            throw new MissingArgumentsException("Campos faltando");
 
         return lessonGateway.updateLesson(id, lesson);
     }

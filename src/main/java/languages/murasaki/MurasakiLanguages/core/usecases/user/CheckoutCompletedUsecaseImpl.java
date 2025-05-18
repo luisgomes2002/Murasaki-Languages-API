@@ -1,7 +1,6 @@
 package languages.murasaki.MurasakiLanguages.core.usecases.user;
 
 import languages.murasaki.MurasakiLanguages.core.entities.payment.CheckoutResponse;
-import languages.murasaki.MurasakiLanguages.core.gateway.PaymentGateway;
 import languages.murasaki.MurasakiLanguages.core.gateway.UserGateway;
 
 public class CheckoutCompletedUsecaseImpl implements CheckoutCompletedUsecase{

@@ -67,5 +67,13 @@ public class ControllerExceptionsHandler {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(UserAIReportException.class)
+    public ResponseEntity<Map<String, String>> handleUserAIReportException(UserAIReportException exception){
+        Map<String, String> response = new HashMap<>();
+        response.put("Error", exception.getMessage());
+        response.put("Message", "Faça as atividades para gera o relatório.");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
     // Update password
 }
