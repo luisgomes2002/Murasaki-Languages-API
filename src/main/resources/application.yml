@@ -11,6 +11,8 @@ spring:
       host: localhost
       port: 6379
       password: sa
+      repositories:
+        enabled: false
 
   cache:
     redis:

@@ -87,6 +87,21 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @PostMapping("send-confirm-email")
+    public void SendConfirmEmail(@RequestBody String email){
+        String token = generateAndStoreTokenUsecase.execute(email);
+
+        String confirmationLink = "http://localhost:8080/api/confirm?token=" + token;
+
+        Email newEmail = new Email(
+                email,
+                "Confirmação de Email",
+                "Olá! Obrigado por se cadastrar. Clique no link abaixo para confirmar seu e-mail:\n" + confirmationLink
+        );
+
+        sendEmailUsecase.execute(newEmail);
+    }
+
     @GetMapping("/")
     public List<User> getAllUsers(){
         return getAllUsersUseCase.execute();
