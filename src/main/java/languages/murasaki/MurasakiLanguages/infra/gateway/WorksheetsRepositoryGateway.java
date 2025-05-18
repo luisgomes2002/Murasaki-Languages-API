@@ -1,6 +1,8 @@
 package languages.murasaki.MurasakiLanguages.infra.gateway;
 
 import languages.murasaki.MurasakiLanguages.core.entities.lesson.AnswerRequest;
+import languages.murasaki.MurasakiLanguages.core.entities.lesson.UserAnswers;
+import languages.murasaki.MurasakiLanguages.core.entities.lesson.UserAnswersLog;
 import languages.murasaki.MurasakiLanguages.core.entities.lesson.Worksheets;
 import languages.murasaki.MurasakiLanguages.core.entities.userreport.UserReportDetail;
 import languages.murasaki.MurasakiLanguages.core.gateway.WorksheetsGateway;
@@ -11,6 +13,7 @@ import languages.murasaki.MurasakiLanguages.infra.persistence.lesson.WorksheetsE
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Component
@@ -70,5 +73,4 @@ public class WorksheetsRepositoryGateway implements WorksheetsGateway {
         else
             return new UserReportDetail(answerRequest.worksheets().id(), answerRequest.worksheets().explanation());
     }
-
 }

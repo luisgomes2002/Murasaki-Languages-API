@@ -25,7 +25,7 @@ public class UserReportRepositoryGateway implements UserReportGateway {
 
     @Override
     public void createUserReport(String name, String userId, UserReportDetail detail) {
-        Optional<UserReportEntity> existReport = userReportRepository.findUserReportByName(name);
+        Optional<UserReportEntity> existReport = userReportRepository.findUserReportByUserId(userId);
 
         if(existReport.isPresent()){
             UserReportEntity newReport = existReport.get();
@@ -53,8 +53,8 @@ public class UserReportRepositoryGateway implements UserReportGateway {
     }
 
     @Override
-    public void removeUserReport(String name, String questionId) {
-        Optional<UserReportEntity> existReport = userReportRepository.findUserReportByName(name);
+    public void removeUserReport(String name, String userId, String questionId) {
+        Optional<UserReportEntity> existReport = userReportRepository.findUserReportByUserId(userId);
 
         if (existReport.isPresent()) {
             UserReportEntity report = existReport.get();

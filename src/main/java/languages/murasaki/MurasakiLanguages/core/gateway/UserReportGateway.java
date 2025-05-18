@@ -10,5 +10,5 @@ public interface UserReportGateway {
     UserReport getReportById(String reportId);
 
     void createUserReport(String name, String userId, UserReportDetail detail);
-    void removeUserReport(String name, String questionId);
+    void removeUserReport(String name, String userId, String questionId);
 }

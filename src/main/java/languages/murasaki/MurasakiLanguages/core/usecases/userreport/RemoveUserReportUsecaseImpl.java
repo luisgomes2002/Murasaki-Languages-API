@@ -11,7 +11,7 @@ public class RemoveUserReportUsecaseImpl implements RemoveUserReportUsecase {
     }
 
     @Override
-    public void execute(String name, String id) {
-        userReportGateway.removeUserReport(name, id);
+    public void execute(String name, String userId, String questionId) {
+        userReportGateway.removeUserReport(name, userId, questionId);
     }
 }

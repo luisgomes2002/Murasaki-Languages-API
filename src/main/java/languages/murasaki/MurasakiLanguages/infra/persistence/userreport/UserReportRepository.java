@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface UserReportRepository extends MongoRepository<UserReportEntity, String> {
 
-    Optional<UserReportEntity> findUserReportByName(String name);
+    Optional<UserReportEntity> findUserReportByUserId(String userId);
 }
