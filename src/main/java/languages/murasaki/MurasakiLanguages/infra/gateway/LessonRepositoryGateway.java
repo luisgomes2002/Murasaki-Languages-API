@@ -1,6 +1,7 @@
 package languages.murasaki.MurasakiLanguages.infra.gateway;
 
 import languages.murasaki.MurasakiLanguages.core.entities.lesson.Lesson;
+import languages.murasaki.MurasakiLanguages.core.enums.JapaneseLevels;
 import languages.murasaki.MurasakiLanguages.core.enums.Visibility;
 import languages.murasaki.MurasakiLanguages.core.gateway.LessonGateway;
 import languages.murasaki.MurasakiLanguages.infra.mapper.lesson.LessonEntityMapper;
@@ -87,6 +88,29 @@ public class LessonRepositoryGateway implements LessonGateway {
                 .stream()
                 .map(lessonEntityMapper::toDomain)
                 .toList();
+    }
+
+    @Override
+    @Cacheable(value = "lesson-japanese-by-level")
+    public List<Lesson> getJapanesLessonsByLevel(JapaneseLevels level) {
+        return lessonRepository
+                .findByJapaneseLevelsAndPublishedTrueAndVisibility(level, Visibility.PUBLIC)
+                .stream()
+                .map(lessonEntityMapper::toDomain)
+                .toList();
+    }
+
+    @Override
+    public void ChangeVisibility(String lessonId, Visibility visibility) {
+        Optional<LessonEntity> entity = lessonRepository.findById(lessonId);
+
+        if(entity.isPresent()){
+            LessonEntity newLesson = entity.get();
+
+            newLesson.setVisibility(visibility);
+
+            lessonRepository.save(newLesson);
+        }
     }
 
     @Override

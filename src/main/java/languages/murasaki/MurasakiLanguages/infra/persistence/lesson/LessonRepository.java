@@ -1,5 +1,6 @@
 package languages.murasaki.MurasakiLanguages.infra.persistence.lesson;
 
+import languages.murasaki.MurasakiLanguages.core.enums.JapaneseLevels;
 import languages.murasaki.MurasakiLanguages.core.enums.Visibility;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
@@ -14,4 +15,7 @@ public interface LessonRepository extends MongoRepository<LessonEntity, String> 
 
     // Filtrar por published (true / false)
     List<LessonEntity> findByPublished(boolean published);
+
+    List<LessonEntity> findByJapaneseLevelsAndPublishedTrueAndVisibility(JapaneseLevels japaneseLevels, Visibility visibility);
+
 }

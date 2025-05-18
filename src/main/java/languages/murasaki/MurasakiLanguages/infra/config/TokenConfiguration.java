@@ -45,7 +45,6 @@ public class TokenConfiguration {
             String email = verify.getSubject();
             String subscription = verify.getClaim("subscription").asString();
 
-
             UserInfoEntity userData = new UserInfoEntity(userId, name, userType, email, subscription);
 
             return Optional.of(userData);

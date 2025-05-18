@@ -2,6 +2,7 @@ package languages.murasaki.MurasakiLanguages.infra.presentation;
 
 import languages.murasaki.MurasakiLanguages.core.entities.backlog.Backlog;
 import languages.murasaki.MurasakiLanguages.core.entities.lesson.Lesson;
+import languages.murasaki.MurasakiLanguages.core.enums.JapaneseLevels;
 import languages.murasaki.MurasakiLanguages.core.enums.Visibility;
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.CreateBacklogUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.lesson.lesson.*;
@@ -33,8 +34,10 @@ public class LessonController {
     private final GetLessonsByPublishedOrNotUsecase getLessonsByPublishedOrNotUsecase;
     private final GetLessonsByVisibilityUsecase getLessonsByVisibilityUsecase;
     private final GetPublicLessonsUsecase getPublicLessonsUsecase;
+    private final GetJapanesLessonsByLevelUsecase getJapanesLessonsByLevelUsecase;
+    private final ChangeVisibilityUsecase changeVisibilityUsecase;
 
-    public LessonController(CreateLessonUsecase createLessonUsecase, PublishLessonUsecase publishLessonUsecase, LessonDtoMapper lessonDtoMapper, PublishLessonInCollectionUsecase publishLessonInCollectionUsecase, GetAllLessonUsecase getAllLessonUsecase, GetLessonByIdUsecase getLessonByIdUsecase, DeleteLessonUsecase deleteLessonUsecase, CreateBacklogUsecase createBacklogUsecase, UpdateLessonUsecase updateLessonUsecase, GetLessonsByPublishedTrueUsecase getLessonsByPublishedTrueUsecase, GetLessonsByPublishedOrNotUsecase getLessonsByPublishedOrNotUsecase, GetLessonsByVisibilityUsecase getLessonsByVisibilityUsecase, GetPublicLessonsUsecase getPublicLessonsUsecase) {
+    public LessonController(CreateLessonUsecase createLessonUsecase, PublishLessonUsecase publishLessonUsecase, LessonDtoMapper lessonDtoMapper, PublishLessonInCollectionUsecase publishLessonInCollectionUsecase, GetAllLessonUsecase getAllLessonUsecase, GetLessonByIdUsecase getLessonByIdUsecase, DeleteLessonUsecase deleteLessonUsecase, CreateBacklogUsecase createBacklogUsecase, UpdateLessonUsecase updateLessonUsecase, GetLessonsByPublishedTrueUsecase getLessonsByPublishedTrueUsecase, GetLessonsByPublishedOrNotUsecase getLessonsByPublishedOrNotUsecase, GetLessonsByVisibilityUsecase getLessonsByVisibilityUsecase, GetPublicLessonsUsecase getPublicLessonsUsecase, GetJapanesLessonsByLevelUsecase getJapanesLessonsByLevelUsecase, ChangeVisibilityUsecase changeVisibilityUsecase) {
         this.createLessonUsecase = createLessonUsecase;
         this.publishLessonUsecase = publishLessonUsecase;
         this.lessonDtoMapper = lessonDtoMapper;
@@ -48,13 +51,15 @@ public class LessonController {
         this.getLessonsByPublishedOrNotUsecase = getLessonsByPublishedOrNotUsecase;
         this.getLessonsByVisibilityUsecase = getLessonsByVisibilityUsecase;
         this.getPublicLessonsUsecase = getPublicLessonsUsecase;
+        this.getJapanesLessonsByLevelUsecase = getJapanesLessonsByLevelUsecase;
+        this.changeVisibilityUsecase = changeVisibilityUsecase;
     }
 
     @PostMapping("create/{userId}")
     public ResponseEntity<Map<String, Object>> createLesson(@RequestBody LessonDto lessonDto, @PathVariable String userId){
         Lesson newLesson = createLessonUsecase.execute(lessonDtoMapper.toDomain(lessonDto));
         Map<String, Object> response = new HashMap<>();
-        response.put("Message: ", "Aula criado com sucesso.");
+        response.put("Message: ", "Aula criada com sucesso.");
         response.put("Lesson data: ", lessonDtoMapper.toDto(newLesson));
 
         Backlog backlog = new Backlog(null, userId, "Criou uma aula: " + newLesson.title(), null);
@@ -89,6 +94,9 @@ public class LessonController {
     @GetMapping("{id}")
     public Lesson getLessonById(@PathVariable String id){ return getLessonByIdUsecase.execute(id); }
 
+    @GetMapping("japanese-level/{level}")
+    public List<Lesson> getByJapaneseLevel(@PathVariable JapaneseLevels level){ return getJapanesLessonsByLevelUsecase.execute(level);}
+
     @DeleteMapping("delete/{id}/{collectionId}")
     public ResponseEntity<String> deleteLesson(@PathVariable String id, @PathVariable String collectionId, String userId, String lessonName){
         deleteLessonUsecase.execute(id);
@@ -122,5 +130,12 @@ public class LessonController {
         createBacklogUsecase.execute(backlog);
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @PutMapping("update/lesson-visibility/{lessonId}")
+    public String updateLessonVisibility(@PathVariable String lessonId, @RequestBody Visibility visibility){
+        changeVisibilityUsecase.execute(lessonId, visibility);
+
+        return "Aula atualizada";
     }
 }

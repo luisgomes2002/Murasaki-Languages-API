@@ -17,13 +17,13 @@ public class PublishLessonInCollectionUsecaseImpl implements PublishLessonInColl
     }
 
     @Override
-    public String execute(String collectionId, String lessoneId, boolean status) {
+    public String execute(String collectionId, String lessonId, boolean status) {
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
         if(!"ADMIN".equals(userInfo.userType()) && !"MOD".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
 
-        if(collectionId == null || lessoneId == null) throw new MissingArgumentsException("Campo faltando");
+        if(collectionId == null || lessonId == null) throw new MissingArgumentsException("Campo faltando");
 
-       return lessonCollectionGateway.publishLessonInCollection(collectionId, lessoneId, status);
+       return lessonCollectionGateway.publishLessonInCollection(collectionId, lessonId, status);
     }
 }

@@ -78,4 +78,14 @@ public class LessonBeanConfiguration {
     public RemoveExplanationUsecase removeExplanationUsecase(LessonGateway lessonGateway, AuthenticatedUsecase authenticatedUsecase){
         return new RemoveExplanationUsecaseImpl(lessonGateway, authenticatedUsecase);
     }
+
+    @Bean
+    public GetJapanesLessonsByLevelUsecase getJapanesLessonsByLevelUsecase(LessonGateway lessonGateway){
+        return new GetJapanesLessonsByLevelUsecaseImpl(lessonGateway);
+    }
+
+    @Bean
+    public ChangeVisibilityUsecase changeVisibilityUsecase(LessonGateway lessonGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new ChangeVisibilityUsecaseImpl(lessonGateway, authenticatedUsecase);
+    }
 }
