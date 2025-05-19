@@ -2,9 +2,7 @@ package languages.murasaki.MurasakiLanguages.infra.presentation;
 
 import languages.murasaki.MurasakiLanguages.core.entities.backlog.Backlog;
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.GetAllBacklogUsecase;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,8 +17,8 @@ public class BacklogController {
     }
 
     @GetMapping("/")
-    public List<Backlog> getAllBacklog(){
-        return getAllBacklogUsecase.execute();
+    public List<Backlog> getAllBacklog(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
+        return getAllBacklogUsecase.execute(page, size);
     }
 
 }

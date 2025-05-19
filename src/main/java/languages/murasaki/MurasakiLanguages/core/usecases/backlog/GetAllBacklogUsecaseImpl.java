@@ -19,11 +19,11 @@ public class GetAllBacklogUsecaseImpl implements GetAllBacklogUsecase{
     }
 
     @Override
-    public List<Backlog> execute() {
+    public List<Backlog> execute(int page, int size) {
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
         if(!"ADMIN".equals(userInfo.userType()) && !"MOD".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
 
-        return backlogGateway.getAllBacklog();
+        return backlogGateway.getAllBacklog(page, size);
     }
 }

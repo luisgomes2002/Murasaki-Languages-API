@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface AiReportGateway {
 
-    List<AiReport> getAllAiReport(String userId);
+    List<AiReport> getAllAiReport(String userId, int page, int size);
 
     void createAiReport(String userId, UserReport userReport);
 }

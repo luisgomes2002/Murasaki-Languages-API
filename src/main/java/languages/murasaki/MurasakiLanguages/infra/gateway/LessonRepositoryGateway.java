@@ -9,6 +9,8 @@ import languages.murasaki.MurasakiLanguages.infra.persistence.lesson.LessonEntit
 import languages.murasaki.MurasakiLanguages.infra.persistence.lesson.LessonRepository;
 import languages.murasaki.MurasakiLanguages.infra.persistence.user.UserInfoEntity;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -44,8 +46,9 @@ public class LessonRepositoryGateway implements LessonGateway {
 
     @Override
     @Cacheable(value = "all-lessons")
-    public List<Lesson> getAllLessons() {
-        return lessonRepository.findAll().stream().map(lessonEntityMapper::toDomain).toList();
+    public List<Lesson> getAllLessons(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return lessonRepository.findAll(pageable).stream().map(lessonEntityMapper::toDomain).toList();
     }
 
     @Override
@@ -56,8 +59,9 @@ public class LessonRepositoryGateway implements LessonGateway {
 
     @Override
     @Cacheable(value = "lesson-by-published-or-not")
-    public List<Lesson> getLessonsByPublishedOrNot(boolean published) {
-        return lessonRepository.findByPublished(published)
+    public List<Lesson> getLessonsByPublishedOrNot(boolean published, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return lessonRepository.findByPublished(published, pageable)
                 .stream()
                 .map(lessonEntityMapper::toDomain)
                 .toList();
@@ -65,8 +69,9 @@ public class LessonRepositoryGateway implements LessonGateway {
 
     @Override
     @Cacheable(value = "lesson-by-published")
-    public List<Lesson> getLessonsByPublishedTrue() {
-        return lessonRepository.findByPublished(true)
+    public List<Lesson> getLessonsByPublishedTrue(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return lessonRepository.findByPublished(true, pageable)
                 .stream()
                 .map(lessonEntityMapper::toDomain)
                 .toList();
@@ -74,8 +79,9 @@ public class LessonRepositoryGateway implements LessonGateway {
 
     @Override
     @Cacheable(value = "lesson-by-visibility")
-    public List<Lesson> getLessonsByVisibility(Visibility visibility) {
-        return lessonRepository.findByVisibility(visibility)
+    public List<Lesson> getLessonsByVisibility(Visibility visibility, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return lessonRepository.findByVisibility(visibility, pageable)
                 .stream()
                 .map(lessonEntityMapper::toDomain)
                 .toList();
@@ -83,8 +89,9 @@ public class LessonRepositoryGateway implements LessonGateway {
 
     @Override
     @Cacheable(value = "lesson-public")
-    public List<Lesson> getPublicLessons() {
-        return lessonRepository.findByVisibility(Visibility.PUBLIC)
+    public List<Lesson> getPublicLessons(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return lessonRepository.findByVisibility(Visibility.PUBLIC, pageable)
                 .stream()
                 .map(lessonEntityMapper::toDomain)
                 .toList();
@@ -92,9 +99,10 @@ public class LessonRepositoryGateway implements LessonGateway {
 
     @Override
     @Cacheable(value = "lesson-japanese-by-level")
-    public List<Lesson> getJapanesLessonsByLevel(JapaneseLevels level) {
+    public List<Lesson> getJapanesLessonsByLevel(JapaneseLevels level, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
         return lessonRepository
-                .findByJapaneseLevelsAndPublishedTrueAndVisibility(level, Visibility.PUBLIC)
+                .findByJapaneseLevelsAndPublishedTrueAndVisibility(level, Visibility.PUBLIC, pageable)
                 .stream()
                 .map(lessonEntityMapper::toDomain)
                 .toList();

@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface GetLessonsByPublishedTrueUsecase {
 
-    List<Lesson> execute();
+    List<Lesson> execute(int page, int size);
 }

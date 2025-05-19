@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface GetAllReportsUsecase {
 
-    List<Report> execute();
+    List<Report> execute(int page, int size);
 }

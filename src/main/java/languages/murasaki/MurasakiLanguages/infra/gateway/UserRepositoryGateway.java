@@ -18,6 +18,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -61,8 +63,12 @@ public class UserRepositoryGateway implements UserGateway {
 
     @Override
     @Cacheable(value = "all-user")
-    public List<User> getAllUsers() {
-        return userRepository.findAll().stream().map(userEntityMapper::toDomain).toList();
+    public List<User> getAllUsers(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return userRepository.findAll(pageable)
+                .stream()
+                .map(userEntityMapper::toDomain)
+                .toList();
     }
 
     @Override

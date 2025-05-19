@@ -69,33 +69,35 @@ public class LessonController {
     }
 
     @GetMapping("/")
-    public List<Lesson> getAllLessons(){ return getAllLessonUsecase.execute(); }
+    public List<Lesson> getAllLessons(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
+        return getAllLessonUsecase.execute(page, size);
+    }
 
     @GetMapping("visibility/{visibility}")
-    public List<Lesson> getLessonsByVisibility(@PathVariable String visibility) {
-        return getLessonsByVisibilityUsecase.execute(Visibility.valueOf(visibility.toUpperCase()));
+    public List<Lesson> getLessonsByVisibility(@PathVariable String visibility, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+        return getLessonsByVisibilityUsecase.execute(Visibility.valueOf(visibility.toUpperCase()), page, size);
     }
 
     @GetMapping("published/{published}")
-    public List<Lesson> getLessonsByPublishedOrNot(@PathVariable boolean published) {
-        return getLessonsByPublishedOrNotUsecase.execute(published);
+    public List<Lesson> getLessonsByPublishedOrNot(@PathVariable boolean published, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+        return getLessonsByPublishedOrNotUsecase.execute(published, page, size);
     }
 
     @GetMapping("public")
-    public List<Lesson> getPublicLessons() {
-        return getPublicLessonsUsecase.execute();
+    public List<Lesson> getPublicLessons(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+        return getPublicLessonsUsecase.execute(page, size);
     }
 
     @GetMapping("published-true")
-    public List<Lesson> getLessonsByPublishedTrue() {
-        return getLessonsByPublishedTrueUsecase.execute();
+    public List<Lesson> getLessonsByPublishedTrue(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+        return getLessonsByPublishedTrueUsecase.execute(page, size);
     }
 
     @GetMapping("{id}")
     public Lesson getLessonById(@PathVariable String id){ return getLessonByIdUsecase.execute(id); }
 
     @GetMapping("japanese-level/{level}")
-    public List<Lesson> getByJapaneseLevel(@PathVariable JapaneseLevels level){ return getJapanesLessonsByLevelUsecase.execute(level);}
+    public List<Lesson> getByJapaneseLevel(@PathVariable JapaneseLevels level, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){ return getJapanesLessonsByLevelUsecase.execute(level, page, size);}
 
     @DeleteMapping("delete/{id}/{collectionId}")
     public ResponseEntity<String> deleteLesson(@PathVariable String id, @PathVariable String collectionId, String userId, String lessonName){

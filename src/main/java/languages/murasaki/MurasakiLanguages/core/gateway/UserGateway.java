@@ -10,7 +10,7 @@ import java.util.List;
 public interface UserGateway {
 
     User createUser(User user);
-    List<User> getAllUsers();
+    List<User> getAllUsers(int page, int size);
     User getUserById(String id);
     User updateUser(String id, User user);
     User updateUserPassword(String id, String newPassword);

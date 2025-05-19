@@ -45,8 +45,8 @@ public class ReportController {
     }
 
     @GetMapping("/")
-    public List<Report> getAllReports(){
-        return getAllReportsUsecase.execute();
+    public List<Report> getAllReports(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
+        return getAllReportsUsecase.execute(page, size);
     }
 
     // TODO: mudar o id para pegar pelo body

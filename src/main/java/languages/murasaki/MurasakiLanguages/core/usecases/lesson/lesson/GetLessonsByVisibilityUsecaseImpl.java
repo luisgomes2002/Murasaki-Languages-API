@@ -20,11 +20,11 @@ public class GetLessonsByVisibilityUsecaseImpl implements GetLessonsByVisibility
     }
 
     @Override
-    public List<Lesson> execute(Visibility visibility) {
+    public List<Lesson> execute(Visibility visibility, int page, int size) {
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
         if(!"ADMIN".equals(userInfo.userType()) && !"MOD".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
 
-        return lessonGateway.getLessonsByVisibility(visibility);
+        return lessonGateway.getLessonsByVisibility(visibility, page, size);
     }
 }

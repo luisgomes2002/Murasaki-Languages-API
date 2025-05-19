@@ -19,11 +19,11 @@ public class GetAllUsersUseCaseImpl implements GetAllUsersUseCase{
     }
 
     @Override
-    public List<User> execute() {
+    public List<User> execute(int page, int size) {
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
         if(!"ADMIN".equals(userInfo.userType()) && !"MOD".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
 
-        return userGateway.getAllUsers();
+        return userGateway.getAllUsers(page, size);
     }
 }

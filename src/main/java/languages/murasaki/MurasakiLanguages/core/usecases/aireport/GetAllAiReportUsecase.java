@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface GetAllAiReportUsecase {
 
-    List<AiReport> execute(String userId);
+    List<AiReport> execute(String userId, int page, int size);
 }

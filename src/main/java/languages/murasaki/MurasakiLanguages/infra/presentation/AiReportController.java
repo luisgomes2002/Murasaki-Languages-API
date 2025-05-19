@@ -31,5 +31,7 @@ public class AiReportController {
     }
 
     @GetMapping("/{userId}/")
-    public List<AiReport> getAllAiReport(@PathVariable String userId){ return getAllAiReportUsecase.execute(userId); }
+    public List<AiReport> getAllAiReport(@PathVariable String userId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
+        return getAllAiReportUsecase.execute(userId, page, size);
+    }
 }

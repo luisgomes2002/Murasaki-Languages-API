@@ -14,7 +14,7 @@ public class GetLessonsByPublishedTrueUsecaseImpl implements  GetLessonsByPublis
     }
 
     @Override
-    public List<Lesson> execute() {
-        return lessonGateway.getLessonsByPublishedTrue();
+    public List<Lesson> execute(int page, int size) {
+        return lessonGateway.getLessonsByPublishedTrue(page, size);
     }
 }

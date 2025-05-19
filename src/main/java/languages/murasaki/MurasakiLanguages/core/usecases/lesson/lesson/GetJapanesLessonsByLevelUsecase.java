@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface GetJapanesLessonsByLevelUsecase {
 
-    List<Lesson> execute(JapaneseLevels levels);
+    List<Lesson> execute(JapaneseLevels levels, int page, int size);
 }

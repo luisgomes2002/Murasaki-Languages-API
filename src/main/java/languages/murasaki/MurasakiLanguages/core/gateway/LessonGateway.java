@@ -9,14 +9,14 @@ import java.util.List;
 public interface LessonGateway {
 
     Lesson createLesson(Lesson lesson);
-    List<Lesson> getAllLessons();
+    List<Lesson> getAllLessons(int page, int size);
     Lesson getLessonById(String id);
     Lesson updateLesson(String id, Lesson lesson);
-    List<Lesson> getLessonsByVisibility(Visibility visibility);
-    List<Lesson> getLessonsByPublishedOrNot(boolean published);
-    List<Lesson> getPublicLessons();
-    List<Lesson> getLessonsByPublishedTrue();
-    List<Lesson> getJapanesLessonsByLevel(JapaneseLevels levels);
+    List<Lesson> getLessonsByVisibility(Visibility visibility, int page, int size);
+    List<Lesson> getLessonsByPublishedOrNot(boolean published, int page, int size);
+    List<Lesson> getPublicLessons(int page, int size);
+    List<Lesson> getLessonsByPublishedTrue(int page, int size);
+    List<Lesson> getJapanesLessonsByLevel(JapaneseLevels levels, int page, int size);
 
     void deleteLesson(String id);
     void addExplanation(String lessonId, String explanationId);

@@ -14,7 +14,7 @@ public class GetPublicLessonsUsecaseImpl implements GetPublicLessonsUsecase{
     }
 
     @Override
-    public List<Lesson> execute() {
-        return lessonGateway.getPublicLessons();
+    public List<Lesson> execute(int page, int size) {
+        return lessonGateway.getPublicLessons(page, size);
     }
 }

@@ -14,7 +14,7 @@ public class GetAllAiReportUsecaseImpl implements GetAllAiReportUsecase{
     }
 
     @Override
-    public List<AiReport> execute(String userId) {
-        return aiReportGateway.getAllAiReport(userId);
+    public List<AiReport> execute(String userId, int page, int size) {
+        return aiReportGateway.getAllAiReport(userId, page, size);
     }
 }

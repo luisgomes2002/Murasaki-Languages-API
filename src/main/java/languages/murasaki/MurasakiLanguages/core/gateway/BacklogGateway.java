@@ -7,5 +7,5 @@ import java.util.List;
 public interface BacklogGateway {
 
     public Backlog createBacklog(Backlog backlog);
-    public List<Backlog> getAllBacklog();
+    public List<Backlog> getAllBacklog(int page, int size);
 }

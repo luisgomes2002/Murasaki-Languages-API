@@ -19,11 +19,11 @@ public class GetAllReportsUsecaseImpl implements GetAllReportsUsecase{
     }
 
     @Override
-    public List<Report> execute() {
+    public List<Report> execute(int page, int size) {
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
         if(!"ADMIN".equals(userInfo.userType()) && !"MOD".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
 
-        return reportGateway.getAllReports();
+        return reportGateway.getAllReports(page, size);
     }
 }

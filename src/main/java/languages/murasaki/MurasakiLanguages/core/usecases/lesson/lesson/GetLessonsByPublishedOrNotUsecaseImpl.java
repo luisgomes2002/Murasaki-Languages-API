@@ -19,11 +19,11 @@ public class GetLessonsByPublishedOrNotUsecaseImpl implements GetLessonsByPublis
     }
 
     @Override
-    public List<Lesson> execute(boolean published) {
+    public List<Lesson> execute(boolean published, int page, int size) {
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
         if(!"ADMIN".equals(userInfo.userType()) && !"MOD".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
 
-        return lessonGateway.getLessonsByPublishedOrNot(published);
+        return lessonGateway.getLessonsByPublishedOrNot(published, page, size);
     }
 }

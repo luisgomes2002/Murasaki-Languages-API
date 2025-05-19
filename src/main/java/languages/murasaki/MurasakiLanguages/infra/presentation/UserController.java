@@ -103,8 +103,8 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public List<User> getAllUsers(){
-        return getAllUsersUseCase.execute();
+    public List<User> getAllUsers(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+        return getAllUsersUseCase.execute(page, size);
     }
 
     @GetMapping("list/{id}")

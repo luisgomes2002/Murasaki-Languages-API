@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface GetAllUsersUseCase {
 
-    public List<User> execute();
+    public List<User> execute(int page, int size);
 }

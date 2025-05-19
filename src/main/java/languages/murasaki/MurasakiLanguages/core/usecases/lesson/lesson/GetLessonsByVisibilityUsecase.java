@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface GetLessonsByVisibilityUsecase {
 
-    List<Lesson> execute(Visibility visibility);
+    List<Lesson> execute(Visibility visibility, int page, int size);
 }

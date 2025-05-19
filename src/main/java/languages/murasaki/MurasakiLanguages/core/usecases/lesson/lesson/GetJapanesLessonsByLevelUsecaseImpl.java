@@ -15,7 +15,7 @@ public class GetJapanesLessonsByLevelUsecaseImpl implements GetJapanesLessonsByL
     }
 
     @Override
-    public List<Lesson> execute(JapaneseLevels levels) {
-       return lessonGateway.getJapanesLessonsByLevel(levels);
+    public List<Lesson> execute(JapaneseLevels levels, int page, int size) {
+       return lessonGateway.getJapanesLessonsByLevel(levels, page, size);
     }
 }

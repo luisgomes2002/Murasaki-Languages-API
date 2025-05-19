@@ -7,7 +7,7 @@ import java.util.List;
 public interface ReportGateway{
 
     Report createReport(Report report);
-    List<Report> getAllReports();
+    List<Report> getAllReports(int page, int size);
 
     void updateReportStatus(String id, boolean finished);
 }

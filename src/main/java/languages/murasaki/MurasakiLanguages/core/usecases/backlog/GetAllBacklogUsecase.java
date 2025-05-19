@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface GetAllBacklogUsecase {
 
-    List<Backlog> execute();
+    List<Backlog> execute(int page, int size);
 }
