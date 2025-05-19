@@ -19,6 +19,8 @@ public class CreateUserUsecaseImpl implements CreateUserUsecase{
 
         if(user.name() == null || user.username() == null || user.email() == null || user.password() == null) throw new MissingArgumentsException("Campos faltando");
 
+        if(userGateway.userUsernameAlreadyCreated(user.username())) throw new DuplicateUserException("Username já existe!");
+
         return userGateway.createUser(user);
     }
 }

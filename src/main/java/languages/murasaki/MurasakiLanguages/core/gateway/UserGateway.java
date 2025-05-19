@@ -24,6 +24,7 @@ public interface UserGateway {
     CheckoutResponse checkoutCompleted(String email, String productName, String userName);
 
     boolean userAlreadyCreated(String email);
+    boolean userUsernameAlreadyCreated(String username);
     boolean userIdExists(String id);
     boolean userIsBanned(String email);
     boolean userIsEnabled(String email);

@@ -15,7 +15,7 @@ public class ControllerExceptionsHandler {
     public ResponseEntity<Map<String, String>> handleDuplicateUserException(DuplicateUserException exception){
         Map<String, String> response = new HashMap<>();
         response.put("Error", exception.getMessage());
-        response.put("Message", "Por favor, insira um e-mail válido.");
+        response.put("Message", "Por favor, insira uma informação válida.");
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 

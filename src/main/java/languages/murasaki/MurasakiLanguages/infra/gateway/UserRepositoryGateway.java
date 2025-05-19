@@ -83,6 +83,11 @@ public class UserRepositoryGateway implements UserGateway {
     }
 
     @Override
+    public boolean userUsernameAlreadyCreated(String username) {
+        return userRepository.findAll().stream().anyMatch(user -> user.getUsername().equalsIgnoreCase(username));
+    }
+
+    @Override
     public User updateUser(String id, User user) {
         Optional<UserEntity> entity = userRepository.findById(id);
 

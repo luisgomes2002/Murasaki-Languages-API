@@ -7,6 +7,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.data.mongodb.core.index.Indexed;
+
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,7 +22,10 @@ public class UserEntity implements UserDetails{
     private String id;
 
     private String name;
+
+    @Indexed(unique = true)
     private String username;
+
     private Gender gender;
     private LocalDate birth;
     private String email;
