@@ -1,4 +1,4 @@
-package languages.murasaki.MurasakiLanguages.infra.dtos.user.response;
+package languages.murasaki.MurasakiLanguages.infra.dtos.user;
 
 import languages.murasaki.MurasakiLanguages.core.enums.Gender;
 import languages.murasaki.MurasakiLanguages.core.enums.SubscriptionType;

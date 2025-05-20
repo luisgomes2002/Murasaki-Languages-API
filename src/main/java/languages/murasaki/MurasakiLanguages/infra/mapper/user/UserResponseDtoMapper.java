@@ -1,7 +1,7 @@
-package languages.murasaki.MurasakiLanguages.infra.mapper.user.response;
+package languages.murasaki.MurasakiLanguages.infra.mapper.user;
 
 import languages.murasaki.MurasakiLanguages.core.entities.user.User;
-import languages.murasaki.MurasakiLanguages.infra.dtos.user.response.UserResponseDto;
+import languages.murasaki.MurasakiLanguages.infra.dtos.user.UserResponseDto;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -30,4 +30,5 @@ public class UserResponseDtoMapper {
                 user.subscription()
         );
     }
+
 }

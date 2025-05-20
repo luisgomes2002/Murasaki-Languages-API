@@ -1,5 +1,6 @@
 package languages.murasaki.MurasakiLanguages.infra.presentation;
 
+import languages.murasaki.MurasakiLanguages.core.entities.temporarytoken.TokenResponse;
 import languages.murasaki.MurasakiLanguages.core.usecases.generatetoken.DeleteTokenUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.generatetoken.GetUserIdByTokenUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.user.UpdateUserEnableUsecase;
@@ -26,11 +27,11 @@ public class EmailController {
 
     @GetMapping("/confirm-account")
     public ResponseEntity<String> confirmEmail(@RequestParam String token) {
-        String userId = getUserIdByTokenUsecase.execute(token);
+        String userEmail = getUserIdByTokenUsecase.execute(token);
 
-        if (userId == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Token inválido ou expirado.");
+        if (userEmail == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Token inválido ou expirado.");
 
-        updateUserEnableUsecase.execute(userId, true);
+        updateUserEnableUsecase.execute(userEmail, true);
 
         deleteTokenUsecase.execute(token);
 

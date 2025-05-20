@@ -2,6 +2,7 @@ package languages.murasaki.MurasakiLanguages.core.usecases.user;
 
 import languages.murasaki.MurasakiLanguages.core.entities.user.User;
 import languages.murasaki.MurasakiLanguages.core.entities.user.UserInfo;
+import languages.murasaki.MurasakiLanguages.core.entities.user.UserResponse;
 import languages.murasaki.MurasakiLanguages.core.gateway.UserGateway;
 import languages.murasaki.MurasakiLanguages.core.usecases.security.AuthenticatedUsecase;
 import languages.murasaki.MurasakiLanguages.infra.exceptions.UserDoesNotHavePermissionException;
@@ -19,7 +20,7 @@ public class GetAllUsersUseCaseImpl implements GetAllUsersUseCase{
     }
 
     @Override
-    public List<User> execute(int page, int size) {
+    public List<UserResponse> execute(int page, int size) {
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
         if(!"ADMIN".equals(userInfo.userType()) && !"MOD".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");

@@ -20,4 +20,5 @@ public interface LessonRepository extends MongoRepository<LessonEntity, String> 
 
     Page<LessonEntity> findByJapaneseLevelsAndPublishedTrueAndVisibility(JapaneseLevels japaneseLevels, Visibility visibility, Pageable pageable);
 
+    Page<LessonEntity> findByJapaneseLevelsAndPublishedTrue(JapaneseLevels japaneseLevels, Pageable pageable);
 }

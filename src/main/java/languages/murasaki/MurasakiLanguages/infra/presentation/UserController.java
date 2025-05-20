@@ -3,18 +3,21 @@ package languages.murasaki.MurasakiLanguages.infra.presentation;
 import languages.murasaki.MurasakiLanguages.core.entities.backlog.Backlog;
 import languages.murasaki.MurasakiLanguages.core.entities.email.Email;
 import languages.murasaki.MurasakiLanguages.core.entities.user.User;
+import languages.murasaki.MurasakiLanguages.core.entities.user.UserResponse;
 import languages.murasaki.MurasakiLanguages.core.enums.UserType;
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.CreateBacklogUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.email.SendEmailUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.generatetoken.GenerateAndStoreTokenUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.generatetoken.GetUserIdByTokenUsecase;
+import languages.murasaki.MurasakiLanguages.core.usecases.metrics.*;
 import languages.murasaki.MurasakiLanguages.core.usecases.user.*;
 import languages.murasaki.MurasakiLanguages.infra.dtos.user.LoginDto;
+import languages.murasaki.MurasakiLanguages.infra.dtos.user.UpdatePasswordRequestDto;
 import languages.murasaki.MurasakiLanguages.infra.dtos.user.UserDto;
-import languages.murasaki.MurasakiLanguages.infra.dtos.user.response.LoginResponseDto;
+import languages.murasaki.MurasakiLanguages.infra.dtos.user.LoginResponseDto;
 import languages.murasaki.MurasakiLanguages.infra.mapper.user.LoginDtoMapper;
 import languages.murasaki.MurasakiLanguages.infra.mapper.user.UserDtoMapper;
-import languages.murasaki.MurasakiLanguages.infra.mapper.user.response.UserResponseDtoMapper;
+import languages.murasaki.MurasakiLanguages.infra.mapper.user.UserResponseDtoMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,12 +42,19 @@ public class UserController {
     private final UpdateUserUsecase updateUserUsecase;
     private final UpdateUserPasswordUsecase updateUserPasswordUsecase;
     private final UpdateUserTypeUsecase updateUserTypeUsecase;
-    private final UpdateUserEnableUsecase updateUserEnableUsecase;
+    private final BanUserUsercase banUserUsercase;
     private final SendEmailUsecase sendEmailUsecase;
     private final GenerateAndStoreTokenUsecase generateAndStoreTokenUsecase;
     private final GetUserIdByTokenUsecase getUserIdByTokenUsecase;
+    private final MetricsActiveUsersUsecase metricsActiveUsersUsecase;
+    private final MetricsBanUserUsecase metricsBanUserUsecase;
+    private final MetricsCreateUserUsecase metricsCreateUserUsecase;
+    private final MetricsDeletedUserUsecase metricsDeletedUserUsecase;
+    private final MetricsUpdateUserAgeUsecase metricsUpdateUserAgeUsecase;
+    private final MetricsUpdateUserGenderUsecase metricsUpdateUserGenderUsecase;
+    private final GetUserByEmailUsecase getUserByEmailUsecase;
 
-    public UserController(CreateUserUsecase createUserUsecase, LoginUsecase loginUsecase, GetAllUsersUseCase getAllUsersUseCase, UserDtoMapper userDtoMapper, LoginDtoMapper loginDtoMapper, UserResponseDtoMapper userResponseDtoMapper, CreateBacklogUsecase createBacklogUsecase, GetUserByIdUsecase getUserByIdUsecase, DeleteUserUsecase deleteUserUsecase, UpdateUserUsecase updateUserUsecase, UpdateUserPasswordUsecase updateUserPasswordUsecase, UpdateUserTypeUsecase updateUserTypeUsecase, UpdateUserEnableUsecase updateUserEnableUsecase, SendEmailUsecase sendEmailUsecase, GenerateAndStoreTokenUsecase generateAndStoreTokenUsecase, GetUserIdByTokenUsecase getUserIdByTokenUsecase) {
+    public UserController(CreateUserUsecase createUserUsecase, LoginUsecase loginUsecase, GetAllUsersUseCase getAllUsersUseCase, UserDtoMapper userDtoMapper, LoginDtoMapper loginDtoMapper, UserResponseDtoMapper userResponseDtoMapper, CreateBacklogUsecase createBacklogUsecase, GetUserByIdUsecase getUserByIdUsecase, DeleteUserUsecase deleteUserUsecase, UpdateUserUsecase updateUserUsecase, UpdateUserPasswordUsecase updateUserPasswordUsecase, UpdateUserTypeUsecase updateUserTypeUsecase, BanUserUsercase banUserUsercase, SendEmailUsecase sendEmailUsecase, GenerateAndStoreTokenUsecase generateAndStoreTokenUsecase, GetUserIdByTokenUsecase getUserIdByTokenUsecase, MetricsActiveUsersUsecase metricsActiveUsersUsecase, MetricsBanUserUsecase metricsBanUserUsecase, MetricsCreateUserUsecase metricsCreateUserUsecase, MetricsDeletedUserUsecase metricsDeletedUserUsecase, MetricsUpdateUserAgeUsecase metricsUpdateUserAgeUsecase, MetricsUpdateUserGenderUsecase metricsUpdateUserGenderUsecase, GetUserByEmailUsecase getUserByEmailUsecase) {
         this.createUserUsecase = createUserUsecase;
         this.loginUsecase = loginUsecase;
         this.getAllUsersUseCase = getAllUsersUseCase;
@@ -57,10 +67,17 @@ public class UserController {
         this.updateUserUsecase = updateUserUsecase;
         this.updateUserPasswordUsecase = updateUserPasswordUsecase;
         this.updateUserTypeUsecase = updateUserTypeUsecase;
-        this.updateUserEnableUsecase = updateUserEnableUsecase;
+        this.banUserUsercase = banUserUsercase;
         this.sendEmailUsecase = sendEmailUsecase;
         this.generateAndStoreTokenUsecase = generateAndStoreTokenUsecase;
         this.getUserIdByTokenUsecase = getUserIdByTokenUsecase;
+        this.metricsActiveUsersUsecase = metricsActiveUsersUsecase;
+        this.metricsBanUserUsecase = metricsBanUserUsecase;
+        this.metricsCreateUserUsecase = metricsCreateUserUsecase;
+        this.metricsDeletedUserUsecase = metricsDeletedUserUsecase;
+        this.metricsUpdateUserAgeUsecase = metricsUpdateUserAgeUsecase;
+        this.metricsUpdateUserGenderUsecase = metricsUpdateUserGenderUsecase;
+        this.getUserByEmailUsecase = getUserByEmailUsecase;
     }
 
     @PostMapping("create")
@@ -72,7 +89,7 @@ public class UserController {
         Backlog backlog = new Backlog(null, newUser.id(),newUser.name() + " criou uma conta", null);
         createBacklogUsecase.execute(backlog);
 
-        String token = generateAndStoreTokenUsecase.execute(newUser.id());
+        String token = generateAndStoreTokenUsecase.execute(newUser.email());
 
         String confirmationLink = "http://localhost:8080/api/confirm?token=" + token;
 
@@ -83,6 +100,11 @@ public class UserController {
         );
 
         sendEmailUsecase.execute(newEmail);
+
+        metricsCreateUserUsecase.execute();
+        metricsActiveUsersUsecase.execute(1);
+        metricsUpdateUserAgeUsecase.execute(userDto.birth(), 1);
+        metricsUpdateUserGenderUsecase.execute(userDto.gender().name(),+1);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -103,7 +125,7 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public List<User> getAllUsers(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+    public List<UserResponse> getAllUsers(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
         return getAllUsersUseCase.execute(page, size);
     }
 
@@ -112,12 +134,12 @@ public class UserController {
         return getUserByIdUsecase.execute(id);
     }
 
-    @GetMapping("request-password/{userId}/{userEmail}")
-    public String requestToChangePassword(@PathVariable String userId, @PathVariable String userEmail){
-        String token = generateAndStoreTokenUsecase.execute(userId);
+    @GetMapping("request-password/")
+    public String requestToChangePassword(@RequestBody String email){
+        String token = generateAndStoreTokenUsecase.execute(email);
 
         Email newEmail = new Email(
-                userEmail,
+                email,
                 "Confirmação de Atualização de Senha",
                 "Olá! Seu pedido para alteração da senha. Se você não fez essa alteração, por favor, clique no link abaixo para redefinir sua senha:\n" + token
         );
@@ -128,13 +150,18 @@ public class UserController {
     }
 
     @PutMapping("update/{userID}")
-    public ResponseEntity<Map<String, Object>> updateUser(@PathVariable String userID, @RequestBody UserDto userDto, @RequestParam String token){
-        String userId = getUserIdByTokenUsecase.execute(token);
+    public ResponseEntity<Map<String, Object>> updateUser(@PathVariable String userID, @RequestBody UserDto userDto){
+        // Update Gender Metrics
+        User userData = getUserByIdUsecase.execute(userID);
+        if(userData.gender() != userDto.gender()) {
+            metricsUpdateUserGenderUsecase.execute(userData.gender().name(), -1);
+            metricsUpdateUserGenderUsecase.execute(userDto.gender().name(), 1);
+        }
 
-        if (userId == null) {
-            Map<String, Object> errorResponse = new HashMap<>();
-            errorResponse.put("error", "Token inválido ou expirado.");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        // Update Age Metrics
+        if(userData.birth() != userDto.birth()){
+            metricsUpdateUserAgeUsecase.execute(userData.birth(), -1);
+            metricsUpdateUserAgeUsecase.execute(userDto.birth(), 1);
         }
 
         User user = updateUserUsecase.execute(userID, userDtoMapper.toDomain(userDto));
@@ -143,6 +170,28 @@ public class UserController {
         response.put("User data: ", userResponseDtoMapper.toDto(user));
 
         Backlog backlog = new Backlog(null, userID,"Atualizou as informações da conta: " + userDto.name(), null);
+        createBacklogUsecase.execute(backlog);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @PutMapping("update-password-by-request")
+    public ResponseEntity<Map<String, Object>> updateUserPasswordByRequest(@RequestBody UpdatePasswordRequestDto updatePasswordRequest, @RequestParam String token){
+        String userEmail = getUserIdByTokenUsecase.execute(token);
+
+        if (userEmail == null) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("error", "Token inválido ou expirado.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        }
+
+        User user = getUserByEmailUsecase.execute(updatePasswordRequest.email());
+
+        updateUserPasswordUsecase.execute(user.id(), updatePasswordRequest.password());
+        Map<String, Object> response = new HashMap<>();
+        response.put("Message: ", "Senha atualizado");
+
+        Backlog backlog = new Backlog(null, user.id(), "Atualizou a senha: " + user.name(), null);
         createBacklogUsecase.execute(backlog);
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
@@ -162,17 +211,23 @@ public class UserController {
 
     @DeleteMapping("delete/{id}")
     public String deleteUser(@PathVariable String id, String userId){
+        User user = getUserByIdUsecase.execute(id);
+
         deleteUserUsecase.execute(id);
 
         Backlog backlog = new Backlog(null, userId, "Excluiu a conta: " + id, null);
         createBacklogUsecase.execute(backlog);
 
+        metricsUpdateUserAgeUsecase.execute(user.birth(), -1);
+        metricsUpdateUserGenderUsecase.execute(user.gender().name(), -1);
+        metricsActiveUsersUsecase.execute(-1);
+        metricsDeletedUserUsecase.execute();
+
         return "Conta excluida";
     }
 
-    // TODO: mudar o id para pegar pelo body
-    @PutMapping("update-role/{id}")
-    public String updateUserRole(@PathVariable String id, @RequestBody UserType userType, String loggedUser){
+    @PutMapping("update-role/{id}/{loggedUser}")
+    public String updateUserRole(@PathVariable String id, @RequestBody UserType userType, @PathVariable String loggedUser){
         updateUserTypeUsecase.execute(id, userType);
 
         Backlog backlog = new Backlog(null, loggedUser, "Atualizou o cargo da conta: " + id + " para " + userType, null);
@@ -181,15 +236,22 @@ public class UserController {
         return "Cargo atualizado para: " + userType;
     }
 
-    // TODO: mudar o id para pegar pelo body
-    @PutMapping("update-status/{id}")
-    public String updateUserState(@PathVariable String id, @RequestBody boolean isEnable, String loggedUser){
-        updateUserEnableUsecase.execute(id, isEnable);
+    @PutMapping("update-status/{id}/{loggedUser}")
+    public String updateUserState(@PathVariable String id, @RequestBody boolean isBan, @PathVariable String loggedUser){
+        banUserUsercase.execute(id, isBan);
 
-        Backlog backlog = new Backlog(null, loggedUser, "Atualizou o status da conta: " + id + " para " + isEnable, null);
+        Backlog backlog = new Backlog(null, loggedUser, "Atualizou o status da conta: " + id + " para " + isBan, null);
         createBacklogUsecase.execute(backlog);
 
-        return "Status atualizado para: " + isEnable;
+        if(isBan){
+            metricsActiveUsersUsecase.execute(-1);
+            metricsBanUserUsecase.execute(+1);
+        }else {
+            metricsActiveUsersUsecase.execute(1);
+            metricsBanUserUsecase.execute(-1);
+        }
+
+        return "Status atualizado para: " + isBan;
     }
 
     @PostMapping("login")
@@ -197,4 +259,5 @@ public class UserController {
         String token = loginUsecase.execute(loginDtoMapper.toDomain(loginDto));
         return ResponseEntity.ok( new LoginResponseDto(token));
     }
+
 }

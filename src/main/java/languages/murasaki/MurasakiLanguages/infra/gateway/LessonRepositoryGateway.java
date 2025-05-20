@@ -98,11 +98,22 @@ public class LessonRepositoryGateway implements LessonGateway {
     }
 
     @Override
+    @Cacheable(value = "lesson-japanese-by-level-public")
+    public List<Lesson> getJapanesLessonsByLevelPublic(JapaneseLevels level, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return lessonRepository
+                .findByJapaneseLevelsAndPublishedTrueAndVisibility(level, Visibility.PUBLIC, pageable)
+                .stream()
+                .map(lessonEntityMapper::toDomain)
+                .toList();
+    }
+
+    @Override
     @Cacheable(value = "lesson-japanese-by-level")
     public List<Lesson> getJapanesLessonsByLevel(JapaneseLevels level, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return lessonRepository
-                .findByJapaneseLevelsAndPublishedTrueAndVisibility(level, Visibility.PUBLIC, pageable)
+                .findByJapaneseLevelsAndPublishedTrue(level, pageable)
                 .stream()
                 .map(lessonEntityMapper::toDomain)
                 .toList();

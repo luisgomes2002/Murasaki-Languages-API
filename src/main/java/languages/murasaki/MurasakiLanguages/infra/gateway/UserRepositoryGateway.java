@@ -3,6 +3,7 @@ package languages.murasaki.MurasakiLanguages.infra.gateway;
 import languages.murasaki.MurasakiLanguages.core.entities.payment.CheckoutResponse;
 import languages.murasaki.MurasakiLanguages.core.entities.user.Login;
 import languages.murasaki.MurasakiLanguages.core.entities.user.User;
+import languages.murasaki.MurasakiLanguages.core.entities.user.UserResponse;
 import languages.murasaki.MurasakiLanguages.core.enums.SubscriptionType;
 import languages.murasaki.MurasakiLanguages.core.enums.UserType;
 import languages.murasaki.MurasakiLanguages.core.gateway.UserGateway;
@@ -63,16 +64,15 @@ public class UserRepositoryGateway implements UserGateway {
 
     @Override
     @Cacheable(value = "all-user")
-    public List<User> getAllUsers(int page, int size) {
+    public List<UserResponse> getAllUsers(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return userRepository.findAll(pageable)
                 .stream()
-                .map(userEntityMapper::toDomain)
+                .map(userEntityMapper::toResponse)
                 .toList();
     }
 
     @Override
-    @Cacheable(value = "user", key = "#id")
     public User getUserById(String id) {
         return userRepository.findById(id).map(userEntityMapper::toDomain).orElse(null);
     }
@@ -102,8 +102,6 @@ public class UserRepositoryGateway implements UserGateway {
             updatedUser.setAbout(user.about());
             updatedUser.setGender(user.gender());
             updatedUser.setBirth(user.birth());
-            updatedUser.setEnabled(false);
-            updatedUser.setBanned(false);
             updatedUser.setUpdatedAt(LocalDateTime.now());
 
             updatedUser.setCreatedAt(entity.get().getCreatedAt());
@@ -167,8 +165,10 @@ public class UserRepositoryGateway implements UserGateway {
     }
 
     @Override
-    public void isEnable(String id, boolean isEnable) {
-        Optional<UserEntity> entity = userRepository.findById(id);
+    public void isEnable(String userEmail, boolean isEnable) {
+        Optional<UserEntity> entity = userRepository.findUserByEmail(userEmail);
+
+        System.out.println(entity);
 
         if(entity.isPresent()){
             UserEntity updatedUser = entity.get();
@@ -178,6 +178,21 @@ public class UserRepositoryGateway implements UserGateway {
 
             userRepository.save(updatedUser);
         }
+    }
+
+    @Override
+    public void banUser(String userId, boolean ban) {
+        Optional<UserEntity> entity = userRepository.findById(userId);
+
+        if(entity.isPresent()){
+            UserEntity updatedUser = entity.get();
+
+            updatedUser.setBanned(ban);
+            updatedUser.setUpdatedAt(LocalDateTime.now());
+
+            userRepository.save(updatedUser);
+        }
+
     }
 
     @Override
@@ -256,5 +271,10 @@ public class UserRepositoryGateway implements UserGateway {
 
             userRepository.save(newUser);
         }
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userRepository.findUserByEmail(email).map(userEntityMapper::toDomain).orElse(null);
     }
 }

@@ -34,12 +34,15 @@ public class ReportController {
         this.createBacklogUsecase = createBacklogUsecase;
     }
 
-    @PostMapping("create")
-    public ResponseEntity<Map<String, Object>> createReport(@RequestBody ReportDto reportDto){
+    @PostMapping("create/{loggedUser}")
+    public ResponseEntity<Map<String, Object>> createReport(@RequestBody ReportDto reportDto, @PathVariable String loggedUser){
         Report newReport = createReportUsecase.execute(reportDtoMapper.toDomain(reportDto));
         Map<String, Object> response = new HashMap<>();
         response.put("Message: ", "Reporte criado");
         response.put("Report data", reportDtoMapper.toDto(newReport));
+
+        Backlog backlog = new Backlog(null, loggedUser, "Criou um report", null);
+        createBacklogUsecase.execute(backlog);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -49,9 +52,8 @@ public class ReportController {
         return getAllReportsUsecase.execute(page, size);
     }
 
-    // TODO: mudar o id para pegar pelo body
-    @PutMapping("update-status/{id}")
-    public String updateReportStatus(@PathVariable String id, @RequestBody boolean finished,  String loggedUser){
+    @PutMapping("update-status/{id}/{loggedUser}")
+    public String updateReportStatus(@PathVariable String id, @RequestBody boolean finished, @PathVariable String loggedUser){
         updateReportStatusUsecase.execute(id, finished);
 
         Backlog backlog = new Backlog(null, loggedUser, "Atualizou o status do report: " + id + " para " + finished, null);

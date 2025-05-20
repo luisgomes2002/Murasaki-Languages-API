@@ -31,8 +31,8 @@ public class LessonCollectionController {
         this.createBacklogUsecase = createBacklogUsecase;
     }
 
-    @PostMapping("create")
-    public ResponseEntity<Map<String, Object>> createLessonCollection(@RequestBody LessonCollectionDto lessonCollectionDto, String userId){
+    @PostMapping("create/{userId}")
+    public ResponseEntity<Map<String, Object>> createLessonCollection(@RequestBody LessonCollectionDto lessonCollectionDto, @PathVariable String userId){
         lessonCollection newLessonCollection = createLessonCollectionUsecase.execute(lessonCollectionDtoMapper.toDomain(lessonCollectionDto));
         Map<String, Object> response = new HashMap<>();
         response.put("Message: ", "Lesson collection criado com sucesso.");

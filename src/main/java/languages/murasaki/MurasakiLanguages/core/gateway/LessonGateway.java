@@ -16,7 +16,8 @@ public interface LessonGateway {
     List<Lesson> getLessonsByPublishedOrNot(boolean published, int page, int size);
     List<Lesson> getPublicLessons(int page, int size);
     List<Lesson> getLessonsByPublishedTrue(int page, int size);
-    List<Lesson> getJapanesLessonsByLevel(JapaneseLevels levels, int page, int size);
+    List<Lesson> getJapanesLessonsByLevelPublic(JapaneseLevels levels, int page, int size);
+    List<Lesson> getJapanesLessonsByLevel(JapaneseLevels level, int page, int size);
 
     void deleteLesson(String id);
     void addExplanation(String lessonId, String explanationId);

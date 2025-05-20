@@ -36,8 +36,8 @@ public class PlansController {
         this.updatePlanUsecase = updatePlanUsecase;
     }
 
-    @PostMapping("create")
-    public ResponseEntity<Map<String, Object>> createPlan(@RequestBody PlansDto plansDto, String userId){
+    @PostMapping("create/{userId}")
+    public ResponseEntity<Map<String, Object>> createPlan(@RequestBody PlansDto plansDto, @PathVariable String userId){
         Plans plans = createPlanUsecase.execute(plansDtoMapper.toDomain(plansDto));
         Map<String, Object> resopnse = new HashMap<>();
         resopnse.put("Message: ", "Plano criado.");
@@ -57,8 +57,8 @@ public class PlansController {
         return getPlanByIdUsecase.execute(id);
     }
 
-    @PutMapping("update/{planId}")
-    public ResponseEntity<Map<String, Object>> updatePlan(@PathVariable String planId, @RequestBody PlansDto plansDto, String userId){
+    @PutMapping("update/{planId}/{userId}")
+    public ResponseEntity<Map<String, Object>> updatePlan(@PathVariable String planId, @RequestBody PlansDto plansDto, @PathVariable String userId){
         Plans plans = updatePlanUsecase.execute(planId, plansDtoMapper.toDomain(plansDto));
         Map<String, Object> response = new HashMap<>();
         response.put("Message: ", "Plano atualizado");
@@ -70,8 +70,8 @@ public class PlansController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @DeleteMapping("delete/{planId}")
-    public String deletePlan(@PathVariable String planId, String userId){
+    @DeleteMapping("delete/{planId}/{userId}")
+    public String deletePlan(@PathVariable String planId, @PathVariable String userId){
         deletePlanUsecase.execute(planId);
 
         Backlog backlog = new Backlog(null, userId, "Excluiu o plano: " + planId, null);

@@ -17,8 +17,6 @@ public class GetLessonByIdUsecaseImpl implements GetLessonByIdUsecase {
 
     @Override
     public Lesson execute(String id) {
-
-
         if(!lessonGateway.lessonIdExists(id)) throw new IdNotFoundException("Aula não encontrado");
 
         return lessonGateway.getLessonById(id);
