@@ -20,6 +20,8 @@ public record Lesson(String id,
                      LocalDateTime createAt,
                      LocalDateTime updatedAt,
                      boolean published,
-                     Visibility visibility
+                     Visibility visibility,
+                     String ankiLink,
+                     String thumbLink
 ) implements Serializable {
 }

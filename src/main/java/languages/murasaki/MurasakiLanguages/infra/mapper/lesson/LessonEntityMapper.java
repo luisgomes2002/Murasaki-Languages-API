@@ -21,7 +21,9 @@ public class LessonEntityMapper {
             lesson.createAt(),
             lesson.updatedAt(),
             lesson.published(),
-            lesson.visibility()
+            lesson.visibility(),
+            lesson.ankiLink(),
+            lesson.thumbLink()
         );
     }
 
@@ -39,7 +41,9 @@ public class LessonEntityMapper {
             lessonEntity.getCreateAt(),
             lessonEntity.getUpdatedAt(),
             lessonEntity.isPublished(),
-            lessonEntity.getVisibility()
+            lessonEntity.getVisibility(),
+            lessonEntity.getAnkiLink(),
+            lessonEntity.getThumbLink()
         );
     }
 }

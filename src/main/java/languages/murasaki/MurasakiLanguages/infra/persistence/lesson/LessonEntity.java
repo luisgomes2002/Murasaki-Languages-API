@@ -29,11 +29,13 @@ public class LessonEntity {
     private LocalDateTime updatedAt;
     private boolean published;
     private Visibility visibility;
+    private String ankiLink;
+    private String thumbLink;
 
     public LessonEntity() {
     }
 
-    public LessonEntity(String id, String title, String text, List<String> explanations, List<String> worksheets, List<String> links, String name, LanguageType languageType, JapaneseLevels japaneseLevels, LocalDateTime createAt, LocalDateTime updatedAt, boolean published, Visibility visibility) {
+    public LessonEntity(String id, String title, String text, List<String> explanations, List<String> worksheets, List<String> links, String name, LanguageType languageType, JapaneseLevels japaneseLevels, LocalDateTime createAt, LocalDateTime updatedAt, boolean published, Visibility visibility, String ankiLink, String thumbLink) {
         this.id = id;
         this.title = title;
         this.text = text;
@@ -47,6 +49,8 @@ public class LessonEntity {
         this.updatedAt = updatedAt;
         this.published = published;
         this.visibility = visibility;
+        this.ankiLink = ankiLink;
+        this.thumbLink = thumbLink;
     }
 
     public String getId() {
@@ -151,5 +155,21 @@ public class LessonEntity {
 
     public void setVisibility(Visibility visibility) {
         this.visibility = visibility;
+    }
+
+    public String getAnkiLink() {
+        return ankiLink;
+    }
+
+    public void setAnkiLink(String ankiLink) {
+        this.ankiLink = ankiLink;
+    }
+
+    public String getThumbLink() {
+        return thumbLink;
+    }
+
+    public void setThumbLink(String thumbLink) {
+        this.thumbLink = thumbLink;
     }
 }

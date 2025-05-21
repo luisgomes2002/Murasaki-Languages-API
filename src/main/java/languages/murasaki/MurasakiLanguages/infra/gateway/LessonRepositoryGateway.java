@@ -147,6 +147,8 @@ public class LessonRepositoryGateway implements LessonGateway {
             updatedLesson.setPublished(lesson.published());
             updatedLesson.setVisibility(lesson.visibility());
             updatedLesson.setUpdatedAt(LocalDateTime.now());
+            updatedLesson.setAnkiLink(lesson.ankiLink());
+            updatedLesson.setThumbLink(lesson.thumbLink());
 
             lessonRepository.save(updatedLesson);
 

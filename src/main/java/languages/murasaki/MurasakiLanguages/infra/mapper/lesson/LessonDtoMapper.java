@@ -21,7 +21,9 @@
                 lesson.createAt(),
                 lesson.updatedAt(),
                 lesson.published(),
-                lesson.visibility()
+                lesson.visibility(),
+                lesson.ankiLink(),
+                lesson.thumbLink()
             );
         }
 
@@ -39,7 +41,9 @@
                 lessonDto.createAt(),
                 lessonDto.updatedAt(),
                 lessonDto.published(),
-                lessonDto.visibility()
+                lessonDto.visibility(),
+                lessonDto.ankiLink(),
+                lessonDto.thumbLink()
             );
         }
     }
