@@ -58,4 +58,9 @@ public class MetricsBeanConfiguration {
     public MetricsByLanguageUsecase metricsByLanguageUsecase(MetricsGateway metricsGateway){
         return new MetricsByLanguageUsecaseImpl(metricsGateway);
     }
+
+    @Bean
+    public RemoveBirthFromListUsecase removeBirthFromListUsecase(MetricsGateway metricsGateway){
+        return new RemoveBirthFromListUsecaseImpl(metricsGateway);
+    }
 }

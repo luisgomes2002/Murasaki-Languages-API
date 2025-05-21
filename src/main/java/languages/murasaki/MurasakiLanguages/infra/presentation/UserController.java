@@ -53,8 +53,9 @@ public class UserController {
     private final MetricsUpdateUserAgeUsecase metricsUpdateUserAgeUsecase;
     private final MetricsUpdateUserGenderUsecase metricsUpdateUserGenderUsecase;
     private final GetUserByEmailUsecase getUserByEmailUsecase;
+    private final RemoveBirthFromListUsecase removeBirthFromListUsecase;
 
-    public UserController(CreateUserUsecase createUserUsecase, LoginUsecase loginUsecase, GetAllUsersUseCase getAllUsersUseCase, UserDtoMapper userDtoMapper, LoginDtoMapper loginDtoMapper, UserResponseDtoMapper userResponseDtoMapper, CreateBacklogUsecase createBacklogUsecase, GetUserByIdUsecase getUserByIdUsecase, DeleteUserUsecase deleteUserUsecase, UpdateUserUsecase updateUserUsecase, UpdateUserPasswordUsecase updateUserPasswordUsecase, UpdateUserTypeUsecase updateUserTypeUsecase, BanUserUsercase banUserUsercase, SendEmailUsecase sendEmailUsecase, GenerateAndStoreTokenUsecase generateAndStoreTokenUsecase, GetUserIdByTokenUsecase getUserIdByTokenUsecase, MetricsActiveUsersUsecase metricsActiveUsersUsecase, MetricsBanUserUsecase metricsBanUserUsecase, MetricsCreateUserUsecase metricsCreateUserUsecase, MetricsDeletedUserUsecase metricsDeletedUserUsecase, MetricsUpdateUserAgeUsecase metricsUpdateUserAgeUsecase, MetricsUpdateUserGenderUsecase metricsUpdateUserGenderUsecase, GetUserByEmailUsecase getUserByEmailUsecase) {
+    public UserController(CreateUserUsecase createUserUsecase, LoginUsecase loginUsecase, GetAllUsersUseCase getAllUsersUseCase, UserDtoMapper userDtoMapper, LoginDtoMapper loginDtoMapper, UserResponseDtoMapper userResponseDtoMapper, CreateBacklogUsecase createBacklogUsecase, GetUserByIdUsecase getUserByIdUsecase, DeleteUserUsecase deleteUserUsecase, UpdateUserUsecase updateUserUsecase, UpdateUserPasswordUsecase updateUserPasswordUsecase, UpdateUserTypeUsecase updateUserTypeUsecase, BanUserUsercase banUserUsercase, SendEmailUsecase sendEmailUsecase, GenerateAndStoreTokenUsecase generateAndStoreTokenUsecase, GetUserIdByTokenUsecase getUserIdByTokenUsecase, MetricsActiveUsersUsecase metricsActiveUsersUsecase, MetricsBanUserUsecase metricsBanUserUsecase, MetricsCreateUserUsecase metricsCreateUserUsecase, MetricsDeletedUserUsecase metricsDeletedUserUsecase, MetricsUpdateUserAgeUsecase metricsUpdateUserAgeUsecase, MetricsUpdateUserGenderUsecase metricsUpdateUserGenderUsecase, GetUserByEmailUsecase getUserByEmailUsecase, RemoveBirthFromListUsecase removeBirthFromListUsecase) {
         this.createUserUsecase = createUserUsecase;
         this.loginUsecase = loginUsecase;
         this.getAllUsersUseCase = getAllUsersUseCase;
@@ -78,6 +79,7 @@ public class UserController {
         this.metricsUpdateUserAgeUsecase = metricsUpdateUserAgeUsecase;
         this.metricsUpdateUserGenderUsecase = metricsUpdateUserGenderUsecase;
         this.getUserByEmailUsecase = getUserByEmailUsecase;
+        this.removeBirthFromListUsecase = removeBirthFromListUsecase;
     }
 
     @PostMapping("create")
@@ -101,9 +103,10 @@ public class UserController {
 
         sendEmailUsecase.execute(newEmail);
 
+        metricsUpdateUserAgeUsecase.execute(newUser.birth(), newUser.id());
         metricsCreateUserUsecase.execute();
         metricsActiveUsersUsecase.execute(1);
-        metricsUpdateUserAgeUsecase.execute(userDto.birth(), 1);
+
         metricsUpdateUserGenderUsecase.execute(userDto.gender().name(),+1);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -158,11 +161,7 @@ public class UserController {
             metricsUpdateUserGenderUsecase.execute(userDto.gender().name(), 1);
         }
 
-        // Update Age Metrics
-        if(userData.birth() != userDto.birth()){
-            metricsUpdateUserAgeUsecase.execute(userData.birth(), -1);
-            metricsUpdateUserAgeUsecase.execute(userDto.birth(), 1);
-        }
+        metricsUpdateUserAgeUsecase.execute(userDto.birth(), userID);
 
         User user = updateUserUsecase.execute(userID, userDtoMapper.toDomain(userDto));
         Map<String, Object> response = new HashMap<>();
@@ -218,7 +217,7 @@ public class UserController {
         Backlog backlog = new Backlog(null, userId, "Excluiu a conta: " + id, null);
         createBacklogUsecase.execute(backlog);
 
-        metricsUpdateUserAgeUsecase.execute(user.birth(), -1);
+        removeBirthFromListUsecase.execute(id);
         metricsUpdateUserGenderUsecase.execute(user.gender().name(), -1);
         metricsActiveUsersUsecase.execute(-1);
         metricsDeletedUserUsecase.execute();

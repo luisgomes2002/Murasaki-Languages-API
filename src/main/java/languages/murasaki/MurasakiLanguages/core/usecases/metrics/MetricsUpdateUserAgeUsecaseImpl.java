@@ -13,7 +13,7 @@ public class MetricsUpdateUserAgeUsecaseImpl implements MetricsUpdateUserAgeUsec
     }
 
     @Override
-    public void execute(LocalDate age, int delta) {
-        metricsGateway.metricsUpdateUserAge(age, delta);
+    public void execute(LocalDate age, String userId) {
+        metricsGateway.metricsUpdateUserAge(age, userId);
     }
 }

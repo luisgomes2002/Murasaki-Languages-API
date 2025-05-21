@@ -24,7 +24,6 @@ public class MetricsController {
         this.getAllMetricsDateUsecase = getAllMetricsDateUsecase;
     }
 
-    // TODO: Como atualizar a idade depois que o usuario faz aniversario
 
     @GetMapping("/")
     public Metrics getMetricByDate(@RequestParam String date){
