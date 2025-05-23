@@ -22,7 +22,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: murasakilanguages@gmail.com
-    password: ${MAILPASSWORD}
+    password: ${MAIL_PASSWORD}
     properties:
       mail:
         smtp:

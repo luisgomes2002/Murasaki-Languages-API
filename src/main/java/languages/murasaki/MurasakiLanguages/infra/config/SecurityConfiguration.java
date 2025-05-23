@@ -46,6 +46,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/api/webhook/stripe").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/mail/confirm-account").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/user/send-confirm-email").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/lesson/published-true").permitAll()
                         .anyRequest().authenticated()
                 )
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))

@@ -52,7 +52,6 @@ public class LessonRepositoryGateway implements LessonGateway {
     }
 
     @Override
-    @Cacheable(value = "lesson", key = "#id")
     public Lesson getLessonById(String id) {
         return lessonRepository.findById(id).map(lessonEntityMapper::toDomain).orElse(null);
     }

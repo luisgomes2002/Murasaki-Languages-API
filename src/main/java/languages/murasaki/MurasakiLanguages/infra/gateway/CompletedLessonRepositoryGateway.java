@@ -61,7 +61,6 @@ public class CompletedLessonRepositoryGateway implements CompletedLessonGateway 
     }
 
     @Override
-    @Cacheable(value = "completed-lesson",  key = "#userId")
     public List<CompletedLesson> getAllCompletedLessons(String userId) {
         return completedLessonRepository.findCompletedLessonByUserId(userId).stream().map(completedLessonEntityMapper::toDomain).toList();
     }

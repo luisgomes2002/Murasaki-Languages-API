@@ -168,8 +168,6 @@ public class UserRepositoryGateway implements UserGateway {
     public void isEnable(String userEmail, boolean isEnable) {
         Optional<UserEntity> entity = userRepository.findUserByEmail(userEmail);
 
-        System.out.println(entity);
-
         if(entity.isPresent()){
             UserEntity updatedUser = entity.get();
 
@@ -192,7 +190,6 @@ public class UserRepositoryGateway implements UserGateway {
 
             userRepository.save(updatedUser);
         }
-
     }
 
     @Override

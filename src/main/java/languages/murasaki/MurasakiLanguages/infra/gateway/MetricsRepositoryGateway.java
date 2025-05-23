@@ -142,13 +142,6 @@ public class MetricsRepositoryGateway implements MetricsGateway {
         updateLatestMetrics(new Update().inc(FIELD_DELETED_USERS, 1));
     }
 
-//    @Override
-//    public void metricsUpdateUserAge(LocalDate ageParam, int delta) {
-//        int age = Period.between( ageParam, LocalDate.now()).getYears();
-//        String ageGroup = getAgeGroup(age);
-//        updateLatestMetrics(new Update().inc(FIELD_USER_AGE_DISTRIBUTION + "." + ageGroup, delta));
-//    }
-
     @Override
     public void metricsUpdateUserAge(LocalDate birthDate, String userId) {
         addBirthToList(userId, birthDate.toString());
@@ -232,7 +225,8 @@ public class MetricsRepositoryGateway implements MetricsGateway {
         mongoTemplate.save(entity);
     }
 
-    @Scheduled(cron = "*/30 * * * * *")
+    //@Scheduled(cron = "*/30 * * * * *")
+    @Scheduled(cron = "0 0 1 * * *")
     public void processUserBirths() {
         MetricsUserBirthEntity birthEntity = mongoTemplate.findAll(MetricsUserBirthEntity.class).stream().findFirst().orElse(null);
         if (birthEntity == null) return;
