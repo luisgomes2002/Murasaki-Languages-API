@@ -23,7 +23,7 @@ public class CreateLessonUsecaseImpl implements CreateLessonUsecase {
 
         if(!"ADMIN".equals(userInfo.userType()) && !"MOD".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
 
-        if(lesson.title() == null || lesson.text() == null || lesson.languageType() == null || lesson.japaneseLevels() == null || lesson.explanations() == null || lesson.links() == null)
+        if(lesson.title() == null || lesson.text() == null || lesson.languageType() == null || lesson.japaneseLevels() == null || lesson.ankiLink() == null || lesson.links() == null)
             throw new MissingArgumentsException("Campos faltando");
 
 
