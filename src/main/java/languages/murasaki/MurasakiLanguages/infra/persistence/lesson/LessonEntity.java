@@ -9,6 +9,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Document(collection = "lessons")
@@ -19,8 +20,8 @@ public class LessonEntity {
 
     private String title;
     private String text;
-    private List<String> explanations;
-    private List<String> worksheets;
+    private List<String> explanations =  new ArrayList<>();
+    private List<String> worksheets =  new ArrayList<>();
     private List<String> links;
     private String name;
     private LanguageType languageType;

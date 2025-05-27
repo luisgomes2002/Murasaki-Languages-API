@@ -26,7 +26,7 @@ public class UpdateLessonUsecaseImpl implements UpdateLessonUsecase{
 
         if(!lessonGateway.lessonIdExists(id)) throw new IdNotFoundException("Aula não encontrado");
 
-        if(lesson.title() == null || lesson.text() == null || lesson.languageType() == null || lesson.japaneseLevels() == null || lesson.explanations() == null || lesson.links() == null)
+        if(lesson.title() == null || lesson.text() == null || lesson.languageType() == null || lesson.japaneseLevels() == null || lesson.ankiLink() == null || lesson.links() == null)
             throw new MissingArgumentsException("Campos faltando");
 
         return lessonGateway.updateLesson(id, lesson);
