@@ -80,8 +80,8 @@ public class LessonBeanConfiguration {
     }
 
     @Bean
-    public GetJapanesLessonsByLevelPublicUsecase getJapanesLessonsByLevelPublicUsecase(LessonGateway lessonGateway){
-        return new GetJapanesLessonsByLevelPublicUsecaseImpl(lessonGateway);
+    public GetJapaneseLessonsByLevelPublicUsecase getJapanesLessonsByLevelPublicUsecase(LessonGateway lessonGateway){
+        return new GetJapaneseLessonsByLevelPublicUsecaseImpl(lessonGateway);
     }
 
     @Bean
@@ -89,7 +89,18 @@ public class LessonBeanConfiguration {
         return new ChangeVisibilityUsecaseImpl(lessonGateway, authenticatedUsecase);
     }
 
-    @Bean GetJapanesLessonsByLevelUsecase getJapanesLessonsByLevelUsecase(LessonGateway lessonGateway){
-        return new GetJapanesLessonsByLevelUsecaseImpl(lessonGateway);
+    @Bean
+    public GetJapaneseLessonsByLevelUsecase getJapanesLessonsByLevelUsecase(LessonGateway lessonGateway){
+        return new GetJapaneseLessonsByLevelUsecaseImpl(lessonGateway);
+    }
+
+    @Bean
+    public GetJapanesePublicLessonsUsecase getJapanesePublicLessonsUsecase(LessonGateway lessonGateway){
+        return new GetJapanesePublicLessonsUsecaseImpl(lessonGateway);
+    }
+
+    @Bean
+    public GetAllJapaneseLessonsUsecase getAllJapaneseLessonsUsecase(LessonGateway lessonGateway){
+        return new GetAllJapaneseLessonsUsecaseImpl(lessonGateway);
     }
 }

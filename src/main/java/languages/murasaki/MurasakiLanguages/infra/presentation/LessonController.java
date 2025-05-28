@@ -34,11 +34,13 @@ public class LessonController {
     private final GetLessonsByPublishedOrNotUsecase getLessonsByPublishedOrNotUsecase;
     private final GetLessonsByVisibilityUsecase getLessonsByVisibilityUsecase;
     private final GetPublicLessonsUsecase getPublicLessonsUsecase;
-    private final GetJapanesLessonsByLevelPublicUsecase getJapanesLessonsByLevelPublicUsecase;
-    private final GetJapanesLessonsByLevelUsecase getJapanesLessonsByLevelUsecase;
+    private final GetJapaneseLessonsByLevelPublicUsecase getJapaneseLessonsByLevelPublicUsecase;
+    private final GetJapaneseLessonsByLevelUsecase getJapaneseLessonsByLevelUsecase;
     private final ChangeVisibilityUsecase changeVisibilityUsecase;
+    private final GetJapanesePublicLessonsUsecase getJapanesePublicLessonsUsecase;
+    private final GetAllJapaneseLessonsUsecase getAllJapaneseLessonsUsecase;
 
-    public LessonController(CreateLessonUsecase createLessonUsecase, PublishLessonUsecase publishLessonUsecase, LessonDtoMapper lessonDtoMapper, PublishLessonInCollectionUsecase publishLessonInCollectionUsecase, GetAllLessonUsecase getAllLessonUsecase, GetLessonByIdUsecase getLessonByIdUsecase, DeleteLessonUsecase deleteLessonUsecase, CreateBacklogUsecase createBacklogUsecase, UpdateLessonUsecase updateLessonUsecase, GetLessonsByPublishedTrueUsecase getLessonsByPublishedTrueUsecase, GetLessonsByPublishedOrNotUsecase getLessonsByPublishedOrNotUsecase, GetLessonsByVisibilityUsecase getLessonsByVisibilityUsecase, GetPublicLessonsUsecase getPublicLessonsUsecase, GetJapanesLessonsByLevelPublicUsecase getJapanesLessonsByLevelPublicUsecase, GetJapanesLessonsByLevelUsecase getJapanesLessonsByLevelUsecase, ChangeVisibilityUsecase changeVisibilityUsecase) {
+    public LessonController(CreateLessonUsecase createLessonUsecase, PublishLessonUsecase publishLessonUsecase, LessonDtoMapper lessonDtoMapper, PublishLessonInCollectionUsecase publishLessonInCollectionUsecase, GetAllLessonUsecase getAllLessonUsecase, GetLessonByIdUsecase getLessonByIdUsecase, DeleteLessonUsecase deleteLessonUsecase, CreateBacklogUsecase createBacklogUsecase, UpdateLessonUsecase updateLessonUsecase, GetLessonsByPublishedTrueUsecase getLessonsByPublishedTrueUsecase, GetLessonsByPublishedOrNotUsecase getLessonsByPublishedOrNotUsecase, GetLessonsByVisibilityUsecase getLessonsByVisibilityUsecase, GetPublicLessonsUsecase getPublicLessonsUsecase, GetJapaneseLessonsByLevelPublicUsecase getJapaneseLessonsByLevelPublicUsecase, GetJapaneseLessonsByLevelUsecase getJapaneseLessonsByLevelUsecase, ChangeVisibilityUsecase changeVisibilityUsecase, GetJapanesePublicLessonsUsecase getJapanesePublicLessonsUsecase, GetAllJapaneseLessonsUsecase getAllJapaneseLessonsUsecase) {
         this.createLessonUsecase = createLessonUsecase;
         this.publishLessonUsecase = publishLessonUsecase;
         this.lessonDtoMapper = lessonDtoMapper;
@@ -52,9 +54,11 @@ public class LessonController {
         this.getLessonsByPublishedOrNotUsecase = getLessonsByPublishedOrNotUsecase;
         this.getLessonsByVisibilityUsecase = getLessonsByVisibilityUsecase;
         this.getPublicLessonsUsecase = getPublicLessonsUsecase;
-        this.getJapanesLessonsByLevelPublicUsecase = getJapanesLessonsByLevelPublicUsecase;
-        this.getJapanesLessonsByLevelUsecase = getJapanesLessonsByLevelUsecase;
+        this.getJapaneseLessonsByLevelPublicUsecase = getJapaneseLessonsByLevelPublicUsecase;
+        this.getJapaneseLessonsByLevelUsecase = getJapaneseLessonsByLevelUsecase;
         this.changeVisibilityUsecase = changeVisibilityUsecase;
+        this.getJapanesePublicLessonsUsecase = getJapanesePublicLessonsUsecase;
+        this.getAllJapaneseLessonsUsecase = getAllJapaneseLessonsUsecase;
     }
 
     @PostMapping("create/{userId}")
@@ -90,19 +94,29 @@ public class LessonController {
         return getPublicLessonsUsecase.execute(page, size);
     }
 
+    @GetMapping("japanese/public/")
+    public List<Lesson> getJapanesePublicLessons(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+        return getJapanesePublicLessonsUsecase.execute(page, size);
+    }
+
     @GetMapping("published-true")
     public List<Lesson> getLessonsByPublishedTrue(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
         return getLessonsByPublishedTrueUsecase.execute(page, size);
+    }
+
+    @GetMapping("all-japanese/published/")
+    public List<Lesson> getAllJapaneseLessonsByPublishedTrue(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+        return getAllJapaneseLessonsUsecase.execute(page, size);
     }
 
     @GetMapping("{id}")
     public Lesson getLessonById(@PathVariable String id){ return getLessonByIdUsecase.execute(id); }
 
     @GetMapping("japanese-level-public/{level}")
-    public List<Lesson> getByJapaneseLevelPublic(@PathVariable JapaneseLevels level, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) { return getJapanesLessonsByLevelPublicUsecase.execute(level, page, size);}
+    public List<Lesson> getByJapaneseLevelPublic(@PathVariable JapaneseLevels level, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) { return getJapaneseLessonsByLevelPublicUsecase.execute(level, page, size);}
 
     @GetMapping("japanese-level/{level}")
-    public List<Lesson> getByJapaneseLevel(@PathVariable JapaneseLevels level, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) { return getJapanesLessonsByLevelUsecase.execute(level, page, size);}
+    public List<Lesson> getByJapaneseLevel(@PathVariable JapaneseLevels level, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) { return getJapaneseLessonsByLevelUsecase.execute(level, page, size);}
 
 
     @DeleteMapping("delete/{id}/{collectionId}/{userId}/{lessonName}")

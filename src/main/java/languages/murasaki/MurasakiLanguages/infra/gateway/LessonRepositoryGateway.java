@@ -2,6 +2,7 @@ package languages.murasaki.MurasakiLanguages.infra.gateway;
 
 import languages.murasaki.MurasakiLanguages.core.entities.lesson.Lesson;
 import languages.murasaki.MurasakiLanguages.core.enums.JapaneseLevels;
+import languages.murasaki.MurasakiLanguages.core.enums.LanguageType;
 import languages.murasaki.MurasakiLanguages.core.enums.Visibility;
 import languages.murasaki.MurasakiLanguages.core.gateway.LessonGateway;
 import languages.murasaki.MurasakiLanguages.infra.mapper.lesson.LessonEntityMapper;
@@ -97,8 +98,28 @@ public class LessonRepositoryGateway implements LessonGateway {
     }
 
     @Override
+    @Cacheable(value = "japanese-lesson-public")
+    public List<Lesson> getJapanesePublicLessons(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return lessonRepository.findByPublishedTrueAndVisibility(Visibility.PUBLIC, pageable)
+                .stream()
+                .map(lessonEntityMapper::toDomain)
+                .toList();
+    }
+
+    @Override
+    @Cacheable(value = "all-japanese-lesson")
+    public List<Lesson> getAllJapaneseLessons(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return lessonRepository.findByPublishedTrueAndLanguageType(LanguageType.JP, pageable)
+                .stream()
+                .map(lessonEntityMapper::toDomain)
+                .toList();
+    }
+
+    @Override
     @Cacheable(value = "lesson-japanese-by-level-public")
-    public List<Lesson> getJapanesLessonsByLevelPublic(JapaneseLevels level, int page, int size) {
+    public List<Lesson> getJapaneseLessonsByLevelPublic(JapaneseLevels level, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return lessonRepository
                 .findByJapaneseLevelsAndPublishedTrueAndVisibility(level, Visibility.PUBLIC, pageable)
@@ -109,7 +130,7 @@ public class LessonRepositoryGateway implements LessonGateway {
 
     @Override
     @Cacheable(value = "lesson-japanese-by-level")
-    public List<Lesson> getJapanesLessonsByLevel(JapaneseLevels level, int page, int size) {
+    public List<Lesson> getJapaneseLessonsByLevel(JapaneseLevels level, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return lessonRepository
                 .findByJapaneseLevelsAndPublishedTrue(level, pageable)

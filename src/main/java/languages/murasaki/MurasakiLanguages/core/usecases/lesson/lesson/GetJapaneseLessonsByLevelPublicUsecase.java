@@ -5,6 +5,7 @@ import languages.murasaki.MurasakiLanguages.core.enums.JapaneseLevels;
 
 import java.util.List;
 
-public interface GetJapanesLessonsByLevelUsecase {
-    List<Lesson> execute(JapaneseLevels level, int page, int size);
+public interface GetJapaneseLessonsByLevelPublicUsecase {
+
+    List<Lesson> execute(JapaneseLevels levels, int page, int size);
 }

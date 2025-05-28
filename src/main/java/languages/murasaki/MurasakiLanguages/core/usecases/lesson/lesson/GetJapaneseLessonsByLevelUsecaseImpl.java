@@ -6,16 +6,16 @@ import languages.murasaki.MurasakiLanguages.core.gateway.LessonGateway;
 
 import java.util.List;
 
-public class GetJapanesLessonsByLevelPublicUsecaseImpl implements GetJapanesLessonsByLevelPublicUsecase {
+public class GetJapaneseLessonsByLevelUsecaseImpl implements GetJapaneseLessonsByLevelUsecase {
 
     private final LessonGateway lessonGateway;
 
-    public GetJapanesLessonsByLevelPublicUsecaseImpl(LessonGateway lessonGateway) {
+    public GetJapaneseLessonsByLevelUsecaseImpl(LessonGateway lessonGateway) {
         this.lessonGateway = lessonGateway;
     }
 
     @Override
-    public List<Lesson> execute(JapaneseLevels levels, int page, int size) {
-       return lessonGateway.getJapanesLessonsByLevelPublic(levels, page, size);
+    public List<Lesson> execute(JapaneseLevels level, int page, int size) {
+        return lessonGateway.getJapaneseLessonsByLevel(level, page, size);
     }
 }

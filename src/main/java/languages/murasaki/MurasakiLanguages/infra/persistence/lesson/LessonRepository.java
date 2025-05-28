@@ -1,6 +1,7 @@
 package languages.murasaki.MurasakiLanguages.infra.persistence.lesson;
 
 import languages.murasaki.MurasakiLanguages.core.enums.JapaneseLevels;
+import languages.murasaki.MurasakiLanguages.core.enums.LanguageType;
 import languages.murasaki.MurasakiLanguages.core.enums.Visibility;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +20,10 @@ public interface LessonRepository extends MongoRepository<LessonEntity, String> 
     Page<LessonEntity> findByPublished(boolean published, Pageable pageable);
 
     Page<LessonEntity> findByJapaneseLevelsAndPublishedTrueAndVisibility(JapaneseLevels japaneseLevels, Visibility visibility, Pageable pageable);
+
+    Page<LessonEntity> findByPublishedTrueAndVisibility(Visibility visibility, Pageable pageable);
+
+    Page<LessonEntity> findByPublishedTrueAndLanguageType(LanguageType languageType, Pageable pageable);
 
     Page<LessonEntity> findByJapaneseLevelsAndPublishedTrue(JapaneseLevels japaneseLevels, Pageable pageable);
 }
