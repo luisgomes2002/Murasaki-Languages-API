@@ -27,7 +27,7 @@ public class TokenConfiguration {
                 .withClaim("name", userEntity.getName())
                 .withClaim("userType", userEntity.getUserType().name())
                 .withClaim("subscription", userEntity.getSubscription().name())
-                .withExpiresAt(Instant.now().plusSeconds(86400))
+                .withExpiresAt(Instant.now().plusSeconds(604800))
                 .withIssuedAt(Instant.now())
                 .withIssuer("API Murasaki Languages")
                 .sign(algorithm);

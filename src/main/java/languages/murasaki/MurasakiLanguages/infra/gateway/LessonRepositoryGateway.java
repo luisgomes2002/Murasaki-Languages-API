@@ -97,6 +97,7 @@ public class LessonRepositoryGateway implements LessonGateway {
                 .toList();
     }
 
+    // Japanese
     @Override
     @Cacheable(value = "japanese-lesson-public")
     public List<Lesson> getJapanesePublicLessons(int page, int size) {
@@ -138,6 +139,9 @@ public class LessonRepositoryGateway implements LessonGateway {
                 .map(lessonEntityMapper::toDomain)
                 .toList();
     }
+
+    // Korean
+    // English
 
     @Override
     public void ChangeVisibility(String lessonId, Visibility visibility) {
