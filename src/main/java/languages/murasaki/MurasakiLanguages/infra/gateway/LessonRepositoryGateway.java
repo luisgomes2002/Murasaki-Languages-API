@@ -1,7 +1,7 @@
 package languages.murasaki.MurasakiLanguages.infra.gateway;
 
 import languages.murasaki.MurasakiLanguages.core.entities.lesson.Lesson;
-import languages.murasaki.MurasakiLanguages.core.enums.JapaneseLevels;
+import languages.murasaki.MurasakiLanguages.core.enums.LanguagesLevels;
 import languages.murasaki.MurasakiLanguages.core.enums.LanguageType;
 import languages.murasaki.MurasakiLanguages.core.enums.Visibility;
 import languages.murasaki.MurasakiLanguages.core.gateway.LessonGateway;
@@ -120,7 +120,7 @@ public class LessonRepositoryGateway implements LessonGateway {
 
     @Override
     @Cacheable(value = "lesson-japanese-by-level-public")
-    public List<Lesson> getJapaneseLessonsByLevelPublic(JapaneseLevels level, int page, int size) {
+    public List<Lesson> getJapaneseLessonsByLevelPublic(LanguagesLevels level, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return lessonRepository
                 .findByJapaneseLevelsAndPublishedTrueAndVisibility(level, Visibility.PUBLIC, pageable)
@@ -131,7 +131,7 @@ public class LessonRepositoryGateway implements LessonGateway {
 
     @Override
     @Cacheable(value = "lesson-japanese-by-level")
-    public List<Lesson> getJapaneseLessonsByLevel(JapaneseLevels level, int page, int size) {
+    public List<Lesson> getJapaneseLessonsByLevel(LanguagesLevels level, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return lessonRepository
                 .findByJapaneseLevelsAndPublishedTrue(level, pageable)
@@ -167,7 +167,7 @@ public class LessonRepositoryGateway implements LessonGateway {
             updatedLesson.setText(lesson.text());
             updatedLesson.setLinks(lesson.links());
             updatedLesson.setLanguageType(lesson.languageType());
-            updatedLesson.setJapaneseLevels(lesson.japaneseLevels());
+            updatedLesson.setJapaneseLevels(lesson.languagesLevels());
             updatedLesson.setPublished(lesson.published());
             updatedLesson.setVisibility(lesson.visibility());
             updatedLesson.setUpdatedAt(LocalDateTime.now());

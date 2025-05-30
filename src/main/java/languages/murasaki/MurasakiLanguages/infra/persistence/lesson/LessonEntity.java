@@ -1,8 +1,6 @@
 package languages.murasaki.MurasakiLanguages.infra.persistence.lesson;
 
-import languages.murasaki.MurasakiLanguages.core.entities.lesson.Explanation;
-import languages.murasaki.MurasakiLanguages.core.entities.lesson.Worksheets;
-import languages.murasaki.MurasakiLanguages.core.enums.JapaneseLevels;
+import languages.murasaki.MurasakiLanguages.core.enums.LanguagesLevels;
 import languages.murasaki.MurasakiLanguages.core.enums.LanguageType;
 import languages.murasaki.MurasakiLanguages.core.enums.Visibility;
 import org.springframework.data.annotation.Id;
@@ -25,7 +23,7 @@ public class LessonEntity {
     private List<String> links;
     private String name;
     private LanguageType languageType;
-    private JapaneseLevels japaneseLevels;
+    private LanguagesLevels languagesLevels;
     private LocalDateTime createAt;
     private LocalDateTime updatedAt;
     private boolean published;
@@ -36,7 +34,7 @@ public class LessonEntity {
     public LessonEntity() {
     }
 
-    public LessonEntity(String id, String title, String text, List<String> explanations, List<String> worksheets, List<String> links, String name, LanguageType languageType, JapaneseLevels japaneseLevels, LocalDateTime createAt, LocalDateTime updatedAt, boolean published, Visibility visibility, String ankiLink, String thumbLink) {
+    public LessonEntity(String id, String title, String text, List<String> explanations, List<String> worksheets, List<String> links, String name, LanguageType languageType, LanguagesLevels languagesLevels, LocalDateTime createAt, LocalDateTime updatedAt, boolean published, Visibility visibility, String ankiLink, String thumbLink) {
         this.id = id;
         this.title = title;
         this.text = text;
@@ -45,7 +43,7 @@ public class LessonEntity {
         this.links = links;
         this.name = name;
         this.languageType = languageType;
-        this.japaneseLevels = japaneseLevels;
+        this.languagesLevels = languagesLevels;
         this.createAt = createAt;
         this.updatedAt = updatedAt;
         this.published = published;
@@ -118,12 +116,12 @@ public class LessonEntity {
         this.languageType = languageType;
     }
 
-    public JapaneseLevels getJapaneseLevels() {
-        return japaneseLevels;
+    public LanguagesLevels getJapaneseLevels() {
+        return languagesLevels;
     }
 
-    public void setJapaneseLevels(JapaneseLevels japaneseLevels) {
-        this.japaneseLevels = japaneseLevels;
+    public void setJapaneseLevels(LanguagesLevels languagesLevels) {
+        this.languagesLevels = languagesLevels;
     }
 
     public LocalDateTime getCreateAt() {

@@ -1,7 +1,7 @@
 package languages.murasaki.MurasakiLanguages.core.gateway;
 
 import languages.murasaki.MurasakiLanguages.core.entities.lesson.Lesson;
-import languages.murasaki.MurasakiLanguages.core.enums.JapaneseLevels;
+import languages.murasaki.MurasakiLanguages.core.enums.LanguagesLevels;
 import languages.murasaki.MurasakiLanguages.core.enums.Visibility;
 
 import java.util.List;
@@ -16,8 +16,8 @@ public interface LessonGateway {
     List<Lesson> getLessonsByPublishedOrNot(boolean published, int page, int size);
     List<Lesson> getPublicLessons(int page, int size);
     List<Lesson> getLessonsByPublishedTrue(int page, int size);
-    List<Lesson> getJapaneseLessonsByLevelPublic(JapaneseLevels levels, int page, int size);
-    List<Lesson> getJapaneseLessonsByLevel(JapaneseLevels level, int page, int size);
+    List<Lesson> getJapaneseLessonsByLevelPublic(LanguagesLevels levels, int page, int size);
+    List<Lesson> getJapaneseLessonsByLevel(LanguagesLevels level, int page, int size);
     List<Lesson> getJapanesePublicLessons(int page, int size);
     List<Lesson> getAllJapaneseLessons(int page, int size);
 

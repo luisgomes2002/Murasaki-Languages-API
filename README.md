@@ -155,7 +155,7 @@ POST /api/lesson/create/{collectionId}
   "worksheets": [],
   "links": ["https://exemplo.com"],
   "languageType": "JP",
-  "japaneseLevels": "N4"
+  "languagesLevels": "N4"
 }
 ```
 

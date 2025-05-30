@@ -1,6 +1,6 @@
 package languages.murasaki.MurasakiLanguages.core.entities.lesson;
 
-import languages.murasaki.MurasakiLanguages.core.enums.JapaneseLevels;
+import languages.murasaki.MurasakiLanguages.core.enums.LanguagesLevels;
 import languages.murasaki.MurasakiLanguages.core.enums.LanguageType;
 import languages.murasaki.MurasakiLanguages.core.enums.Visibility;
 
@@ -16,7 +16,7 @@ public record Lesson(String id,
                      List<String> links,
                      String name,
                      LanguageType languageType,
-                     JapaneseLevels japaneseLevels,
+                     LanguagesLevels languagesLevels,
                      LocalDateTime createAt,
                      LocalDateTime updatedAt,
                      boolean published,

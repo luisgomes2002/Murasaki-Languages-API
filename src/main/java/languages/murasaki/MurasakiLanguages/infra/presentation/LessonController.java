@@ -2,7 +2,7 @@ package languages.murasaki.MurasakiLanguages.infra.presentation;
 
 import languages.murasaki.MurasakiLanguages.core.entities.backlog.Backlog;
 import languages.murasaki.MurasakiLanguages.core.entities.lesson.Lesson;
-import languages.murasaki.MurasakiLanguages.core.enums.JapaneseLevels;
+import languages.murasaki.MurasakiLanguages.core.enums.LanguagesLevels;
 import languages.murasaki.MurasakiLanguages.core.enums.Visibility;
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.CreateBacklogUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.lesson.lesson.*;
@@ -113,10 +113,10 @@ public class LessonController {
     public Lesson getLessonById(@PathVariable String id){ return getLessonByIdUsecase.execute(id); }
 
     @GetMapping("japanese-level-public/{level}")
-    public List<Lesson> getByJapaneseLevelPublic(@PathVariable JapaneseLevels level, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) { return getJapaneseLessonsByLevelPublicUsecase.execute(level, page, size);}
+    public List<Lesson> getByJapaneseLevelPublic(@PathVariable LanguagesLevels level, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) { return getJapaneseLessonsByLevelPublicUsecase.execute(level, page, size);}
 
     @GetMapping("japanese-level/{level}")
-    public List<Lesson> getByJapaneseLevel(@PathVariable JapaneseLevels level, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) { return getJapaneseLessonsByLevelUsecase.execute(level, page, size);}
+    public List<Lesson> getByJapaneseLevel(@PathVariable LanguagesLevels level, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) { return getJapaneseLessonsByLevelUsecase.execute(level, page, size);}
 
 
     @DeleteMapping("delete/{id}/{collectionId}/{userId}/{lessonName}")

@@ -17,7 +17,7 @@ public class LessonEntityMapper {
             lesson.links(),
             lesson.name(),
             lesson.languageType(),
-            lesson.japaneseLevels(),
+            lesson.languagesLevels(),
             lesson.createAt(),
             lesson.updatedAt(),
             lesson.published(),
