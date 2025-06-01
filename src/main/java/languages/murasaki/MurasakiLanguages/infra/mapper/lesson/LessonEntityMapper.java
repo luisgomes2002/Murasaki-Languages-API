@@ -37,7 +37,7 @@ public class LessonEntityMapper {
             lessonEntity.getLinks(),
             lessonEntity.getName(),
             lessonEntity.getLanguageType(),
-            lessonEntity.getJapaneseLevels(),
+            lessonEntity.getLanguagesLevels(),
             lessonEntity.getCreateAt(),
             lessonEntity.getUpdatedAt(),
             lessonEntity.isPublished(),

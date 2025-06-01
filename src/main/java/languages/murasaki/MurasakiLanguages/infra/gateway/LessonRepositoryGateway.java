@@ -39,6 +39,7 @@ public class LessonRepositoryGateway implements LessonGateway {
         entity.setCreateAt(LocalDateTime.now());
         entity.setUpdatedAt(LocalDateTime.now());
         entity.setVisibility(Visibility.valueOf("PRIVATE"));
+        entity.setPublished(false);
 
         lessonRepository.save(entity);
 
@@ -123,7 +124,7 @@ public class LessonRepositoryGateway implements LessonGateway {
     public List<Lesson> getJapaneseLessonsByLevelPublic(LanguagesLevels level, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return lessonRepository
-                .findByJapaneseLevelsAndPublishedTrueAndVisibility(level, Visibility.PUBLIC, pageable)
+                .findByLanguagesLevelsAndPublishedTrueAndVisibility(level, Visibility.PUBLIC, pageable)
                 .stream()
                 .map(lessonEntityMapper::toDomain)
                 .toList();
@@ -134,7 +135,7 @@ public class LessonRepositoryGateway implements LessonGateway {
     public List<Lesson> getJapaneseLessonsByLevel(LanguagesLevels level, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return lessonRepository
-                .findByJapaneseLevelsAndPublishedTrue(level, pageable)
+                .findByLanguagesLevelsAndPublishedTrue(level, pageable)
                 .stream()
                 .map(lessonEntityMapper::toDomain)
                 .toList();
@@ -167,7 +168,7 @@ public class LessonRepositoryGateway implements LessonGateway {
             updatedLesson.setText(lesson.text());
             updatedLesson.setLinks(lesson.links());
             updatedLesson.setLanguageType(lesson.languageType());
-            updatedLesson.setJapaneseLevels(lesson.languagesLevels());
+            updatedLesson.setLanguagesLevels(lesson.languagesLevels());
             updatedLesson.setPublished(lesson.published());
             updatedLesson.setVisibility(lesson.visibility());
             updatedLesson.setUpdatedAt(LocalDateTime.now());

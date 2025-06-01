@@ -18,8 +18,8 @@ public class LessonEntity {
 
     private String title;
     private String text;
-    private List<String> explanations =  new ArrayList<>();
-    private List<String> worksheets =  new ArrayList<>();
+    private List<String> explanations = new ArrayList<>();
+    private List<String> worksheets = new ArrayList<>();
     private List<String> links;
     private String name;
     private LanguageType languageType;
@@ -33,6 +33,7 @@ public class LessonEntity {
 
     public LessonEntity() {
     }
+
 
     public LessonEntity(String id, String title, String text, List<String> explanations, List<String> worksheets, List<String> links, String name, LanguageType languageType, LanguagesLevels languagesLevels, LocalDateTime createAt, LocalDateTime updatedAt, boolean published, Visibility visibility, String ankiLink, String thumbLink) {
         this.id = id;
@@ -116,11 +117,11 @@ public class LessonEntity {
         this.languageType = languageType;
     }
 
-    public LanguagesLevels getJapaneseLevels() {
+    public LanguagesLevels getLanguagesLevels() {
         return languagesLevels;
     }
 
-    public void setJapaneseLevels(LanguagesLevels languagesLevels) {
+    public void setLanguagesLevels(LanguagesLevels languagesLevels) {
         this.languagesLevels = languagesLevels;
     }
 

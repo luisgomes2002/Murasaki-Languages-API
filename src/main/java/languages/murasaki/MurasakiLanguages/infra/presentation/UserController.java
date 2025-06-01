@@ -84,6 +84,8 @@ public class UserController {
 
     @PostMapping("create")
     public ResponseEntity<Map<String, Object>> createUser(@RequestBody UserDto userDto){
+        System.out.println(userDto);
+
         User newUser = createUserUsecase.execute(userDtoMapper.toDomain(userDto));
         Map<String, Object > response = new HashMap<>();
         response.put("Message: ", "Usuário criado com sucesso.");

@@ -17,11 +17,11 @@ public interface LessonRepository extends MongoRepository<LessonEntity, String> 
     // Filtrar por published (true / false)
     Page<LessonEntity> findByPublished(boolean published, Pageable pageable);
 
-    Page<LessonEntity> findByJapaneseLevelsAndPublishedTrueAndVisibility(LanguagesLevels languagesLevels, Visibility visibility, Pageable pageable);
+    Page<LessonEntity> findByLanguagesLevelsAndPublishedTrueAndVisibility(LanguagesLevels languagesLevels, Visibility visibility, Pageable pageable);
 
     Page<LessonEntity> findByPublishedTrueAndVisibility(Visibility visibility, Pageable pageable);
 
     Page<LessonEntity> findByPublishedTrueAndLanguageType(LanguageType languageType, Pageable pageable);
 
-    Page<LessonEntity> findByJapaneseLevelsAndPublishedTrue(LanguagesLevels languagesLevels, Pageable pageable);
+    Page<LessonEntity> findByLanguagesLevelsAndPublishedTrue(LanguagesLevels languagesLevels, Pageable pageable);
 }
