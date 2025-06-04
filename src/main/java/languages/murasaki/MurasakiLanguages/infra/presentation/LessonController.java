@@ -65,8 +65,8 @@ public class LessonController {
     public ResponseEntity<Map<String, Object>> createLesson(@RequestBody LessonDto lessonDto, @PathVariable String userId){
         Lesson newLesson = createLessonUsecase.execute(lessonDtoMapper.toDomain(lessonDto));
         Map<String, Object> response = new HashMap<>();
-        response.put("Message: ", "Aula criada com sucesso.");
-        response.put("Lesson data: ", lessonDtoMapper.toDto(newLesson));
+        response.put("Message", "Aula criada com sucesso.");
+        response.put("Lesson data", lessonDtoMapper.toDto(newLesson));
 
         Backlog backlog = new Backlog(null, userId, "Criou uma aula: " + newLesson.title(), null);
         createBacklogUsecase.execute(backlog);
@@ -145,8 +145,8 @@ public class LessonController {
     public ResponseEntity<Map<String, Object>> updateLesson(@PathVariable String lessonId, @PathVariable String userId, @RequestBody LessonDto lessonDto){
         Lesson lesson = updateLessonUsecase.execute(lessonId, lessonDtoMapper.toDomain(lessonDto));
         Map<String, Object> response = new HashMap<>();
-        response.put("Message: ", "Aula atualizada");
-        response.put("Lesson data: ", lessonDtoMapper.toDto(lesson));
+        response.put("Message", "Aula atualizada");
+        response.put("Lesson data", lessonDtoMapper.toDto(lesson));
 
         Backlog backlog = new Backlog(null, userId, "Atualizou o aula: " + lesson.title(), null);
         createBacklogUsecase.execute(backlog);

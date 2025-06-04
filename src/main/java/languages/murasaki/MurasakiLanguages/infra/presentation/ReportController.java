@@ -38,7 +38,7 @@ public class ReportController {
     public ResponseEntity<Map<String, Object>> createReport(@RequestBody ReportDto reportDto, @PathVariable String loggedUser){
         Report newReport = createReportUsecase.execute(reportDtoMapper.toDomain(reportDto));
         Map<String, Object> response = new HashMap<>();
-        response.put("Message: ", "Reporte criado");
+        response.put("Message", "Reporte criado");
         response.put("Report data", reportDtoMapper.toDto(newReport));
 
         Backlog backlog = new Backlog(null, loggedUser, "Criou um report", null);

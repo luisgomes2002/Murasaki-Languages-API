@@ -40,8 +40,8 @@ public class PlansController {
     public ResponseEntity<Map<String, Object>> createPlan(@RequestBody PlansDto plansDto, @PathVariable String userId){
         Plans plans = createPlanUsecase.execute(plansDtoMapper.toDomain(plansDto));
         Map<String, Object> resopnse = new HashMap<>();
-        resopnse.put("Message: ", "Plano criado.");
-        resopnse.put("Plan data: ", plansDtoMapper.toDto(plans));
+        resopnse.put("Message", "Plano criado.");
+        resopnse.put("Plan data", plansDtoMapper.toDto(plans));
 
         Backlog backlog = new Backlog(null, userId, "Criou um plano: " + plans.title(), null);
         createBacklogUsecase.execute(backlog);
@@ -61,8 +61,8 @@ public class PlansController {
     public ResponseEntity<Map<String, Object>> updatePlan(@PathVariable String planId, @RequestBody PlansDto plansDto, @PathVariable String userId){
         Plans plans = updatePlanUsecase.execute(planId, plansDtoMapper.toDomain(plansDto));
         Map<String, Object> response = new HashMap<>();
-        response.put("Message: ", "Plano atualizado");
-        response.put("Plan data: ", plansDtoMapper.toDto(plans));
+        response.put("Message", "Plano atualizado");
+        response.put("Plan data", plansDtoMapper.toDto(plans));
 
         Backlog backlog = new Backlog(null, userId, "Atualizou o plano: " + plans.title(), null);
         createBacklogUsecase.execute(backlog);

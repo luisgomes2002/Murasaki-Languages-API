@@ -35,8 +35,8 @@ public class LessonCollectionController {
     public ResponseEntity<Map<String, Object>> createLessonCollection(@RequestBody LessonCollectionDto lessonCollectionDto, @PathVariable String userId){
         lessonCollection newLessonCollection = createLessonCollectionUsecase.execute(lessonCollectionDtoMapper.toDomain(lessonCollectionDto));
         Map<String, Object> response = new HashMap<>();
-        response.put("Message: ", "Lesson collection criado com sucesso.");
-        response.put("Lesson collection data: ", lessonCollectionDtoMapper.toDto(newLessonCollection));
+        response.put("Message", "Lesson collection criado com sucesso.");
+        response.put("Lesson collection data", lessonCollectionDtoMapper.toDto(newLessonCollection));
 
         Backlog backlog = new Backlog(null, userId, "Criou um collection: " + newLessonCollection.languageName(), null);
         createBacklogUsecase.execute(backlog);

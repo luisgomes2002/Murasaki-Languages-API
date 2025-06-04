@@ -88,7 +88,7 @@ public class UserController {
 
         User newUser = createUserUsecase.execute(userDtoMapper.toDomain(userDto));
         Map<String, Object > response = new HashMap<>();
-        response.put("Message: ", "Usuário criado com sucesso.");
+        response.put("Message", "Usuário criado com sucesso.");
 
         Backlog backlog = new Backlog(null, newUser.id(),newUser.name() + " criou uma conta", null);
         createBacklogUsecase.execute(backlog);
@@ -167,8 +167,8 @@ public class UserController {
 
         User user = updateUserUsecase.execute(userID, userDtoMapper.toDomain(userDto));
         Map<String, Object> response = new HashMap<>();
-        response.put("Message: ", "Usuário atualizado");
-        response.put("User data: ", userResponseDtoMapper.toDto(user));
+        response.put("Message", "Usuário atualizado");
+        response.put("User data", userResponseDtoMapper.toDto(user));
 
         Backlog backlog = new Backlog(null, userID,"Atualizou as informações da conta: " + userDto.name(), null);
         createBacklogUsecase.execute(backlog);
@@ -190,7 +190,7 @@ public class UserController {
 
         updateUserPasswordUsecase.execute(user.id(), updatePasswordRequest.password());
         Map<String, Object> response = new HashMap<>();
-        response.put("Message: ", "Senha atualizado");
+        response.put("Message", "Senha atualizado");
 
         Backlog backlog = new Backlog(null, user.id(), "Atualizou a senha: " + user.name(), null);
         createBacklogUsecase.execute(backlog);
@@ -202,7 +202,7 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> updateUserPassword(@PathVariable String id, @RequestBody String newPassword){
         User user = updateUserPasswordUsecase.execute(id, newPassword);
         Map<String, Object> response = new HashMap<>();
-        response.put("Message: ", "Senha atualizado");
+        response.put("Message", "Senha atualizado");
 
         Backlog backlog = new Backlog(null, id, "Atualizou a senha: " + user.name(), null);
         createBacklogUsecase.execute(backlog);

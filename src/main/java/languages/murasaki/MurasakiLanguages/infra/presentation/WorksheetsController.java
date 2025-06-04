@@ -63,8 +63,8 @@ public class WorksheetsController {
     public ResponseEntity<Map<String, Object>> createWorksheet(@PathVariable String lessonId, @RequestBody WorksheetsDto worksheetsDto, @PathVariable String userId){
         Worksheets newWorksheet = createWorksheetsUseCase.execute(worksheetsDtoMapper.toDomain(worksheetsDto));
         Map<String, Object > response = new HashMap<>();
-        response.put("Message: ", "Exercício criado com sucesso.");
-        response.put("Worksheet data: ", worksheetsDtoMapper.toDto(newWorksheet));
+        response.put("Message", "Exercício criado com sucesso.");
+        response.put("Worksheet data", worksheetsDtoMapper.toDto(newWorksheet));
 
         addWorksheetsUsecase.execute(lessonId, newWorksheet.id());
 
@@ -92,8 +92,8 @@ public class WorksheetsController {
     public ResponseEntity<Map<String, Object>> updateWorksheet(@PathVariable String worksheetId, @PathVariable String userId, @RequestBody WorksheetsDto worksheetsDto){
         Worksheets worksheets = updateWorksheetsUseCase.execute(worksheetId, worksheetsDtoMapper.toDomain(worksheetsDto));
         Map<String, Object> response = new HashMap<>();
-        response.put("Message: ", "Atividade atualizada");
-        response.put("Worksheet data: ", worksheetsDtoMapper.toDto(worksheets));
+        response.put("Message", "Atividade atualizada");
+        response.put("Worksheet data", worksheetsDtoMapper.toDto(worksheets));
 
         Backlog backlog = new Backlog(null, userId, "Atualizou o atividade: " + worksheets.id(), null);
         createBacklogUsecase.execute(backlog);
@@ -115,8 +115,8 @@ public class WorksheetsController {
     public ResponseEntity<Map<String, Object>> canAnswer(@PathVariable String userId, @PathVariable String questionId){
         QuestionEligibility canAnswer = canAnswerQuestionUsecase.execute(userId ,questionId);
         Map<String, Object> response = new HashMap<>();
-        response.put("Message: ", canAnswer.message());
-        response.put("CanAnswer: ", canAnswer.canAnswer() );
+        response.put("Message", canAnswer.message());
+        response.put("CanAnswer", canAnswer.canAnswer() );
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

@@ -48,8 +48,8 @@ public class ExplanationController {
     public ResponseEntity<Map<String, Object>> createExplanation(@PathVariable String lessonId, @RequestBody ExplanationDto explanationDto, @PathVariable String userId){
         Explanation newExplanation = createExplanationUsecase.execute(explanationDtoMapper.toDomain(explanationDto));
         Map<String, Object > response = new HashMap<>();
-        response.put("Message: ", "Explicação criada com sucesso.");
-        response.put("Explanation data: ", explanationDtoMapper.toDto(newExplanation));
+        response.put("Message", "Explicação criada com sucesso.");
+        response.put("Explanation data", explanationDtoMapper.toDto(newExplanation));
 
         addExplanationUsecase.execute(lessonId, newExplanation.id());
 
@@ -77,7 +77,7 @@ public class ExplanationController {
     public ResponseEntity<Map<String, Object>> updateExplanation(@PathVariable String explanationId, @PathVariable String userId, @RequestBody ExplanationDto explanationDto){
         Explanation explanation = updateExplanationUsecase.execute(explanationId, explanationDtoMapper.toDomain(explanationDto));
         Map<String, Object> response = new HashMap<>();
-        response.put("Message: ", "Explicação atualizada");
+        response.put("Message", "Explicação atualizada");
         response.put("Worksheet data: ", explanationDtoMapper.toDto(explanation));
 
         Backlog backlog = new Backlog(null, userId, "Atualizou uma explicação: " + explanation.id(), null);
