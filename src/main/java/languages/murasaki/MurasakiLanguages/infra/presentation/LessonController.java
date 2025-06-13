@@ -118,11 +118,12 @@ public class LessonController {
     @GetMapping("japanese-level/{level}")
     public List<Lesson> getByJapaneseLevel(@PathVariable LanguagesLevels level, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) { return getJapaneseLessonsByLevelUsecase.execute(level, page, size);}
 
-
-    @DeleteMapping("delete/{id}/{collectionId}/{userId}/{lessonName}")
-    public ResponseEntity<String> deleteLesson(@PathVariable String id, @PathVariable String collectionId, @PathVariable String userId, @PathVariable String lessonName){
+    // @DeleteMapping("delete/{id}/{collectionId}/{userId}/{lessonName}")
+    // public ResponseEntity<String> deleteLesson(@PathVariable String id, @PathVariable String collectionId, @PathVariable String userId, @PathVariable String lessonName){
+    @DeleteMapping("delete/{id}/{userId}/{lessonName}")
+    public ResponseEntity<String> deleteLesson(@PathVariable String id, @PathVariable String userId, @PathVariable String lessonName){
         deleteLessonUsecase.execute(id);
-        publishLessonInCollectionUsecase.execute(collectionId, id, false);
+        // publishLessonInCollectionUsecase.execute(collectionId, id, false);
 
         Backlog backlog = new Backlog(null, userId, "Deletou uma aula: " + lessonName, null);
         createBacklogUsecase.execute(backlog);

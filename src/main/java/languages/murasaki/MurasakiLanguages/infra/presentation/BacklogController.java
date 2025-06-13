@@ -17,7 +17,7 @@ public class BacklogController {
     }
 
     @GetMapping("/")
-    public List<Backlog> getAllBacklog(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
+    public List<Backlog> getAllBacklog(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "15") int size){
         return getAllBacklogUsecase.execute(page, size);
     }
 

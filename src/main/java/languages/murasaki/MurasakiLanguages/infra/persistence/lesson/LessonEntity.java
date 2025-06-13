@@ -34,7 +34,6 @@ public class LessonEntity {
     public LessonEntity() {
     }
 
-
     public LessonEntity(String id, String title, String text, List<String> explanations, List<String> worksheets, List<String> links, String name, LanguageType languageType, LanguagesLevels languagesLevels, LocalDateTime createAt, LocalDateTime updatedAt, boolean published, Visibility visibility, String ankiLink, String thumbLink) {
         this.id = id;
         this.title = title;
