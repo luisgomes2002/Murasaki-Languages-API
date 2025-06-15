@@ -6,7 +6,6 @@ import languages.murasaki.MurasakiLanguages.core.enums.LanguagesLevels;
 import languages.murasaki.MurasakiLanguages.core.enums.Visibility;
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.CreateBacklogUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.lesson.lesson.*;
-import languages.murasaki.MurasakiLanguages.core.usecases.lessoncollection.PublishLessonInCollectionUsecase;
 import languages.murasaki.MurasakiLanguages.infra.dtos.lesson.LessonDto;
 import languages.murasaki.MurasakiLanguages.infra.mapper.lesson.LessonDtoMapper;
 import org.springframework.http.HttpStatus;
@@ -24,7 +23,6 @@ public class LessonController {
     private final CreateLessonUsecase createLessonUsecase;
     private final PublishLessonUsecase publishLessonUsecase;
     private final LessonDtoMapper lessonDtoMapper;
-    private final PublishLessonInCollectionUsecase publishLessonInCollectionUsecase;
     private final GetAllLessonUsecase getAllLessonUsecase;
     private final GetLessonByIdUsecase getLessonByIdUsecase;
     private final DeleteLessonUsecase deleteLessonUsecase;
@@ -40,11 +38,10 @@ public class LessonController {
     private final GetJapanesePublicLessonsUsecase getJapanesePublicLessonsUsecase;
     private final GetAllJapaneseLessonsUsecase getAllJapaneseLessonsUsecase;
 
-    public LessonController(CreateLessonUsecase createLessonUsecase, PublishLessonUsecase publishLessonUsecase, LessonDtoMapper lessonDtoMapper, PublishLessonInCollectionUsecase publishLessonInCollectionUsecase, GetAllLessonUsecase getAllLessonUsecase, GetLessonByIdUsecase getLessonByIdUsecase, DeleteLessonUsecase deleteLessonUsecase, CreateBacklogUsecase createBacklogUsecase, UpdateLessonUsecase updateLessonUsecase, GetLessonsByPublishedTrueUsecase getLessonsByPublishedTrueUsecase, GetLessonsByPublishedOrNotUsecase getLessonsByPublishedOrNotUsecase, GetLessonsByVisibilityUsecase getLessonsByVisibilityUsecase, GetPublicLessonsUsecase getPublicLessonsUsecase, GetJapaneseLessonsByLevelPublicUsecase getJapaneseLessonsByLevelPublicUsecase, GetJapaneseLessonsByLevelUsecase getJapaneseLessonsByLevelUsecase, ChangeVisibilityUsecase changeVisibilityUsecase, GetJapanesePublicLessonsUsecase getJapanesePublicLessonsUsecase, GetAllJapaneseLessonsUsecase getAllJapaneseLessonsUsecase) {
+    public LessonController(CreateLessonUsecase createLessonUsecase, PublishLessonUsecase publishLessonUsecase, LessonDtoMapper lessonDtoMapper, GetAllLessonUsecase getAllLessonUsecase, GetLessonByIdUsecase getLessonByIdUsecase, DeleteLessonUsecase deleteLessonUsecase, CreateBacklogUsecase createBacklogUsecase, UpdateLessonUsecase updateLessonUsecase, GetLessonsByPublishedTrueUsecase getLessonsByPublishedTrueUsecase, GetLessonsByPublishedOrNotUsecase getLessonsByPublishedOrNotUsecase, GetLessonsByVisibilityUsecase getLessonsByVisibilityUsecase, GetPublicLessonsUsecase getPublicLessonsUsecase, GetJapaneseLessonsByLevelPublicUsecase getJapaneseLessonsByLevelPublicUsecase, GetJapaneseLessonsByLevelUsecase getJapaneseLessonsByLevelUsecase, ChangeVisibilityUsecase changeVisibilityUsecase, GetJapanesePublicLessonsUsecase getJapanesePublicLessonsUsecase, GetAllJapaneseLessonsUsecase getAllJapaneseLessonsUsecase) {
         this.createLessonUsecase = createLessonUsecase;
         this.publishLessonUsecase = publishLessonUsecase;
         this.lessonDtoMapper = lessonDtoMapper;
-        this.publishLessonInCollectionUsecase = publishLessonInCollectionUsecase;
         this.getAllLessonUsecase = getAllLessonUsecase;
         this.getLessonByIdUsecase = getLessonByIdUsecase;
         this.deleteLessonUsecase = deleteLessonUsecase;
@@ -118,28 +115,14 @@ public class LessonController {
     @GetMapping("japanese-level/{level}")
     public List<Lesson> getByJapaneseLevel(@PathVariable LanguagesLevels level, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) { return getJapaneseLessonsByLevelUsecase.execute(level, page, size);}
 
-    // @DeleteMapping("delete/{id}/{collectionId}/{userId}/{lessonName}")
-    // public ResponseEntity<String> deleteLesson(@PathVariable String id, @PathVariable String collectionId, @PathVariable String userId, @PathVariable String lessonName){
     @DeleteMapping("delete/{id}/{userId}/{lessonName}")
     public ResponseEntity<String> deleteLesson(@PathVariable String id, @PathVariable String userId, @PathVariable String lessonName){
         deleteLessonUsecase.execute(id);
-        // publishLessonInCollectionUsecase.execute(collectionId, id, false);
 
         Backlog backlog = new Backlog(null, userId, "Deletou uma aula: " + lessonName, null);
         createBacklogUsecase.execute(backlog);
 
         return ResponseEntity.status(HttpStatus.OK).body("Aula deletado");
-    }
-
-    @PostMapping("publish/{collectionId}/{lessonId}/{userId}")
-    public ResponseEntity<String> updatePublishLesson(@PathVariable String collectionId, @PathVariable String lessonId, @PathVariable String userId){
-        boolean status = publishLessonUsecase.execute(lessonId);
-        String message = publishLessonInCollectionUsecase.execute(collectionId, lessonId, status);
-
-        Backlog backlog = new Backlog(null, userId, "Atualizou um aula: " + lessonId, null);
-        createBacklogUsecase.execute(backlog);
-
-        return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 
     @PutMapping("update/{lessonId}/{userId}")

@@ -1,8 +1,8 @@
 package languages.murasaki.MurasakiLanguages.core.usecases.lessoncollection;
 
-import languages.murasaki.MurasakiLanguages.core.entities.lessoncollection.lessonCollection;
+import languages.murasaki.MurasakiLanguages.core.entities.lessoncollection.LessonCollection;
 
 public interface GetLessonCollectionByIdUsecase {
 
-    lessonCollection execute(String collectionId);
+    LessonCollection execute(String collectionId);
 }

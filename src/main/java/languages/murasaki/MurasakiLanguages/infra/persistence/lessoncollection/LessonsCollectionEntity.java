@@ -13,15 +13,15 @@ public class LessonsCollectionEntity {
     private String id;
 
     private String languageName;
-    private List<String> lessonsId;
+    private boolean status;
 
     public LessonsCollectionEntity() {
     }
 
-    public LessonsCollectionEntity(String id, String languageName, List<String> lessonsId) {
+    public LessonsCollectionEntity(String id, String languageName, boolean status) {
         this.id = id;
         this.languageName = languageName;
-        this.lessonsId = (lessonsId != null) ? new ArrayList<>(lessonsId) : new ArrayList<>();
+        this.status = status;
     }
 
     public String getId() {
@@ -40,11 +40,11 @@ public class LessonsCollectionEntity {
         this.languageName = languageName;
     }
 
-    public List<String> getLessonsId() {
-        return lessonsId;
+    public boolean isStatus() {
+        return status;
     }
 
-    public void setLessonsId(List<String> lessonsId) {
-        this.lessonsId = lessonsId;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }

@@ -1,25 +1,25 @@
 package languages.murasaki.MurasakiLanguages.infra.mapper.lessoncollection;
 
-import languages.murasaki.MurasakiLanguages.core.entities.lessoncollection.lessonCollection;
+import languages.murasaki.MurasakiLanguages.core.entities.lessoncollection.LessonCollection;
 import languages.murasaki.MurasakiLanguages.infra.persistence.lessoncollection.LessonsCollectionEntity;
 import org.springframework.stereotype.Component;
 
 @Component
 public class LessonCollectionEntityMapper {
 
-    public LessonsCollectionEntity toEntity(lessonCollection lessonCollection){
+    public LessonsCollectionEntity toEntity(LessonCollection lessonCollection){
         return new LessonsCollectionEntity(
             lessonCollection.id(),
             lessonCollection.languageName(),
-            lessonCollection.lessonId()
+            lessonCollection.status()
         );
     }
 
-    public lessonCollection toDomain(LessonsCollectionEntity lessonCollection){
-        return new lessonCollection(
+    public LessonCollection toDomain(LessonsCollectionEntity lessonCollection){
+        return new LessonCollection(
             lessonCollection.getId(),
             lessonCollection.getLanguageName(),
-            lessonCollection.getLessonsId()
+            lessonCollection.isStatus()
         );
     }
 }

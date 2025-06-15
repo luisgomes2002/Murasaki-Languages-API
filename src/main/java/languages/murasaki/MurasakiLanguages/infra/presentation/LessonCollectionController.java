@@ -1,7 +1,7 @@
 package languages.murasaki.MurasakiLanguages.infra.presentation;
 
 import languages.murasaki.MurasakiLanguages.core.entities.backlog.Backlog;
-import languages.murasaki.MurasakiLanguages.core.entities.lessoncollection.lessonCollection;
+import languages.murasaki.MurasakiLanguages.core.entities.lessoncollection.LessonCollection;
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.CreateBacklogUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.lessoncollection.CreateLessonCollectionUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.lessoncollection.GetAllCollectionsUsecase;
@@ -33,7 +33,7 @@ public class LessonCollectionController {
 
     @PostMapping("create/{userId}")
     public ResponseEntity<Map<String, Object>> createLessonCollection(@RequestBody LessonCollectionDto lessonCollectionDto, @PathVariable String userId){
-        lessonCollection newLessonCollection = createLessonCollectionUsecase.execute(lessonCollectionDtoMapper.toDomain(lessonCollectionDto));
+        LessonCollection newLessonCollection = createLessonCollectionUsecase.execute(lessonCollectionDtoMapper.toDomain(lessonCollectionDto));
         Map<String, Object> response = new HashMap<>();
         response.put("Message", "Lesson collection criado com sucesso.");
         response.put("Lesson collection data", lessonCollectionDtoMapper.toDto(newLessonCollection));
@@ -45,7 +45,7 @@ public class LessonCollectionController {
     }
 
     @GetMapping("/")
-    public List<lessonCollection> getAllUsers(){
+    public List<LessonCollection> getAllUsers(){
         return getAllCollectionsUsecase.execute();
     }
 }

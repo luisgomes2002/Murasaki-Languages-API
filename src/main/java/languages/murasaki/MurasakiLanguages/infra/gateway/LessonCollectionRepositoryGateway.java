@@ -1,6 +1,6 @@
 package languages.murasaki.MurasakiLanguages.infra.gateway;
 
-import languages.murasaki.MurasakiLanguages.core.entities.lessoncollection.lessonCollection;
+import languages.murasaki.MurasakiLanguages.core.entities.lessoncollection.LessonCollection;
 import languages.murasaki.MurasakiLanguages.core.gateway.LessonCollectionGateway;
 import languages.murasaki.MurasakiLanguages.infra.mapper.lessoncollection.LessonCollectionEntityMapper;
 import languages.murasaki.MurasakiLanguages.infra.persistence.lessoncollection.LessonsCollectionEntity;
@@ -9,6 +9,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class LessonCollectionRepositoryGateway implements LessonCollectionGateway {
@@ -22,7 +23,7 @@ public class LessonCollectionRepositoryGateway implements LessonCollectionGatewa
     }
 
     @Override
-    public lessonCollection createLessonCollection(lessonCollection lessonCollection) {
+    public LessonCollection createLessonCollection(LessonCollection lessonCollection) {
         LessonsCollectionEntity entity = lessonCollectionEntityMapper.toEntity(lessonCollection);
         lessonsCollectionRepository.save(entity);
         return lessonCollectionEntityMapper.toDomain(entity);
@@ -30,24 +31,30 @@ public class LessonCollectionRepositoryGateway implements LessonCollectionGatewa
 
     @Override
     @Cacheable(value = "lesson-collection")
-    public List<lessonCollection> getAllCollections() {
+    public List<LessonCollection> getAllCollections() {
         return lessonsCollectionRepository.findAll().stream().map(lessonCollectionEntityMapper::toDomain).toList();
     }
 
     @Override
-    public lessonCollection getLessonCollectionById(String collectionId) {
+    public LessonCollection getLessonCollectionById(String collectionId) {
         return lessonsCollectionRepository.findById(collectionId).map(lessonCollectionEntityMapper::toDomain).orElse(null);
     }
 
     @Override
-    public String publishLessonInCollection(String collectionId, String lessonId, boolean status) {
-        lessonCollection lessonCollection = getLessonCollectionById(collectionId);
+    public LessonCollection updateCollection(String collectionId, LessonCollection lessonCollection) {
+        Optional<LessonsCollectionEntity> entity = lessonsCollectionRepository.findById(collectionId);
 
-        if (status) lessonCollection.lessonId().add(lessonId);
-        else lessonCollection.lessonId().remove(lessonId);
+        if(entity.isPresent()){
+            LessonsCollectionEntity update = entity.get();
 
-        lessonsCollectionRepository.save(lessonCollectionEntityMapper.toEntity(lessonCollection));
+            update.setLanguageName(lessonCollection.languageName());
+            update.setStatus(lessonCollection.status());
 
-        return status ? "Status atualizado: Publicado" : "Status atualizado: Arquivado";
+            lessonsCollectionRepository.save(update);
+
+            return lessonCollectionEntityMapper.toDomain(update);
+        }
+
+        return null;
     }
 }

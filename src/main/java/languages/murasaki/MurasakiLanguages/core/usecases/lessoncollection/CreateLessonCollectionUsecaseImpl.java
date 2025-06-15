@@ -1,6 +1,6 @@
 package languages.murasaki.MurasakiLanguages.core.usecases.lessoncollection;
 
-import languages.murasaki.MurasakiLanguages.core.entities.lessoncollection.lessonCollection;
+import languages.murasaki.MurasakiLanguages.core.entities.lessoncollection.LessonCollection;
 import languages.murasaki.MurasakiLanguages.core.entities.user.UserInfo;
 import languages.murasaki.MurasakiLanguages.core.gateway.LessonCollectionGateway;
 import languages.murasaki.MurasakiLanguages.core.usecases.security.AuthenticatedUsecase;
@@ -18,7 +18,7 @@ public class CreateLessonCollectionUsecaseImpl implements CreateLessonCollection
     }
 
     @Override
-    public lessonCollection execute(lessonCollection lessonCollection) {
+    public LessonCollection execute(LessonCollection lessonCollection) {
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
         if(!"ADMIN".equals(userInfo.userType()) && !"MOD".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");

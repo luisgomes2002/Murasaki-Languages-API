@@ -25,7 +25,7 @@ public class LessonCollectionBeanConfiguration {
     }
 
     @Bean
-    public PublishLessonInCollectionUsecase publishLessonInCollectionUsecase(LessonCollectionGateway lessonCollectionGateway, AuthenticatedUsecase authenticatedUsecase){
-        return new PublishLessonInCollectionUsecaseImpl(lessonCollectionGateway, authenticatedUsecase);
+    public UpdateLessonCollectionUsecase updateLessonCollectionUsecase(LessonCollectionGateway lessonCollectionGateway, AuthenticatedUsecase authenticatedUsecase){
+        return new UpdateLessonCollectionUsecaseImpl(lessonCollectionGateway, authenticatedUsecase);
     }
 }

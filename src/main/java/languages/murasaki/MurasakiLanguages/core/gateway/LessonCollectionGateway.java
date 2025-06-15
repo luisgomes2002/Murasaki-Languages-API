@@ -1,14 +1,13 @@
 package languages.murasaki.MurasakiLanguages.core.gateway;
 
-import languages.murasaki.MurasakiLanguages.core.entities.lessoncollection.lessonCollection;
+import languages.murasaki.MurasakiLanguages.core.entities.lessoncollection.LessonCollection;
 
 import java.util.List;
 
 public interface LessonCollectionGateway {
 
-    lessonCollection createLessonCollection(lessonCollection lessonCollection);
-    List<lessonCollection> getAllCollections();
-    lessonCollection getLessonCollectionById(String collectionId);
-
-    String publishLessonInCollection(String collectionId, String lessonId, boolean status);
+    LessonCollection createLessonCollection(LessonCollection lessonCollection);
+    List<LessonCollection> getAllCollections();
+    LessonCollection getLessonCollectionById(String collectionId);
+    LessonCollection updateCollection(String collectionId, LessonCollection lessonCollection);
 }
