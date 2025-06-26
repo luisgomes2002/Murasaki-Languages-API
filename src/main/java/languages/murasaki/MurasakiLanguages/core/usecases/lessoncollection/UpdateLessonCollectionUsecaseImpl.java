@@ -18,11 +18,11 @@ public class UpdateLessonCollectionUsecaseImpl implements  UpdateLessonCollectio
   }
 
   @Override
-  public void execute(String collectionId, LessonCollection lessonCollection) {
+  public LessonCollection execute(String collectionId, LessonCollection lessonCollection) {
     UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
     if(!"ADMIN".equals(userInfo.userType()) && !"MOD".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
 
-    lessonCollectionGateway.updateCollection(collectionId, lessonCollection);
+    return lessonCollectionGateway.updateCollection(collectionId, lessonCollection);
   }
 }

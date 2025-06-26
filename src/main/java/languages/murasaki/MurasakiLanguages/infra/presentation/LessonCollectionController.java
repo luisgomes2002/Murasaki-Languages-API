@@ -5,6 +5,7 @@ import languages.murasaki.MurasakiLanguages.core.entities.lessoncollection.Lesso
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.CreateBacklogUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.lessoncollection.CreateLessonCollectionUsecase;
 import languages.murasaki.MurasakiLanguages.core.usecases.lessoncollection.GetAllCollectionsUsecase;
+import languages.murasaki.MurasakiLanguages.core.usecases.lessoncollection.UpdateLessonCollectionUsecase;
 import languages.murasaki.MurasakiLanguages.infra.dtos.lessoncollection.LessonCollectionDto;
 import languages.murasaki.MurasakiLanguages.infra.mapper.lessoncollection.LessonCollectionDtoMapper;
 import org.springframework.http.HttpStatus;
@@ -23,12 +24,14 @@ public class LessonCollectionController {
     private final LessonCollectionDtoMapper lessonCollectionDtoMapper;
     private final GetAllCollectionsUsecase getAllCollectionsUsecase;
     private final CreateBacklogUsecase createBacklogUsecase;
+    private final UpdateLessonCollectionUsecase updateLessonCollectionUsecase;
 
-    public LessonCollectionController(CreateLessonCollectionUsecase createLessonCollectionUsecase, LessonCollectionDtoMapper lessonCollectionDtoMapper, GetAllCollectionsUsecase getAllCollectionsUsecase, CreateBacklogUsecase createBacklogUsecase) {
+    public LessonCollectionController(CreateLessonCollectionUsecase createLessonCollectionUsecase, LessonCollectionDtoMapper lessonCollectionDtoMapper, GetAllCollectionsUsecase getAllCollectionsUsecase, CreateBacklogUsecase createBacklogUsecase, UpdateLessonCollectionUsecase updateLessonCollectionUsecase) {
         this.createLessonCollectionUsecase = createLessonCollectionUsecase;
         this.lessonCollectionDtoMapper = lessonCollectionDtoMapper;
         this.getAllCollectionsUsecase = getAllCollectionsUsecase;
         this.createBacklogUsecase = createBacklogUsecase;
+        this.updateLessonCollectionUsecase = updateLessonCollectionUsecase;
     }
 
     @PostMapping("create/{userId}")
@@ -47,5 +50,18 @@ public class LessonCollectionController {
     @GetMapping("/")
     public List<LessonCollection> getAllUsers(){
         return getAllCollectionsUsecase.execute();
+    }
+
+    @PutMapping("update/{collectionId}/{userId}")
+    public ResponseEntity<Map<String, Object>> updateLessonCollection(@PathVariable String collectionId, @PathVariable String userId, @RequestBody LessonCollection lessonCollection){
+        LessonCollection updateLesson =updateLessonCollectionUsecase.execute(collectionId, lessonCollection);
+        Map<String, Object> response = new HashMap<>();
+        response.put("Message", "Lesson collection atualizada");
+        response.put("Collection data", lessonCollectionDtoMapper.toDto(updateLesson));
+
+        Backlog backlog = new Backlog(null, userId, "Atualizou um collection: " + lessonCollection.languageName(), null);
+        createBacklogUsecase.execute(backlog);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }
