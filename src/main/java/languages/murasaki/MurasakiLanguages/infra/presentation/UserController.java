@@ -157,6 +157,7 @@ public class UserController {
     @PutMapping("update/{userID}")
     public ResponseEntity<Map<String, Object>> updateUser(@PathVariable String userID, @RequestBody UserDto userDto){
         // Update Gender Metrics
+        // Update Birth
         User userData = getUserByIdUsecase.execute(userID);
         if(userData.gender() != userDto.gender()) {
             metricsUpdateUserGenderUsecase.execute(userData.gender().name(), -1);
@@ -200,6 +201,8 @@ public class UserController {
 
     @PutMapping("update-password/{id}")
     public ResponseEntity<Map<String, Object>> updateUserPassword(@PathVariable String id, @RequestBody String newPassword){
+        newPassword = newPassword.replace("\"", "");
+
         User user = updateUserPasswordUsecase.execute(id, newPassword);
         Map<String, Object> response = new HashMap<>();
         response.put("Message", "Senha atualizado");

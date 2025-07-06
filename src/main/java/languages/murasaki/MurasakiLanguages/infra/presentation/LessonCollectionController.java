@@ -54,7 +54,7 @@ public class LessonCollectionController {
 
     @PutMapping("update/{collectionId}/{userId}")
     public ResponseEntity<Map<String, Object>> updateLessonCollection(@PathVariable String collectionId, @PathVariable String userId, @RequestBody LessonCollection lessonCollection){
-        LessonCollection updateLesson =updateLessonCollectionUsecase.execute(collectionId, lessonCollection);
+        LessonCollection updateLesson = updateLessonCollectionUsecase.execute(collectionId, lessonCollection);
         Map<String, Object> response = new HashMap<>();
         response.put("Message", "Lesson collection atualizada");
         response.put("Collection data", lessonCollectionDtoMapper.toDto(updateLesson));
