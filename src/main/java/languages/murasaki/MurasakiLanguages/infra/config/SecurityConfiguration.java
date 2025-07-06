@@ -47,6 +47,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/api/mail/confirm-account").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/user/send-confirm-email").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/lesson/published-true").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/user/update-password-by-request").permitAll()
                         .anyRequest().authenticated()
                 )
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))

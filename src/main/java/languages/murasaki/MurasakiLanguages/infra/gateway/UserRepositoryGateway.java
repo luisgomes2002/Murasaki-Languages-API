@@ -133,6 +133,24 @@ public class UserRepositoryGateway implements UserGateway {
     }
 
     @Override
+    public User updateUserPasswordByRequest(String id, String newPassword) {
+        Optional<UserEntity> entity = userRepository.findById(id);
+
+        if(entity.isPresent()){
+            UserEntity updatedUser = entity.get();
+
+            updatedUser.setPassword(passwordEncoder.encode(newPassword));
+            updatedUser.setUpdatedAt(LocalDateTime.now());
+
+            UserEntity newUser = userRepository.save(updatedUser);
+
+            return userEntityMapper.toDomain(newUser);
+        }
+
+        return null;
+    }
+
+    @Override
     public void updateUserType(String id, UserType type) {
         Optional<UserEntity> entity = userRepository.findById(id);
 

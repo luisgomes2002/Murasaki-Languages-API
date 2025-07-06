@@ -54,8 +54,9 @@ public class UserController {
     private final MetricsUpdateUserGenderUsecase metricsUpdateUserGenderUsecase;
     private final GetUserByEmailUsecase getUserByEmailUsecase;
     private final RemoveBirthFromListUsecase removeBirthFromListUsecase;
+    private final UpdateUserPasswordByRequestUsecase updateUserPasswordByRequestUsecase;
 
-    public UserController(CreateUserUsecase createUserUsecase, LoginUsecase loginUsecase, GetAllUsersUseCase getAllUsersUseCase, UserDtoMapper userDtoMapper, LoginDtoMapper loginDtoMapper, UserResponseDtoMapper userResponseDtoMapper, CreateBacklogUsecase createBacklogUsecase, GetUserByIdUsecase getUserByIdUsecase, DeleteUserUsecase deleteUserUsecase, UpdateUserUsecase updateUserUsecase, UpdateUserPasswordUsecase updateUserPasswordUsecase, UpdateUserTypeUsecase updateUserTypeUsecase, BanUserUsercase banUserUsercase, SendEmailUsecase sendEmailUsecase, GenerateAndStoreTokenUsecase generateAndStoreTokenUsecase, GetUserIdByTokenUsecase getUserIdByTokenUsecase, MetricsActiveUsersUsecase metricsActiveUsersUsecase, MetricsBanUserUsecase metricsBanUserUsecase, MetricsCreateUserUsecase metricsCreateUserUsecase, MetricsDeletedUserUsecase metricsDeletedUserUsecase, MetricsUpdateUserAgeUsecase metricsUpdateUserAgeUsecase, MetricsUpdateUserGenderUsecase metricsUpdateUserGenderUsecase, GetUserByEmailUsecase getUserByEmailUsecase, RemoveBirthFromListUsecase removeBirthFromListUsecase) {
+    public UserController(CreateUserUsecase createUserUsecase, LoginUsecase loginUsecase, GetAllUsersUseCase getAllUsersUseCase, UserDtoMapper userDtoMapper, LoginDtoMapper loginDtoMapper, UserResponseDtoMapper userResponseDtoMapper, CreateBacklogUsecase createBacklogUsecase, GetUserByIdUsecase getUserByIdUsecase, DeleteUserUsecase deleteUserUsecase, UpdateUserUsecase updateUserUsecase, UpdateUserPasswordUsecase updateUserPasswordUsecase, UpdateUserTypeUsecase updateUserTypeUsecase, BanUserUsercase banUserUsercase, SendEmailUsecase sendEmailUsecase, GenerateAndStoreTokenUsecase generateAndStoreTokenUsecase, GetUserIdByTokenUsecase getUserIdByTokenUsecase, MetricsActiveUsersUsecase metricsActiveUsersUsecase, MetricsBanUserUsecase metricsBanUserUsecase, MetricsCreateUserUsecase metricsCreateUserUsecase, MetricsDeletedUserUsecase metricsDeletedUserUsecase, MetricsUpdateUserAgeUsecase metricsUpdateUserAgeUsecase, MetricsUpdateUserGenderUsecase metricsUpdateUserGenderUsecase, GetUserByEmailUsecase getUserByEmailUsecase, RemoveBirthFromListUsecase removeBirthFromListUsecase, UpdateUserPasswordByRequestUsecase updateUserPasswordByRequestUsecase) {
         this.createUserUsecase = createUserUsecase;
         this.loginUsecase = loginUsecase;
         this.getAllUsersUseCase = getAllUsersUseCase;
@@ -80,6 +81,7 @@ public class UserController {
         this.metricsUpdateUserGenderUsecase = metricsUpdateUserGenderUsecase;
         this.getUserByEmailUsecase = getUserByEmailUsecase;
         this.removeBirthFromListUsecase = removeBirthFromListUsecase;
+        this.updateUserPasswordByRequestUsecase = updateUserPasswordByRequestUsecase;
     }
 
     @PostMapping("create")
@@ -139,14 +141,37 @@ public class UserController {
         return getUserByIdUsecase.execute(id);
     }
 
-    @GetMapping("request-password/")
+    @PostMapping("request-password/")
     public String requestToChangePassword(@RequestBody String email){
+        email = email.replace("\"", "");
         String token = generateAndStoreTokenUsecase.execute(email);
 
+        String link = "http://localhost:5173/update-password?token=" + token;
+
+        String htmlContent = """
+        <html>
+            <body>
+                <p>Olá! Seu pedido para alteração da senha foi recebido.</p>
+                <p>Se você não fez essa solicitação, ignore esta mensagem.</p>
+                <a href="%s" style="
+                    display: inline-block;
+                    padding: 8px;
+                    background-color: #0a0520;
+                    color: white;
+                    text-decoration: none;
+                    border-radius: 10px;
+                    font-family: Arial, sans-serif;
+                ">
+                    Alterar senha
+                </a>
+            </body>
+        </html>
+    """.formatted(link);
+
         Email newEmail = new Email(
-                email,
-                "Confirmação de Atualização de Senha",
-                "Olá! Seu pedido para alteração da senha. Se você não fez essa alteração, por favor, clique no link abaixo para redefinir sua senha:\n" + token
+            email,
+            "Confirmação de Atualização de Senha",
+            htmlContent
         );
 
         sendEmailUsecase.execute(newEmail);
@@ -189,9 +214,9 @@ public class UserController {
 
         User user = getUserByEmailUsecase.execute(updatePasswordRequest.email());
 
-        updateUserPasswordUsecase.execute(user.id(), updatePasswordRequest.password());
+        updateUserPasswordByRequestUsecase.execute(user.id(), updatePasswordRequest.password());
         Map<String, Object> response = new HashMap<>();
-        response.put("Message", "Senha atualizado");
+        response.put("Message", "Senha atualizada");
 
         Backlog backlog = new Backlog(null, user.id(), "Atualizou a senha: " + user.name(), null);
         createBacklogUsecase.execute(backlog);
@@ -205,7 +230,7 @@ public class UserController {
 
         User user = updateUserPasswordUsecase.execute(id, newPassword);
         Map<String, Object> response = new HashMap<>();
-        response.put("Message", "Senha atualizado");
+        response.put("Message", "Senha atualizada");
 
         Backlog backlog = new Backlog(null, id, "Atualizou a senha: " + user.name(), null);
         createBacklogUsecase.execute(backlog);

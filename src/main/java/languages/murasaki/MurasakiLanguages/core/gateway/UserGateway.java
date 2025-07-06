@@ -15,6 +15,7 @@ public interface UserGateway {
     User getUserById(String id);
     User updateUser(String id, User user);
     User updateUserPassword(String id, String newPassword);
+    User updateUserPasswordByRequest(String id, String newPassword);
     User getUserByEmail(String email);
 
     void deleteUser(String id);

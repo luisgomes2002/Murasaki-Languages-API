@@ -68,4 +68,9 @@ public class UserBeanConfiguration {
     public BanUserUsercase banUserUsercase(UserGateway userGateway, AuthenticatedUsecase authenticatedUsecase){
         return new BanUserUsercaseImpl(userGateway, authenticatedUsecase);
     }
+
+    @Bean
+    public UpdateUserPasswordByRequestUsecase updateUserPasswordByRequestUsecase(UserGateway userGateway){
+        return new UpdateUserPasswordByRequestUsecaseImpl(userGateway);
+    }
 }
