@@ -50,9 +50,9 @@ public class UserRepositoryGateway implements UserGateway {
         entity.setUpdatedAt(LocalDateTime.now());
         entity.setIcon("");
         entity.setBackground("");
-        entity.setUserType(UserType.valueOf("ADMIN"));
+        entity.setUserType(UserType.valueOf("COMMUM"));
         entity.setAbout("Ainda não criou uma descrição");
-        entity.setEnabled(true);
+        entity.setEnabled(false);
         entity.setSubscription(SubscriptionType.FREE);
 
         String password = entity.getPassword();
@@ -265,8 +265,8 @@ public class UserRepositoryGateway implements UserGateway {
         entity.setEnabled(false);
 
         if(productName.equals("Plano Básico")) entity.setSubscription(SubscriptionType.BASIC);
-        if(productName.equals("Plano Intermediário"))   entity.setSubscription(SubscriptionType.PRO);
-        if(productName.equals("Plano Premium"))   entity.setSubscription(SubscriptionType.PREMIUM);
+        if(productName.equals("Plano Intermediário")) entity.setSubscription(SubscriptionType.PRO);
+        if(productName.equals("Plano Premium")) entity.setSubscription(SubscriptionType.PREMIUM);
 
         entity.setPassword(passwordEncoder.encode(password));
 

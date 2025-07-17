@@ -86,7 +86,6 @@ public class UserController {
 
     @PostMapping("create")
     public ResponseEntity<Map<String, Object>> createUser(@RequestBody UserDto userDto){
-        System.out.println(userDto);
 
         User newUser = createUserUsecase.execute(userDtoMapper.toDomain(userDto));
         Map<String, Object > response = new HashMap<>();
@@ -97,13 +96,34 @@ public class UserController {
 
         String token = generateAndStoreTokenUsecase.execute(newUser.email());
 
-        String confirmationLink = "http://localhost:8080/api/confirm?token=" + token;
+        String confirmationLink = "http://localhost:5173/confirm?token=" + token;
+
+        String htmlContent = """
+        <html>
+            <body>
+                <p>Olá! Seu pedido para alteração da senha foi recebido.</p>
+                <p>Se você não fez essa solicitação, ignore esta mensagem.</p>
+                <a href="%s" style="
+                    display: inline-block;
+                    padding: 8px;
+                    background-color: #0a0520;
+                    color: white;
+                    text-decoration: none;
+                    border-radius: 10px;
+                    font-family: Arial, sans-serif;
+                ">
+                    Confirmar email
+                </a>
+            </body>
+        </html>
+    """.formatted(confirmationLink);
 
         Email newEmail = new Email(
-                newUser.email(),
-                "Confirmação de Cadastro",
-                "Olá! Obrigado por se cadastrar. Clique no link abaixo para confirmar seu e-mail:\n" + confirmationLink
+                userDto.email(),
+                "Confirmação de Email",
+                htmlContent
         );
+
 
         sendEmailUsecase.execute(newEmail);
 
@@ -118,14 +138,35 @@ public class UserController {
 
     @PostMapping("send-confirm-email")
     public void SendConfirmEmail(@RequestBody String email){
+        email = email.replace("\"", "");
         String token = generateAndStoreTokenUsecase.execute(email);
 
-        String confirmationLink = "http://localhost:8080/api/confirm?token=" + token;
+        String confirmationLink = "http://localhost:5173/confirm?token=" + token;
+
+        String htmlContent = """
+        <html>
+            <body>
+                <p>Olá! Seu pedido para alteração da senha foi recebido.</p>
+                <p>Se você não fez essa solicitação, ignore esta mensagem.</p>
+                <a href="%s" style="
+                    display: inline-block;
+                    padding: 8px;
+                    background-color: #0a0520;
+                    color: white;
+                    text-decoration: none;
+                    border-radius: 10px;
+                    font-family: Arial, sans-serif;
+                ">
+                    Confirmar email
+                </a>
+            </body>
+        </html>
+    """.formatted(confirmationLink);
 
         Email newEmail = new Email(
                 email,
                 "Confirmação de Email",
-                "Olá! Obrigado por se cadastrar. Clique no link abaixo para confirmar seu e-mail:\n" + confirmationLink
+                htmlContent
         );
 
         sendEmailUsecase.execute(newEmail);
@@ -212,7 +253,13 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
         }
 
-        User user = getUserByEmailUsecase.execute(updatePasswordRequest.email());
+        User user = getUserByEmailUsecase.execute(userEmail);
+
+        if (user == null) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("error", "Usuário não encontrado.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+        }
 
         updateUserPasswordByRequestUsecase.execute(user.id(), updatePasswordRequest.password());
         Map<String, Object> response = new HashMap<>();
