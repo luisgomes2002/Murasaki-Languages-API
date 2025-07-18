@@ -24,7 +24,7 @@ public class TokenConfiguration {
         return JWT.create()
                 .withSubject(userEntity.getEmail())
                 .withClaim("userId", userEntity.getId())
-                .withClaim("name", userEntity.getName())
+                .withClaim("name", userEntity.getUsername())
                 .withClaim("userType", userEntity.getUserType().name())
                 .withClaim("subscription", userEntity.getSubscription().name())
                 .withExpiresAt(Instant.now().plusSeconds(604800))
