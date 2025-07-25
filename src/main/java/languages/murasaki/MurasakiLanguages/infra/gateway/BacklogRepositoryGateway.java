@@ -1,6 +1,7 @@
 package languages.murasaki.MurasakiLanguages.infra.gateway;
 
 import languages.murasaki.MurasakiLanguages.core.entities.backlog.Backlog;
+import languages.murasaki.MurasakiLanguages.core.entities.pagination.Pagination;
 import languages.murasaki.MurasakiLanguages.core.gateway.BacklogGateway;
 import languages.murasaki.MurasakiLanguages.infra.mapper.backlog.BacklogEntityMapper;
 import languages.murasaki.MurasakiLanguages.infra.persistence.backlog.BacklogEntity;
@@ -34,12 +35,23 @@ public class BacklogRepositoryGateway implements BacklogGateway {
 
     @Override
     @Cacheable(value = "all-backlogs")
-    public List<Backlog> getAllBacklog(int page, int size) {
+    public Pagination<Backlog> getAllBacklog(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
+        var pageResult = backlogRepository.findAll(pageable);
 
-        return backlogRepository.findAll(pageable)
+        var content = pageResult.getContent()
                 .stream()
                 .map(backlogEntityMapper::toDomain)
                 .toList();
+
+        return new Pagination<>(
+                content,
+                pageResult.getTotalPages(),
+                pageResult.getTotalElements(),
+                pageResult.getSize(),
+                pageResult.getNumber()
+        );
     }
+
+
 }

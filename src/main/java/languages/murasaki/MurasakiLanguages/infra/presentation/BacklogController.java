@@ -1,6 +1,7 @@
 package languages.murasaki.MurasakiLanguages.infra.presentation;
 
 import languages.murasaki.MurasakiLanguages.core.entities.backlog.Backlog;
+import languages.murasaki.MurasakiLanguages.core.entities.pagination.Pagination;
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.GetAllBacklogUsecase;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class BacklogController {
     }
 
     @GetMapping("/")
-    public List<Backlog> getAllBacklog(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "15") int size){
+    public Pagination<Backlog> getAllBacklog(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "15") int size){
         return getAllBacklogUsecase.execute(page, size);
     }
 

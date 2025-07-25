@@ -1,6 +1,7 @@
 package languages.murasaki.MurasakiLanguages.core.usecases.backlog;
 
 import languages.murasaki.MurasakiLanguages.core.entities.backlog.Backlog;
+import languages.murasaki.MurasakiLanguages.core.entities.pagination.Pagination;
 import languages.murasaki.MurasakiLanguages.core.entities.user.UserInfo;
 import languages.murasaki.MurasakiLanguages.core.gateway.BacklogGateway;
 import languages.murasaki.MurasakiLanguages.core.usecases.security.AuthenticatedUsecase;
@@ -19,7 +20,7 @@ public class GetAllBacklogUsecaseImpl implements GetAllBacklogUsecase{
     }
 
     @Override
-    public List<Backlog> execute(int page, int size) {
+    public Pagination<Backlog> execute(int page, int size) {
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
         if(!"ADMIN".equals(userInfo.userType()) && !"MOD".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
