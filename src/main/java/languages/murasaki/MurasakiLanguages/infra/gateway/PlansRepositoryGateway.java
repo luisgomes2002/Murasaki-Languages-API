@@ -36,7 +36,6 @@ public class PlansRepositoryGateway implements PlansGateway {
     }
 
     @Override
-    @Cacheable(value = "user", key = "#id")
     public Plans getPlanById(String id) {
         return plansRepository.findById(id).map(plansEntityMapper::toDomain).orElse(null);
     }
