@@ -2,6 +2,7 @@ package languages.murasaki.MurasakiLanguages.infra.presentation;
 
 import languages.murasaki.MurasakiLanguages.core.entities.backlog.Backlog;
 import languages.murasaki.MurasakiLanguages.core.entities.email.Email;
+import languages.murasaki.MurasakiLanguages.core.entities.pagination.Pagination;
 import languages.murasaki.MurasakiLanguages.core.entities.user.User;
 import languages.murasaki.MurasakiLanguages.core.entities.user.UserResponse;
 import languages.murasaki.MurasakiLanguages.core.enums.UserType;
@@ -173,7 +174,7 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public List<UserResponse> getAllUsers(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+    public Pagination<User> getAllUsers(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "12") int size) {
         return getAllUsersUseCase.execute(page, size);
     }
 

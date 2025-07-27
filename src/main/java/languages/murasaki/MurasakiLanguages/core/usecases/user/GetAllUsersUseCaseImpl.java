@@ -1,5 +1,6 @@
 package languages.murasaki.MurasakiLanguages.core.usecases.user;
 
+import languages.murasaki.MurasakiLanguages.core.entities.pagination.Pagination;
 import languages.murasaki.MurasakiLanguages.core.entities.user.User;
 import languages.murasaki.MurasakiLanguages.core.entities.user.UserInfo;
 import languages.murasaki.MurasakiLanguages.core.entities.user.UserResponse;
@@ -20,7 +21,7 @@ public class GetAllUsersUseCaseImpl implements GetAllUsersUseCase{
     }
 
     @Override
-    public List<UserResponse> execute(int page, int size) {
+    public Pagination<User> execute(int page, int size) {
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
         if(!"ADMIN".equals(userInfo.userType()) && !"MOD".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");

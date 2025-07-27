@@ -1,5 +1,6 @@
 package languages.murasaki.MurasakiLanguages.infra.gateway;
 
+import languages.murasaki.MurasakiLanguages.core.entities.pagination.Pagination;
 import languages.murasaki.MurasakiLanguages.core.entities.payment.CheckoutResponse;
 import languages.murasaki.MurasakiLanguages.core.entities.user.Login;
 import languages.murasaki.MurasakiLanguages.core.entities.user.User;
@@ -64,12 +65,22 @@ public class UserRepositoryGateway implements UserGateway {
 
     @Override
     @Cacheable(value = "all-user")
-    public List<UserResponse> getAllUsers(int page, int size) {
+    public Pagination<User> getAllUsers(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return userRepository.findAll(pageable)
-                .stream()
-                .map(userEntityMapper::toResponse)
-                .toList();
+        var pageResult = userRepository.findAll(pageable);
+
+        var content = pageResult.getContent().
+            stream()
+            .map(userEntityMapper::toDomain)
+            .toList();
+
+        return new Pagination<>(
+            content,
+            pageResult.getTotalPages(),
+            pageResult.getTotalElements(),
+            pageResult.getSize(),
+            pageResult.getNumber()
+        );
     }
 
     @Override

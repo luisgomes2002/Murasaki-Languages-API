@@ -1,5 +1,6 @@
 package languages.murasaki.MurasakiLanguages.core.gateway;
 
+import languages.murasaki.MurasakiLanguages.core.entities.pagination.Pagination;
 import languages.murasaki.MurasakiLanguages.core.entities.payment.CheckoutResponse;
 import languages.murasaki.MurasakiLanguages.core.entities.user.Login;
 import languages.murasaki.MurasakiLanguages.core.entities.user.User;
@@ -11,7 +12,7 @@ import java.util.List;
 public interface UserGateway {
 
     User createUser(User user);
-    List<UserResponse> getAllUsers(int page, int size);
+    Pagination<User> getAllUsers(int page, int size);
     User getUserById(String id);
     User updateUser(String id, User user);
     User updateUserPassword(String id, String newPassword);
