@@ -1,6 +1,7 @@
 package languages.murasaki.MurasakiLanguages.core.usecases.lesson.lesson;
 
 import languages.murasaki.MurasakiLanguages.core.entities.lesson.Lesson;
+import languages.murasaki.MurasakiLanguages.core.entities.pagination.Pagination;
 import languages.murasaki.MurasakiLanguages.core.entities.user.UserInfo;
 import languages.murasaki.MurasakiLanguages.core.enums.SubscriptionType;
 import languages.murasaki.MurasakiLanguages.core.enums.Visibility;
@@ -21,7 +22,7 @@ public class GetLessonsByVisibilityUsecaseImpl implements GetLessonsByVisibility
     }
 
     @Override
-    public List<Lesson> execute(Visibility visibility, int page, int size) {
+    public Pagination<Lesson> execute(Visibility visibility, int page, int size) {
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
         SubscriptionType userSubscription = SubscriptionType.valueOf(userInfo.subscription());

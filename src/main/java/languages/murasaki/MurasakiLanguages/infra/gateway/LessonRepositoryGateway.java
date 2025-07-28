@@ -1,6 +1,7 @@
 package languages.murasaki.MurasakiLanguages.infra.gateway;
 
 import languages.murasaki.MurasakiLanguages.core.entities.lesson.Lesson;
+import languages.murasaki.MurasakiLanguages.core.entities.pagination.Pagination;
 import languages.murasaki.MurasakiLanguages.core.enums.LanguagesLevels;
 import languages.murasaki.MurasakiLanguages.core.enums.LanguageType;
 import languages.murasaki.MurasakiLanguages.core.enums.Visibility;
@@ -48,9 +49,22 @@ public class LessonRepositoryGateway implements LessonGateway {
 
     @Override
     @Cacheable(value = "all-lessons")
-    public List<Lesson> getAllLessons(int page, int size) {
+    public Pagination<Lesson> getAllLessons(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return lessonRepository.findAll(pageable).stream().map(lessonEntityMapper::toDomain).toList();
+        var pageResult = lessonRepository.findAll(pageable);
+
+        var content = pageResult.getContent()
+                .stream()
+                .map(lessonEntityMapper::toDomain)
+                .toList();
+
+        return new Pagination<>(
+                content,
+                pageResult.getTotalPages(),
+                pageResult.getTotalElements(),
+                pageResult.getSize(),
+                pageResult.getNumber()
+        );
     }
 
     @Override
@@ -59,7 +73,6 @@ public class LessonRepositoryGateway implements LessonGateway {
     }
 
     @Override
-    @Cacheable(value = "lesson-by-published-or-not")
     public List<Lesson> getLessonsByPublishedOrNot(boolean published, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return lessonRepository.findByPublished(published, pageable)
@@ -69,7 +82,6 @@ public class LessonRepositoryGateway implements LessonGateway {
     }
 
     @Override
-    @Cacheable(value = "lesson-by-published")
     public List<Lesson> getLessonsByPublishedTrue(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return lessonRepository.findByPublished(true, pageable)
@@ -79,28 +91,45 @@ public class LessonRepositoryGateway implements LessonGateway {
     }
 
     @Override
-    @Cacheable(value = "lesson-by-visibility")
-    public List<Lesson> getLessonsByVisibility(Visibility visibility, int page, int size) {
+    public Pagination<Lesson> getLessonsByVisibility(Visibility visibility, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return lessonRepository.findByVisibility(visibility, pageable)
+        var pageResult = lessonRepository.findByVisibility(visibility, pageable);
+
+        var content = pageResult.getContent()
                 .stream()
                 .map(lessonEntityMapper::toDomain)
                 .toList();
+
+        return new Pagination<>(
+                content,
+                pageResult.getTotalPages(),
+                pageResult.getTotalElements(),
+                pageResult.getSize(),
+                pageResult.getNumber()
+        );
     }
 
     @Override
-    @Cacheable(value = "lesson-public")
-    public List<Lesson> getPublicLessons(int page, int size) {
+    public Pagination<Lesson> getPublicLessons(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return lessonRepository.findByVisibility(Visibility.PUBLIC, pageable)
+        var pageResult = lessonRepository.findByVisibility(Visibility.PUBLIC, pageable);
+
+        var content = pageResult.getContent()
                 .stream()
                 .map(lessonEntityMapper::toDomain)
                 .toList();
+
+        return new Pagination<>(
+                content,
+                pageResult.getTotalPages(),
+                pageResult.getTotalElements(),
+                pageResult.getSize(),
+                pageResult.getNumber()
+        );
     }
 
     // Japanese
     @Override
-    @Cacheable(value = "japanese-lesson-public")
     public List<Lesson> getJapanesePublicLessons(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return lessonRepository.findByPublishedTrueAndVisibility(Visibility.PUBLIC, pageable)
@@ -110,35 +139,60 @@ public class LessonRepositoryGateway implements LessonGateway {
     }
 
     @Override
-    @Cacheable(value = "all-japanese-lesson")
-    public List<Lesson> getAllJapaneseLessons(int page, int size) {
+    public Pagination<Lesson> getAllJapaneseLessons(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return lessonRepository.findByPublishedTrueAndLanguageType(LanguageType.JP, pageable)
+        var pageResult = lessonRepository.findByPublishedTrueAndLanguageType(LanguageType.JP, pageable);
+
+        var content = pageResult.getContent()
                 .stream()
                 .map(lessonEntityMapper::toDomain)
                 .toList();
+
+        return new Pagination<>(
+                content,
+                pageResult.getTotalPages(),
+                pageResult.getTotalElements(),
+                pageResult.getSize(),
+                pageResult.getNumber()
+        );
     }
 
     @Override
-    @Cacheable(value = "lesson-japanese-by-level-public")
-    public List<Lesson> getJapaneseLessonsByLevelPublic(LanguagesLevels level, int page, int size) {
+    public Pagination<Lesson> getJapaneseLessonsByLevelPublic(LanguagesLevels level, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return lessonRepository
-                .findByLanguagesLevelsAndPublishedTrueAndVisibility(level, Visibility.PUBLIC, pageable)
+        var pageResult = lessonRepository.findByLanguagesLevelsAndPublishedTrueAndVisibility(level, Visibility.PUBLIC, pageable);
+
+        var content = pageResult.getContent()
                 .stream()
                 .map(lessonEntityMapper::toDomain)
                 .toList();
+
+        return new Pagination<>(
+                content,
+                pageResult.getTotalPages(),
+                pageResult.getTotalElements(),
+                pageResult.getSize(),
+                pageResult.getNumber()
+        );
     }
 
     @Override
-    @Cacheable(value = "lesson-japanese-by-level")
-    public List<Lesson> getJapaneseLessonsByLevel(LanguagesLevels level, int page, int size) {
+    public Pagination<Lesson> getJapaneseLessonsByLevel(LanguagesLevels level, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return lessonRepository
-                .findByLanguagesLevelsAndPublishedTrue(level, pageable)
+        var pageResult = lessonRepository.findByLanguagesLevelsAndPublishedTrue(level, pageable);
+
+        var content = pageResult.getContent()
                 .stream()
                 .map(lessonEntityMapper::toDomain)
                 .toList();
+
+        return new Pagination<>(
+                content,
+                pageResult.getTotalPages(),
+                pageResult.getTotalElements(),
+                pageResult.getSize(),
+                pageResult.getNumber()
+        );
     }
 
     // Korean

@@ -2,6 +2,7 @@ package languages.murasaki.MurasakiLanguages.infra.presentation;
 
 import languages.murasaki.MurasakiLanguages.core.entities.backlog.Backlog;
 import languages.murasaki.MurasakiLanguages.core.entities.lesson.Lesson;
+import languages.murasaki.MurasakiLanguages.core.entities.pagination.Pagination;
 import languages.murasaki.MurasakiLanguages.core.enums.LanguagesLevels;
 import languages.murasaki.MurasakiLanguages.core.enums.Visibility;
 import languages.murasaki.MurasakiLanguages.core.usecases.backlog.CreateBacklogUsecase;
@@ -72,12 +73,12 @@ public class LessonController {
     }
 
     @GetMapping("/")
-    public List<Lesson> getAllLessons(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
+    public Pagination<Lesson> getAllLessons(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
         return getAllLessonUsecase.execute(page, size);
     }
 
     @GetMapping("visibility/{visibility}")
-    public List<Lesson> getLessonsByVisibility(@PathVariable String visibility, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+    public Pagination<Lesson> getLessonsByVisibility(@PathVariable String visibility, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
         return getLessonsByVisibilityUsecase.execute(Visibility.valueOf(visibility.toUpperCase()), page, size);
     }
 
@@ -87,7 +88,7 @@ public class LessonController {
     }
 
     @GetMapping("public")
-    public List<Lesson> getPublicLessons(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+    public Pagination<Lesson> getPublicLessons(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "15") int size) {
         return getPublicLessonsUsecase.execute(page, size);
     }
 
@@ -102,7 +103,7 @@ public class LessonController {
     }
 
     @GetMapping("all-japanese/published/")
-    public List<Lesson> getAllJapaneseLessonsByPublishedTrue(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+    public Pagination<Lesson> getAllJapaneseLessonsByPublishedTrue(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "15") int size) {
         return getAllJapaneseLessonsUsecase.execute(page, size);
     }
 
@@ -110,10 +111,10 @@ public class LessonController {
     public Lesson getLessonById(@PathVariable String id){ return getLessonByIdUsecase.execute(id); }
 
     @GetMapping("japanese-level-public/{level}")
-    public List<Lesson> getByJapaneseLevelPublic(@PathVariable LanguagesLevels level, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) { return getJapaneseLessonsByLevelPublicUsecase.execute(level, page, size);}
+    public Pagination<Lesson> getByJapaneseLevelPublic(@PathVariable LanguagesLevels level, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "15") int size) { return getJapaneseLessonsByLevelPublicUsecase.execute(level, page, size);}
 
     @GetMapping("japanese-level/{level}")
-    public List<Lesson> getByJapaneseLevel(@PathVariable LanguagesLevels level, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) { return getJapaneseLessonsByLevelUsecase.execute(level, page, size);}
+    public Pagination<Lesson> getByJapaneseLevel(@PathVariable LanguagesLevels level, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "15") int size) { return getJapaneseLessonsByLevelUsecase.execute(level, page, size);}
 
     @DeleteMapping("delete/{id}/{userId}/{lessonName}")
     public ResponseEntity<String> deleteLesson(@PathVariable String id, @PathVariable String userId, @PathVariable String lessonName){

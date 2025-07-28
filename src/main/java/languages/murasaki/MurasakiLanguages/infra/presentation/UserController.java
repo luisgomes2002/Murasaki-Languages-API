@@ -174,7 +174,7 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public Pagination<User> getAllUsers(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "12") int size) {
+    public Pagination<User> getAllUsers(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "15") int size) {
         return getAllUsersUseCase.execute(page, size);
     }
 
