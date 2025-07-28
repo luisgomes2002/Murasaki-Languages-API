@@ -15,7 +15,6 @@ public class GetAllCollectionsUsecaseImpl implements GetAllCollectionsUsecase{
 
     @Override
     public List<LessonCollection> execute() {
-
         return lessonCollectionGateway.getAllCollections();
     }
 }
