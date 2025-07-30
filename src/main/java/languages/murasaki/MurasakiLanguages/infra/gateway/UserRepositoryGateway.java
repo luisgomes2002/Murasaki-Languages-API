@@ -273,7 +273,7 @@ public class UserRepositoryGateway implements UserGateway {
         entity.setBackground("");
         entity.setUserType(UserType.valueOf("COMMUM"));
         entity.setAbout("Ainda não criou uma descrição");
-        entity.setEnabled(false);
+        entity.setEnabled(true);
 
         if(productName.equals("Plano Básico")) entity.setSubscription(SubscriptionType.BASIC);
         if(productName.equals("Plano Intermediário")) entity.setSubscription(SubscriptionType.PRO);

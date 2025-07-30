@@ -225,8 +225,9 @@ public class MetricsRepositoryGateway implements MetricsGateway {
         mongoTemplate.save(entity);
     }
 
-    //@Scheduled(cron = "*/30 * * * * *")
-    @Scheduled(cron = "0 0 1 * * *")
+
+  //  @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(cron = "*/30 * * * * *")
     public void processUserBirths() {
         MetricsUserBirthEntity birthEntity = mongoTemplate.findAll(MetricsUserBirthEntity.class).stream().findFirst().orElse(null);
         if (birthEntity == null) return;

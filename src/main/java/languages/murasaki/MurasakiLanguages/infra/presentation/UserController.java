@@ -102,8 +102,7 @@ public class UserController {
         String htmlContent = """
         <html>
             <body>
-                <p>Olá! Seu pedido para alteração da senha foi recebido.</p>
-                <p>Se você não fez essa solicitação, ignore esta mensagem.</p>
+                <p>Olá! confirme meu e-mail.</p>
                 <a href="%s" style="
                     display: inline-block;
                     padding: 8px;
@@ -147,7 +146,7 @@ public class UserController {
         String htmlContent = """
         <html>
             <body>
-                <p>Olá! Seu pedido para alteração da senha foi recebido.</p>
+                <p>Olá! Seu pedido para confirmação do email foi recebido.</p>
                 <p>Se você não fez essa solicitação, ignore esta mensagem.</p>
                 <a href="%s" style="
                     display: inline-block;
@@ -223,11 +222,13 @@ public class UserController {
 
     @PutMapping("update/{userID}")
     public ResponseEntity<Map<String, Object>> updateUser(@PathVariable String userID, @RequestBody UserDto userDto){
-        // Update Gender Metrics
-        // Update Birth
         User userData = getUserByIdUsecase.execute(userID);
+
         if(userData.gender() != userDto.gender()) {
-            metricsUpdateUserGenderUsecase.execute(userData.gender().name(), -1);
+            if(userData.gender() != null){
+                metricsUpdateUserGenderUsecase.execute(userData.gender().name(), -1);
+                metricsUpdateUserGenderUsecase.execute(userDto.gender().name(), 1);
+            }
             metricsUpdateUserGenderUsecase.execute(userDto.gender().name(), 1);
         }
 

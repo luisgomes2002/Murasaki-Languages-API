@@ -55,9 +55,8 @@ public class PaymentController {
         }
 
         if(paymentResponse.paymentType().equals(PaymentType.RENEWED)) {
-            renewedSubscriptionUsecase.execute(paymentResponse.email());
+            renewedSubscriptionUsecase.execute(paymentResponse.email(), String.valueOf(paymentResponse.paymentType()), paymentResponse.userName(), paymentResponse.productName());
         }
-
 
         return ResponseEntity.ok("Received");
     }

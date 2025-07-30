@@ -20,8 +20,6 @@ public class GetUserByIdUsecaseImpl implements GetUserByIdUsecase{
     public User execute(String id) {
         UserInfo userInfo = authenticatedUsecase.getAuthenticatedUser();
 
-        if(!"ADMIN".equals(userInfo.userType()) && !"MOD".equals(userInfo.userType())) throw new UserDoesNotHavePermissionException("Ação bloqueada");
-
         return userGateway.getUserById(id);
     }
 }

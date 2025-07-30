@@ -11,7 +11,7 @@ public class RenewedSubscriptionUsecaseImpl implements RenewedSubscriptionUsecas
     }
 
     @Override
-    public void execute(String email) {
-        emailGateway.renewedSubscription(email);
+    public void execute(String email, String payment, String userName, String productName) {
+        emailGateway.renewedSubscription(email, payment, userName, productName);
     }
 }

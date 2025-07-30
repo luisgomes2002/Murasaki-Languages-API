@@ -39,16 +39,16 @@ public class EmailRepositoryGateway implements EmailGateway {
     public void completedSubscription(CheckoutResponse checkoutResponse, String email, String token, boolean accountExist) {
         if (accountExist) {
             String body = """
-            Olá! 🎉
+            <p>Olá! 🎉</p>
 
-            Sua assinatura foi confirmada com sucesso!
+            <p>Sua assinatura foi confirmada com sucesso!</p>
 
-            Se tiver qualquer dúvida ou precisar de ajuda, estamos aqui para te atender.
+            <p>Se tiver qualquer dúvida ou precisar de ajuda, estamos aqui para te atender.</p>
 
-            Aproveite ao máximo sua experiência com a gente!
+            <p>Aproveite ao máximo sua experiência com a gente!</p>
 
-            Atenciosamente,
-            Equipe Murasaki Languages.
+            <p>Atenciosamente,<br>
+            Equipe Murasaki Languages.</p>
             """;
 
             sendEmail(new Email(email, "Assinatura Confirmada!", body));
@@ -58,23 +58,24 @@ public class EmailRepositoryGateway implements EmailGateway {
     }
 
     private void createSubscription(String email, String token, CheckoutResponse checkoutResponse) {
-        String confirmationLink = "http://localhost:8080/api/confirm?token=" + token;
+        String confirmationLink = "http://localhost:5173/confirm?token=" + token;
+
+        System.out.println(token);
 
         String body = String.format("""
-                Olá! 🎉
+            <p>Olá! 🎉</p>
 
-                Obrigado por assinar um de nossos planos!
+            <p>Obrigado por assinar um de nossos planos!</p>
 
-                Sua assinatura foi confirmada com sucesso. Agora você tem acesso aos benefícios exclusivos do seu plano.
+            <p>Sua assinatura foi confirmada com sucesso. Agora você tem acesso aos benefícios exclusivos do seu plano.</p>
 
-                Sua senha de acesso: %s
-                Por favor, confirme seu e-mail: %s
+            <p><strong>Sua senha de acesso:</strong> %s<br>
 
-                Se tiver qualquer dúvida ou precisar de ajuda, estamos aqui para te atender.
+            <p>Se tiver qualquer dúvida ou precisar de ajuda, estamos aqui para te atender.</p>
 
-                Atenciosamente,
-                Equipe Murasaki Languages.
-                """, checkoutResponse.password(), confirmationLink);
+            <p>Atenciosamente,<br>
+            Equipe Murasaki Languages.</p>
+            """, checkoutResponse.password(), confirmationLink, confirmationLink);
 
         Email newEmail = new Email(email, "Assinatura Confirmada!", body);
         sendEmail(newEmail);
@@ -83,31 +84,51 @@ public class EmailRepositoryGateway implements EmailGateway {
     @Override
     public void deletedSubscription(String email) {
         String body = """
-            Olá! 😢
+        <p>Olá! 😢</p>
 
-            Sentiremos sua falta!
+        <p>Sentiremos sua falta!</p>
 
-            Sua assinatura foi cancelada com sucesso, mas queremos que saiba que foi um prazer ter você com a gente durante esse tempo.
+        <p>Sua assinatura foi cancelada com sucesso, mas queremos que saiba que foi um prazer ter você com a gente durante esse tempo.</p>
 
-            Se precisar de qualquer coisa ou quiser voltar, estaremos de portas abertas!
+        <p>Se precisar de qualquer coisa ou quiser voltar, estaremos de portas abertas!</p>
 
-            Com carinho,
-            Equipe Murasaki.
-            """;
+        <p>Com carinho,<br>
+        Equipe Murasaki.</p>
+        """;
 
         sendEmail(new Email(email, "Até breve!", body));
     }
 
     @Override
-    public void renewedSubscription(String email) {
-        String body = """
-        NOTA FISCAL
-       
-        Equipe Murasaki Languages.
-        """;
+    public void renewedSubscription(String email, String payment, String userName, String productName) {
+        String body = String.format("""
+        <p>Olá, %s!</p>
+
+        <p>Confirmamos o pagamento da sua assinatura do plano "<strong>%s</strong>". 🎉</p>
+
+        <p>Aqui estão os detalhes do seu pagamento:</p>
+
+        <ul>
+            <li>👤 <strong>Nome do assinante:</strong> %s</li>
+            <li>📦 <strong>Plano:</strong> %s</li>
+            <li>📅 <strong>Data da renovação:</strong> %s</li>
+        </ul>
+
+        <p>Se tiver qualquer dúvida ou precisar de ajuda, é só nos chamar!</p>
+
+        <p>Atenciosamente,<br>
+        Equipe Murasaki Languages.</p>
+        """,
+                userName,
+                productName,
+                userName,
+                productName,
+                java.time.LocalDate.now().toString()
+        );
 
         sendEmail(new Email(email, "Assinatura Renovada com Sucesso!", body));
     }
+
 
 
 }
