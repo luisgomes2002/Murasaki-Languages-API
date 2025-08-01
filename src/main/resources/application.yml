@@ -41,9 +41,6 @@ murasakilanguages:
   security:
     secret: ${SECRET}
 
-mercadopago:
-  token: ${MERCADO_PAGO_ACCESS_TOKEN}
-
 stripe:
   api-key: ${STRIPE_SECRET_KEY}
   webhook-secret: ${STRIPE_WEBHOOK_SECRET}
